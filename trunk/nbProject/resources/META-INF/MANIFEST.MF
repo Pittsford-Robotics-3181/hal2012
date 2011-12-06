@@ -1,0 +1,6 @@
+MIDlet-Name: FRC3181-2012
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: FIRST
+MIDlet-1: hal, , org.frc3181.yr2012.hal
+MicroEdition-Profile: IMP-1.0
+MicroEdition-Configuration: CLDC-1.1

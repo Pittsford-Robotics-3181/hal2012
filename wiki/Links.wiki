@@ -9,3 +9,6 @@
 
 == 2012: Rebound Rumble ==
 [http://www.youtube.com/watch?v=nzpoMzLMhcw Rebound Rumble] involves picking up balls and shooting them into targets at many levels.
+
+= Game Manual =
+  * [http://code.google.com/p/frc3181-2012/downloads/detail?name=frc2012manual.pdf&can=2#makechanges 2012: Rebound Rumble]

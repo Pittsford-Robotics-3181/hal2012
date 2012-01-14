@@ -20,6 +20,18 @@ import edu.wpi.first.wpilibj.Solenoid;
  * @author Ben
  * @author Eric
  * @author Liam
+ * @author Robbie
+ */
+
+/**
+ * Drive System:
+ * Boolean trigger on Joystick:
+ * On=Rotate Robot (to align for a crash)
+ * Off=Linear movement of  Robot
+ * Rotational mode inverts two motors, using RobotDrive.setInvertedMotor(the motors, Joystick.getTrigger());
+ * Use RobotDrive.mecanumDrive_Polar(Joystick.getMagnitude(), Joystick.getDirectionDegrees(), Speed);
+ * May use another Joystick for the speed, or just a constant.
+ * @author robbiemarkwick
  */
 public class HAL extends IterativeRobot {
     /*

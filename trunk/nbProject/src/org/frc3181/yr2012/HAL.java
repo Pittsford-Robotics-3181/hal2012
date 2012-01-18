@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
  * The main class for our robot
- * @author Chris Cheng
- * @author Ben
- * @author Eric
- * @author Liam
- * @author Robbie
+ * @author Chris Cheng (2012)
+ * @author Ben Lowenstein (2012)
+ * @author Eric Lee (2012)
+ * @author Liam Middlebrook (2012)
+ * @author Robbie Markwick (2012)
  */
 
 public class HAL extends IterativeRobot {

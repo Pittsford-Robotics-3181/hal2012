@@ -1,5 +1,7 @@
 package org.frc3181.yr2012;
 
+import edu.wpi.first.wpilibj.Dashboard;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -60,5 +62,13 @@ public class HAL extends IterativeRobot {
      */
     public void teleopPeriodic() {
         
+    }
+    
+    public void updateDash() {
+        Dashboard low = DriverStation.getInstance().getDashboardPackerLow();
+        low.addCluster(); {
+            
+        } low.finalizeCluster();
+        low.commit();
     }
 }

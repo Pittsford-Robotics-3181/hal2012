@@ -64,6 +64,10 @@ public class HAL extends IterativeRobot {
         
     }
     
+    /**
+     * Updates the Dashboard.  Durrrrr~
+     * @author Chris Cheng (2012)
+     */
     public void updateDash() {
         Dashboard low = DriverStation.getInstance().getDashboardPackerLow();
         low.addCluster(); {

@@ -80,7 +80,8 @@ public class DriveSystem extends RobotDrive{
      *      mecanumDrive(magnitude, direction);
      * }
      * 
-     * To be fed by joystick movements, red in polar.
+     * To be fed by joystick movements, read in polar.
+     * Will be able to drive in any directino, not just NSEW
      */
     
 }

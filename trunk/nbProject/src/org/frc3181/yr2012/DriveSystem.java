@@ -66,22 +66,17 @@ public class DriveSystem extends RobotDrive{
     private void mecanumDrive(double magnitude, double direction){
         mecanumDrive_Polar(magnitude, direction, 0);
     }
-    
-    /* The following method is my suggestion for the drive:
-     * public void robbiesDriveSuggestion (double magnitude, double direction){
-     *     if(magnitude<0){
-     *          magnitude=0-magnitude;
-     *          direction=180+direction;
-     *      }
-     *      if(direction<0)
-     *          direction+=360;
-     *      if(direction>360)
-     *          direction-=360;
-     *      mecanumDrive(magnitude, direction);
-     * }
-     * 
-     * To be fed by joystick movements, read in polar.
-     * Will be able to drive in any directino, not just NSEW
-     */
+
+      public void robbiesDriveSuggestion (double magnitude, double direction){
+          if(magnitude<0){
+               magnitude=0-magnitude;
+               direction=180+direction;
+           }
+           if(direction<0)
+               direction+=360;
+           if(direction>360)
+               direction-=360;
+           mecanumDrive(magnitude, direction);
+      }
     
 }

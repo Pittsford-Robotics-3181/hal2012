@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj.SpeedController;
  * Rotational mode inverts two motors, using RobotDrive.setInvertedMotor(the motor, Joystick.getTrigger());
  * Use RobotDrive.mecanumDrive_Polar(Joystick.getMagnitude(), Joystick.getDirectionDegrees(), Speed);
  * May use another Joystick for the speed, or just a constant.
+ * @author Robbie Markwick
  * @author lowenstein benjamin
- * @author robbiemarkwick
  */
 public class DriveSystem extends RobotDrive{
     
@@ -91,7 +91,7 @@ public class DriveSystem extends RobotDrive{
               setInvertedMotor(MotorType.kFrontRight ,false); //uninvert motors
               setInvertedMotor(MotorType.kRearRight ,false);
           }
-           if(direction<=45||direction>=315)
+           if(direction<=225&&direction>=135)
           {
               setInvertedMotor(MotorType.kFrontLeft ,true);//invert proper motors
               setInvertedMotor(MotorType.kRearLeft ,true);

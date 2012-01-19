@@ -29,7 +29,7 @@ public class DriveSystem extends RobotDrive{
      * @param frontRightMotor
      * @param rearRightMotor 
      */
-    public DriveSystem(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor, SpeedController rearRightMotor){
+    public DriveSystem(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor, SpeedController rearRightMotor) {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
     }
     
@@ -37,7 +37,7 @@ public class DriveSystem extends RobotDrive{
      * Given a speed between -1.0 and 1.0, drive forward (if positive) or backward (if positive).
      * @param speed The speed to drive at.
      */
-    public void driveForwardBackward(double speed){
+    public void driveForwardBackward(double speed) {
         if(speed > 0)
             mecanumDrive(speed, 0);
         else
@@ -48,7 +48,7 @@ public class DriveSystem extends RobotDrive{
      * Given a speed between -1.0 and 1.0, drive right (if positive) or left (if positive).
      * @param speed The speed to drive at.
      */
-    public void driveLeftRight(double speed){
+    public void driveLeftRight(double speed) {
         if(speed > 0)
             mecanumDrive(speed, 270);
         else
@@ -63,7 +63,7 @@ public class DriveSystem extends RobotDrive{
      * @param magnitude The speed that the robot should drive in a given direction.
      * @param direction The direction the robot should drive in degrees. The direction and magnitude are independent of the rotation rate.
      */
-    private void mecanumDrive(double magnitude, double direction){
+    private void mecanumDrive(double magnitude, double direction) {
         mecanumDrive_Polar(magnitude, direction, 0);
     }
 
@@ -74,7 +74,7 @@ public class DriveSystem extends RobotDrive{
      * @param button the value of the trigger on the joystick. If activated, it tells the Robot to Rotate instead of moving
      * @author Robbie Markwick
      */
-    public void robbiesDriveSuggestion (double magnitude, double direction, boolean button){
+    public void polarMechanumDrive(double magnitude, double direction, boolean button) {
         if(magnitude<0) {
             magnitude=0-magnitude; //fixes magnitude if necessary
             direction=180+direction;

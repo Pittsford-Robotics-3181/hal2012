@@ -76,7 +76,7 @@ public class HAL extends IterativeRobot {
         updateDash();
         
         //tells the robot how to drive given the polar coordinates of the stick as well as the value of the trigger.
-        Hardware.driveSystem.robbiesDriveSuggestion(Hardware.driveController.getMagnitude(), Hardware.driveController.getDirectionDegrees(), Hardware.driveController.getTrigger());
+        Hardware.driveSystem.polarMechanumDrive(Hardware.driveController.getMagnitude(), Hardware.driveController.getDirectionDegrees(), Hardware.driveController.getTrigger());
     }
     
     /**

@@ -2,6 +2,7 @@ package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.Dashboard;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -61,6 +62,7 @@ public class HAL extends IterativeRobot {
      * This function is called periodically during operator control.
      */
     public void teleopPeriodic() {
+        Hardware.driveSystem.robbiesDriveSuggestion(Hardware.driveController.getMagnitude(), Hardware.driveController.getDirectionDegrees(), Hardware.driveController.getTrigger());//tells the robot how to drive given the polar coordinates of the trigger as well as the value of the trigger.
         
     }
     

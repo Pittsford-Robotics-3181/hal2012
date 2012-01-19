@@ -67,16 +67,42 @@ public class DriveSystem extends RobotDrive{
         mecanumDrive_Polar(magnitude, direction, 0);
     }
 
-      public void robbiesDriveSuggestion (double magnitude, double direction){
-          if(magnitude<0){
-               magnitude=0-magnitude;
+    /**
+     * Allows the Robot to drive in any direction, as well as rotating. Can replace driveFowardBackward and driveLeftRight.
+     * @param magnitude the Speed that the robot should drive (from Joystick, "r" in polar coordinates)
+     * @param direction the direction in degrees that the robot should drive in linear mode, or the direction in rotational mode (for Linear, "theta" in polar coordinates, read from the joystick).
+     * @param button the value of the trigger on the joystick. If activated, it tells the Robot to Rotate instead of moving
+     * @author Robbie Markwick
+     */
+      public void robbiesDriveSuggestion (double magnitude, double direction, boolean button){
+           if(magnitude<0){
+                magnitude=0-magnitude;
                direction=180+direction;
-           }
-           if(direction<0)
-               direction+=360;
-           if(direction>360)
-               direction-=360;
-           mecanumDrive(magnitude, direction);
+             }
+            while(direction<0){ direction+=360;}
+            while(direction>360){direction-=360;}
+            
+          if(button){
+          if(direction<=45||direction>=315)
+          {
+              setInvertedMotor(MotorType.kFrontRight ,true);
+              setInvertedMotor(MotorType.kRearRight ,true);
+              mecanumDrive(magnitude,90);
+              setInvertedMotor(MotorType.kFrontRight ,false);
+              setInvertedMotor(MotorType.kRearRight ,false);
+          }
+           if(direction<=45||direction>=315)
+          {
+              setInvertedMotor(MotorType.kFrontLeft ,true);
+              setInvertedMotor(MotorType.kRearLeft ,true);
+              mecanumDrive(magnitude,90);
+              setInvertedMotor(MotorType.kFrontLeft ,false);
+              setInvertedMotor(MotorType.kRearLeft ,false);
+          }
+          }
+          else{
+            mecanumDrive(magnitude, direction);
+          }
       }
     
 }

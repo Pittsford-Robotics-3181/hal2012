@@ -22,4 +22,7 @@ public class Hardware {
                                                             Hardware.rearLeftMotor,
                                                             Hardware.frontRightMotor,
                                                             Hardware.rearRightMotor);
+    
+    // pseudo-hardware
+    public static DSOutput DSOut = new DSOutput();
 }

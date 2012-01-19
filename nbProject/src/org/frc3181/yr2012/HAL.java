@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 
 public class HAL extends IterativeRobot {
+    
+    String state = "";
 
     /**
      * This function is run when the robot starts up and should be
@@ -23,12 +25,20 @@ public class HAL extends IterativeRobot {
     public void robotInit() {
        
     }
+    
+    /**
+     * This function is called as soon as it enters the disabled state.
+     */
+    public void disabledInit() {
+        state = "Disabled";
+        Hardware.DSOut.say(1, "State: " + state);
+    }
 
     /**
      * This function is called periodically during disabled.
      */
     public void disabledPeriodic() {
-        
+        updateDash();
     }
 
 
@@ -38,14 +48,15 @@ public class HAL extends IterativeRobot {
      * This function is run when autonomous mode begins.
      */
     public void autonomousInit() {
-        
+        state = "Autonomous";
+        Hardware.DSOut.say(1, "State: " + state);
     }
 
     /**
      * This function is called periodically during autonomous.
      */
     public void autonomousPeriodic() {
-        
+        updateDash();
     }
 
 
@@ -55,15 +66,16 @@ public class HAL extends IterativeRobot {
      * This function is run when teleop mode begins.
      */
     public void teleopInit() {
-        
+        state = "Teleoperated";
+        Hardware.DSOut.say(1, "State: " + state);
     }
 
     /**
      * This function is called periodically during operator control.
      */
     public void teleopPeriodic() {
+        updateDash();
         Hardware.driveSystem.robbiesDriveSuggestion(Hardware.driveController.getMagnitude(), Hardware.driveController.getDirectionDegrees(), Hardware.driveController.getTrigger());//tells the robot how to drive given the polar coordinates of the trigger as well as the value of the trigger.
-        
     }
     
     /**

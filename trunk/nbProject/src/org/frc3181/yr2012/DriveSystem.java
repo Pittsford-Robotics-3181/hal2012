@@ -75,33 +75,33 @@ public class DriveSystem extends RobotDrive{
      * @author Robbie Markwick
      */
       public void robbiesDriveSuggestion (double magnitude, double direction, boolean button){
-           if(magnitude<0){
-                magnitude=0-magnitude;
+          if(magnitude<0){
+                magnitude=0-magnitude; //fixes magnitude if necessary
                direction=180+direction;
              }
-            while(direction<0){ direction+=360;}
+            while(direction<0){ direction+=360;}  //fixes direction if necessary
             while(direction>360){direction-=360;}
             
-          if(button){
-          if(direction<=45||direction>=315)
+          if(button){ //if the trigger is on, the robot will rotate instead of crawling around on the floor)
+          if(direction<=45||direction>=315) //if the joystick is right, the robot will spin clockwise
           {
-              setInvertedMotor(MotorType.kFrontRight ,true);
+              setInvertedMotor(MotorType.kFrontRight ,true);//invert proper motors
               setInvertedMotor(MotorType.kRearRight ,true);
-              mecanumDrive(magnitude,90);
-              setInvertedMotor(MotorType.kFrontRight ,false);
+              mecanumDrive(magnitude,90); //drive robot with inverted wheels
+              setInvertedMotor(MotorType.kFrontRight ,false); //uninvert motors
               setInvertedMotor(MotorType.kRearRight ,false);
           }
            if(direction<=45||direction>=315)
           {
-              setInvertedMotor(MotorType.kFrontLeft ,true);
+              setInvertedMotor(MotorType.kFrontLeft ,true);//invert proper motors
               setInvertedMotor(MotorType.kRearLeft ,true);
-              mecanumDrive(magnitude,90);
-              setInvertedMotor(MotorType.kFrontLeft ,false);
+              mecanumDrive(magnitude,90);//drive robot with inverted wheels
+              setInvertedMotor(MotorType.kFrontLeft ,false);//uninvert motors
               setInvertedMotor(MotorType.kRearLeft ,false);
           }
           }
-          else{
-            mecanumDrive(magnitude, direction);
+          else{//no trigger produces linear motion
+            mecanumDrive(magnitude, direction); //robot drives.
           }
       }
     

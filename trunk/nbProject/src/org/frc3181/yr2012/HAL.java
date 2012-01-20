@@ -86,7 +86,7 @@ public class HAL extends IterativeRobot {
     public void updateDash() {
         Dashboard low = DriverStation.getInstance().getDashboardPackerLow();
         low.addCluster(); {
-            
+            low.addString(state);
         } low.finalizeCluster();
         low.commit();
     }

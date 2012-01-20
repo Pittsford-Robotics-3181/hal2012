@@ -30,7 +30,7 @@ public class HAL extends IterativeRobot {
      */
     public void disabledInit() {
         state = "Disabled";
-        Hardware.DSOut.say(1, "State: " + state);
+       Hardware.DSOut.say(1, "State: " + state);
     }
 
     /**
@@ -48,7 +48,7 @@ public class HAL extends IterativeRobot {
      */
     public void autonomousInit() {
         state = "Autonomous";
-        Hardware.DSOut.say(1, "State: " + state);
+       Hardware.DSOut.say(1, "State: " + state);
     }
 
     /**

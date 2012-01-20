@@ -15,7 +15,7 @@ public class Hardware {
     public static Jaguar rearRightMotor = new Jaguar(/*slot*/4, /*channel*/4);
     
     //joystick
-    public static Joystick driveController = new Joystick(1);
+    public static Joystick driveController = new Joystick(01);
     
     // drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
@@ -23,6 +23,6 @@ public class Hardware {
                                                             Hardware.frontRightMotor,
                                                             Hardware.rearRightMotor);
     
-    // pseudo-hardware
+ // pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();
 }

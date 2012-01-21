@@ -20,7 +20,7 @@ public class Hardware {
     public static Joystick driveController = new Joystick(1);
     
     //camera
-    public static String cameraAddress = "10.31.81.10";
+    public static final String cameraAddress = "10.31.81.10";
     public static AxisCamera camera = AxisCamera.getInstance(cameraAddress);
     // drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,

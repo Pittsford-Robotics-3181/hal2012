@@ -68,9 +68,10 @@ public class HAL extends IterativeRobot {
      * This function is called periodically during operator control.
      */
     public void teleopPeriodic() {
+        //update dashboard
         updateDash();
 
-        //tells the robot how to drive given the polar coordinates of the stick as well as the value of the trigger.
+        //drive
         Hardware.driveSystem.drive();
     }
 

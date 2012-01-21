@@ -9,21 +9,13 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  * This is our robot's drive system, which implements mecanum wheels.
- * 
- * Drive System:
- * Boolean trigger on Joystick:
- * On=Rotate Robot (to align for a crash)
- * Off=Linear movement of  Robot
- * Rotational mode inverts two motors, using RobotDrive.setInvertedMotor(the motor, Joystick.getTrigger());
- * Use RobotDrive.mecanumDrive_Polar(Joystick.getMagnitude(), Joystick.getDirectionDegrees(), Speed);
- * May use another Joystick for the speed, or just a constant.
  * @author Robbie Markwick
  * @author Ben
  */
 public class DriveSystem extends RobotDrive {
 
     /**
-     * Constructor
+     * Constructor.
      * @param frontLeftMotor
      * @param rearLeftMotor
      * @param frontRightMotor
@@ -34,57 +26,52 @@ public class DriveSystem extends RobotDrive {
     }
 
     /**
-     * Given a speed between -1.0 and 1.0, drive forward (if positive) or backward (if positive).
-     * @param speed The speed to drive at.
-     */
-    public void driveForwardBackward(double speed) {
-        if (speed > 0) {
-            mecanumDrive(speed, 0);
-        } else {
-            mecanumDrive(speed, 180);
-        }
-    }
-
-    /**
-     * Given a speed between -1.0 and 1.0, drive right (if positive) or left (if positive).
-     * @param speed The speed to drive at.
-     */
-    public void driveLeftRight(double speed) {
-        if (speed > 0) {
-            mecanumDrive(speed, 270);
-        } else {
-            mecanumDrive(speed, 90);
-        }
-    }
-
-    /**
      * Drive method for Mecanum wheeled robots. A method for driving with
      * Mecanum wheeled robots. There are 4 wheels on the robot, arranged so that
      * the front and back wheels are toed in 45 degrees. When looking at the
      * wheels from the top, the roller axles should form an X across the robot. 
      * @param magnitude The speed that the robot should drive in a given direction.
      * @param direction The direction the robot should drive in degrees. The direction and magnitude are independent of the rotation rate.
+     * @param rotation The rate of rotation for the robot that is completely independent of the magnitude or direction. [-1.0..1.0]
      */
-    private void mecanumDrive(double magnitude, double direction) {
-        mecanumDrive_Polar(magnitude, direction, 0);
+    private void mecanumDrive(double magnitude, double direction, double rotation) {
+        //make magnitude and rotation zero if they are small enough
+        magnitude = Utils.checkForSmall(magnitude);
+        rotation = Utils.checkForSmall(rotation);
+
+        //drive at half speed if trigger is pulled
+        if (Hardware.driveController.getTrigger()) {
+            magnitude *= .5;
+            rotation *= .5;
+        }
+
+        //call the drive method inherited from RobotDrive
+        mecanumDrive_Polar(magnitude, direction, rotation);
     }
 
     /**
-     * Allows the Robot to drive in any direction, as well as rotating. Can replace driveFowardBackward and driveLeftRight.
-     * @param magnitude the Speed that the robot should drive (from Joystick, "r" in polar coordinates)
-     * @param direction the direction in degrees that the robot should drive in linear mode, or the direction in rotational mode (for Linear, "theta" in polar coordinates, read from the joystick).
-     * @param button the value of the trigger on the joystick. If activated, it tells the Robot to Rotate instead of moving
-     * @author Robbie Markwick
+     * Converts buttons 4 and 5 on joystick to rotation. There are four cases:
+     * neither pushed: no rotation
+     * just 4 pushed: counterclockwise rotation
+     * just 5 pushed: clockwise rotation
+     * both pushed: no rotation
+     * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
+     */
+    private double calculateRotation() {
+        boolean ccw = Hardware.driveController.getRawButton(4);
+        boolean cw = Hardware.driveController.getRawButton(5);
+        //rotation is -1 for counterclockwise and +1 for clockwise
+        //for now, only full speed rotation is possible from this method
+        return Utils.toInt(cw) - Utils.toInt(ccw);
+    }
+
+    /**
+     * Allows the Robot to drive in any direction, as well as rotating.
      */
     public void drive() {
-            double magnitude=Hardware.driveController.getMagnitude();
-            double direction=Hardware.driveController.getDirectionDegrees();
-            boolean l=Hardware.driveController.getRawButton(4);
-            int ccw=l ? -1 : 0;
-            boolean r=Hardware.driveController.getRawButton(5);
-            int cw=r ? 1 : 0;
-            double rotation=ccw+cw;
-            mecanumDrive_Polar(magnitude, direction, rotation); //robot drives.
-        }
+        double magnitude = Hardware.driveController.getMagnitude();
+        double direction = Hardware.driveController.getDirectionDegrees();
+        double rotation = calculateRotation();
+        mecanumDrive(magnitude, direction, rotation); //robot drives
     }
-    
+}

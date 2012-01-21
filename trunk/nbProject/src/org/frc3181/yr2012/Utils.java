@@ -42,7 +42,8 @@ public class Utils {
      * Checks if a value is small enough to be considered zero, with a specified
      * tolerance.
      * @param value The value to check
-     * @return 0, if abs(value) is less than .05; value, otherwise
+     * @param tolerance The largest absolute value that can be considered 0.
+     * @return 0, if abs(value) is less than tolerance; value, otherwise
      */
     public static double checkForSmall(double value, double tolerance) {
         if(Math.abs(value) < tolerance)

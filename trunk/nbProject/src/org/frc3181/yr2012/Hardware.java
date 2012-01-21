@@ -1,5 +1,4 @@
 package org.frc3181.yr2012;
-import java.lang.String;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.camera.AxisCamera;

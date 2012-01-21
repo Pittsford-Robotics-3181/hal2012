@@ -76,7 +76,7 @@ public class DriveSystem extends RobotDrive {
      * @param button the value of the trigger on the joystick. If activated, it tells the Robot to Rotate instead of moving
      * @author Robbie Markwick
      */
-    public void polarMechanumDrive(double magnitude, double direction, boolean button) {
+    public void mechanumRotate(double magnitude, double direction, boolean button) {
         if (magnitude < 0) {
             magnitude = 0 - magnitude; //fixes magnitude if necessary
             direction = 180 + direction;

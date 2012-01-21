@@ -4,10 +4,12 @@ import edu.wpi.first.wpilibj.DriverStationLCD;
 
 /**
  * Utilities for managing the Driver Station output window.
- * @author Chris Cheng (2011)
- * @author Ben (2011)
+ * @author Chris Cheng
+ * @author Ben
+ * @version 2011
  */
 public class DSOutput {
+
     static DriverStationLCD output;
 
     /**

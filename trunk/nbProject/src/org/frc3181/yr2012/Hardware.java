@@ -1,11 +1,13 @@
 package org.frc3181.yr2012;
-
+import java.lang.String;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
 
 /**
  * This file contains our hardware declarations.
  * @author Ben
+ * @author liam middlebrook
  */
 public class Hardware {
     // motors
@@ -17,6 +19,9 @@ public class Hardware {
     //joystick
     public static Joystick driveController = new Joystick(1);
     
+    //camera
+    public static String cameraAddress = "10.31.81.10";
+    public static AxisCamera camera = AxisCamera.getInstance(cameraAddress);
     // drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
             Hardware.rearLeftMotor,

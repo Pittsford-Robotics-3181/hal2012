@@ -18,10 +18,10 @@ import edu.wpi.first.wpilibj.SpeedController;
  * Use RobotDrive.mecanumDrive_Polar(Joystick.getMagnitude(), Joystick.getDirectionDegrees(), Speed);
  * May use another Joystick for the speed, or just a constant.
  * @author Robbie Markwick
- * @author lowenstein benjamin
+ * @author Ben
  */
-public class DriveSystem extends RobotDrive{
-    
+public class DriveSystem extends RobotDrive {
+
     /**
      * Constructor
      * @param frontLeftMotor
@@ -32,29 +32,31 @@ public class DriveSystem extends RobotDrive{
     public DriveSystem(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor, SpeedController rearRightMotor) {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
     }
-    
+
     /**
      * Given a speed between -1.0 and 1.0, drive forward (if positive) or backward (if positive).
      * @param speed The speed to drive at.
      */
     public void driveForwardBackward(double speed) {
-        if(speed > 0)
+        if (speed > 0) {
             mecanumDrive(speed, 0);
-        else
+        } else {
             mecanumDrive(speed, 180);
+        }
     }
-    
+
     /**
      * Given a speed between -1.0 and 1.0, drive right (if positive) or left (if positive).
      * @param speed The speed to drive at.
      */
     public void driveLeftRight(double speed) {
-        if(speed > 0)
+        if (speed > 0) {
             mecanumDrive(speed, 270);
-        else
+        } else {
             mecanumDrive(speed, 90);
+        }
     }
-    
+
     /**
      * Drive method for Mecanum wheeled robots. A method for driving with
      * Mecanum wheeled robots. There are 4 wheels on the robot, arranged so that
@@ -75,33 +77,35 @@ public class DriveSystem extends RobotDrive{
      * @author Robbie Markwick
      */
     public void polarMechanumDrive(double magnitude, double direction, boolean button) {
-        if(magnitude<0) {
-            magnitude=0-magnitude; //fixes magnitude if necessary
-            direction=180+direction;
+        if (magnitude < 0) {
+            magnitude = 0 - magnitude; //fixes magnitude if necessary
+            direction = 180 + direction;
         }
 
-        while(direction<0) {direction+=360;}  //fixes direction if necessary
-        while(direction>360) {direction-=360;}
-            
-        if(button) { //if the trigger is on, the robot will rotate instead of crawling around on the floor)
-            if(direction<=45||direction>=315) { //if the joystick is right, the robot will spin clockwise
-                setInvertedMotor(MotorType.kFrontRight ,true); //invert proper motors
-                setInvertedMotor(MotorType.kRearRight ,true);
-                mecanumDrive(magnitude,90); //drive robot with inverted wheels
-                setInvertedMotor(MotorType.kFrontRight ,false); //uninvert motors
-                setInvertedMotor(MotorType.kRearRight ,false);
-            }
-            if(direction<=225&&direction>=135) {
-                setInvertedMotor(MotorType.kFrontLeft ,true); //invert proper motors
-                setInvertedMotor(MotorType.kRearLeft ,true);
-                mecanumDrive(magnitude,90);//drive robot with inverted wheels
-                setInvertedMotor(MotorType.kFrontLeft ,false); //uninvert motors
-                setInvertedMotor(MotorType.kRearLeft ,false);
-            }
+        while (direction < 0) {
+            direction += 360;
+        }  //fixes direction if necessary
+        while (direction > 360) {
+            direction -= 360;
         }
-        else {//no trigger produces linear motion
+
+        if (button) { //if the trigger is on, the robot will rotate instead of crawling around on the floor)
+            if (direction <= 45 || direction >= 315) { //if the joystick is right, the robot will spin clockwise
+                setInvertedMotor(MotorType.kFrontRight, true); //invert proper motors
+                setInvertedMotor(MotorType.kRearRight, true);
+                mecanumDrive(magnitude, 90); //drive robot with inverted wheels
+                setInvertedMotor(MotorType.kFrontRight, false); //uninvert motors
+                setInvertedMotor(MotorType.kRearRight, false);
+            }
+            if (direction <= 225 && direction >= 135) {
+                setInvertedMotor(MotorType.kFrontLeft, true); //invert proper motors
+                setInvertedMotor(MotorType.kRearLeft, true);
+                mecanumDrive(magnitude, 90);//drive robot with inverted wheels
+                setInvertedMotor(MotorType.kFrontLeft, false); //uninvert motors
+                setInvertedMotor(MotorType.kRearLeft, false);
+            }
+        } else {//no trigger produces linear motion
             mecanumDrive(magnitude, direction); //robot drives.
         }
-      }
-    
+    }
 }

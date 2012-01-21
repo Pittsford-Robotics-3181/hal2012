@@ -76,36 +76,15 @@ public class DriveSystem extends RobotDrive {
      * @param button the value of the trigger on the joystick. If activated, it tells the Robot to Rotate instead of moving
      * @author Robbie Markwick
      */
-    public void mechanumRotate(double magnitude, double direction, boolean button) {
-        if (magnitude < 0) {
-            magnitude = 0 - magnitude; //fixes magnitude if necessary
-            direction = 180 + direction;
-        }
-
-        while (direction < 0) {
-            direction += 360;
-        }  //fixes direction if necessary
-        while (direction > 360) {
-            direction -= 360;
-        }
-
-        if (button) { //if the trigger is on, the robot will rotate instead of crawling around on the floor)
-            if (direction <= 45 || direction >= 315) { //if the joystick is right, the robot will spin clockwise
-                setInvertedMotor(MotorType.kFrontRight, true); //invert proper motors
-                setInvertedMotor(MotorType.kRearRight, true);
-                mecanumDrive(magnitude, 90); //drive robot with inverted wheels
-                setInvertedMotor(MotorType.kFrontRight, false); //uninvert motors
-                setInvertedMotor(MotorType.kRearRight, false);
-            }
-            if (direction <= 225 && direction >= 135) {
-                setInvertedMotor(MotorType.kFrontLeft, true); //invert proper motors
-                setInvertedMotor(MotorType.kRearLeft, true);
-                mecanumDrive(magnitude, 90);//drive robot with inverted wheels
-                setInvertedMotor(MotorType.kFrontLeft, false); //uninvert motors
-                setInvertedMotor(MotorType.kRearLeft, false);
-            }
-        } else {//no trigger produces linear motion
-            mecanumDrive(magnitude, direction); //robot drives.
+    public void drive() {
+            double magnitude=Hardware.driveController.getMagnitude();
+            double direction=Hardware.driveController.getDirectionDegrees();
+            boolean l=Hardware.driveController.getRawButton(4);
+            int ccw=l ? -1 : 0;
+            boolean r=Hardware.driveController.getRawButton(5);
+            int cw=r ? 1 : 0;
+            double rotation=ccw+cw;
+            mecanumDrive_Polar(magnitude, direction, rotation); //robot drives.
         }
     }
-}
+    

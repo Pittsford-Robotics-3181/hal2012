@@ -44,6 +44,10 @@ public class DriveSystem extends RobotDrive {
 
         //call the drive method inherited from RobotDrive
         mecanumDrive_Polar(magnitude, direction, rotation);
+
+        Hardware.DSOut.say(4, "Magnitude: "+magnitude);
+        Hardware.DSOut.say(5, "Direction: "+direction);
+        Hardware.DSOut.say(6, "Rotation:  "+rotation);
     }
 
     /**

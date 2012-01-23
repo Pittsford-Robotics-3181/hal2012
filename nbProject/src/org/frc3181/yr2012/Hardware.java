@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.camera.AxisCamera;
  */
 public class Hardware {
     // motors
-    public static Jaguar frontLeftMotor = new Jaguar(/*slot*/4, /*channel*/ 1);
-    public static Jaguar rearLeftMotor = new Jaguar(/*slot*/4, /*channel*/ 2);
-    public static Jaguar frontRightMotor = new Jaguar(/*slot*/4, /*channel*/ 3);
-    public static Jaguar rearRightMotor = new Jaguar(/*slot*/4, /*channel*/ 4);
+    // note that slot 1 refers to what appears to be slot 2
+    // "slot 1" is the first three slots; "slot 2" is slots 5-7
+    public static Jaguar frontLeftMotor = new Jaguar(/*slot*/1, /*channel*/1);
+    public static Jaguar rearLeftMotor = new Jaguar(/*slot*/1, /*channel*/2);
+    public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/3);
+    public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/4);
     
     //joystick
     public static Joystick driveController = new Joystick(1);

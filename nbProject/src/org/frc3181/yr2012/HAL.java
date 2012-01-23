@@ -3,6 +3,7 @@ package org.frc3181.yr2012;
 import edu.wpi.first.wpilibj.Dashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
 
 /**
  * The main class for our 2012 robot, HAL.
@@ -71,6 +72,7 @@ public class HAL extends IterativeRobot {
      * This function is called periodically during operator control.
      */
     public void teleopPeriodic() {
+        AxisCamera cam = AxisCamera.getInstance("10.31.81.10");
         //update dashboard
         updateDash();
 

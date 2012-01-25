@@ -15,9 +15,14 @@ public class Shooter {
      * cannon: the Victor that controls the wheels to launch the balls
      * delay: the timer that delays any shooter action during a shot.
      */
-    private Victor aim=Hardware.aimShooter;
-    private Victor cannon=Hardware.launchBalls;
+    private Victor aim;
+    private Victor cannon;
     private Timer delay=new Timer();
+    
+    public Shooter (Victor aimMotor, Victor ballLauncher){
+    aim=aimMotor;
+    cannon=ballLauncher;
+    }
     
     private void aimShot(double anglechange) {
     aim.set(anglechange);

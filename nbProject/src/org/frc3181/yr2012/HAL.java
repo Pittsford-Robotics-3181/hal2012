@@ -78,6 +78,9 @@ public class HAL extends IterativeRobot {
 
         //drive
         Hardware.driveSystem.drive();
+        
+        //Control Shooter
+        Hardware.BallLauncher.controlShooting();
     }
 
     /**

@@ -84,6 +84,9 @@ public class HAL extends IterativeRobot {
         
         //Control Shooter
         Hardware.BallLauncher.controlShooting();
+        
+        //Tip Bridge if Necessary
+        Hardware.bridgeTip.controlTipper();
     }
 
     /**

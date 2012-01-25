@@ -8,6 +8,7 @@ import org.frc3181.yr2012.components.*;
 
 /**
  * This file contains our hardware declarations.
+ * @author Robie
  * @author Ben
  * @author liam middlebrook
  */
@@ -20,10 +21,11 @@ public class Hardware {
     public static Jaguar rearLeftMotor = new Jaguar(/*slot*/1, /*channel*/2);
     public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/3);
     public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/4);
-    //Shooting Motors
+    //non-Driving Motors
     public static Victor aimShooter = new Victor(1,5);
     public static Victor launchBalls = new Victor(1,6);
     public static Victor Rolling= new Victor (1,7);
+    public static Victor Tip=new Victor(1,8);
     
     //joystick for Driving
     public static Joystick driveController = new Joystick(1);
@@ -42,6 +44,8 @@ public class Hardware {
     public static Shooter BallLauncher= new Shooter(aimShooter,launchBalls);
     // Roller
     public static Roller Collector=new Roller(Rolling);
+    //tipper
+    public static Tipper bridgeTip=new Tipper(Tip);
     
     // pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();

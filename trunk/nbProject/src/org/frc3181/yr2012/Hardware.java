@@ -23,6 +23,7 @@ public class Hardware {
     //Shooting Motors
     public static Victor aimShooter = new Victor(1,5);
     public static Victor launchBalls = new Victor(1,6);
+    public static Victor Rolling= new Victor (1,7);
     
     //joystick for Driving
     public static Joystick driveController = new Joystick(1);
@@ -39,6 +40,9 @@ public class Hardware {
             Hardware.rearRightMotor);
     // Shooter
     public static Shooter BallLauncher= new Shooter(aimShooter,launchBalls);
+    // Roller
+    public static Roller Collector=new Roller(Rolling);
+    
     // pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();
 }

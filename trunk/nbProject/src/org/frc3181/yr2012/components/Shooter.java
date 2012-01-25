@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Shooter {
     /**
-     * Three Variables:
+     * Three Fields:
      * aim: the Victor that controls the angle
      * cannon: the Victor that controls the wheels to launch the balls
      * delay: the timer that delays any shooter action during a shot.

@@ -1,0 +1,12 @@
+Please *do* know that there is a Tasks window in NetBeans.  You guys can use this to flag tasks that need to be done.
+
+Viewing Tasks:
+If there is a Tasks window open, simply look in it.  If needed, right click inside and hit Refresh.
+Otherwise, go to Window up to and hit Tasks.
+
+Adding Tasks:
+Within the code, add this line:
+
+// TODO: [...]
+
+...replacing "[...]" with the description of the Task that needs to be done.  NetBeans will pick this up and add it to the list when you save.

@@ -13,40 +13,40 @@ import org.frc3181.yr2012.components.*;
  * @author liam middlebrook
  */
 public class Hardware {
-    // motors
-    // note that slot 1 refers to what appears to be slot 2
+    // Motors
+    // Note that slot 1 refers to what appears to be slot 2
     // "slot 1" is the first three slots; "slot 2" is slots 5-7
-    //Drive Motors
+    // Drive Motors
     public static Jaguar frontLeftMotor = new Jaguar(/*slot*/1, /*channel*/1);
     public static Jaguar rearLeftMotor = new Jaguar(/*slot*/1, /*channel*/2);
     public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/3);
     public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/4);
-    //non-Driving Motors
-    public static Victor aimShooter = new Victor(1,5);
-    public static Victor launchBalls = new Victor(1,6);
-    public static Victor Rolling= new Victor (1,7);
-    public static Victor Tip=new Victor(1,8);
+    // Non-Driving Motors
+    public static final Victor aimShooter = new Victor(1,5);
+    public static final Victor launchBalls = new Victor(1,6);
+    public static final Victor rolling = new Victor (1,7);
+    public static final Victor tip = new Victor(1,8);
     
-    //joystick for Driving
+    // Joystick for Driving
     public static Joystick driveController = new Joystick(1);
-    //joystick for Shooter
+    // Joystick for Shooter
     public static Joystick shotController = new Joystick(2);
     
-    //camera
+    // Camera
     public static final String cameraAddress = "10.31.81.10";
     public static AxisCamera camera = AxisCamera.getInstance(cameraAddress);
-    // drive system
+    // Drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
             Hardware.rearLeftMotor,
             Hardware.frontRightMotor,
             Hardware.rearRightMotor);
     // Shooter
-    public static Shooter BallLauncher= new Shooter(aimShooter,launchBalls);
+    public static Shooter ballLauncher = new Shooter(aimShooter,launchBalls);
     // Roller
-    public static Roller Collector=new Roller(Rolling);
-    //tipper
-    public static Tipper bridgeTip=new Tipper(Tip);
+    public static Roller collector = new Roller(rolling);
+    // Tipper
+    public static Tipper bridgeTip = new Tipper(tip);
     
-    // pseudo-hardware 
+    // Pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();
 }

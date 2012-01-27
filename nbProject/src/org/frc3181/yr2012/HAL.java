@@ -87,6 +87,9 @@ public class HAL extends IterativeRobot {
         
         //Tip Bridge if Necessary
         Hardware.bridgeTip.controlTipper();
+        
+        //lift balls if present
+        Hardware.ballLift.moveBalls();    
     }
 
     /**

@@ -1,9 +1,8 @@
 package org.frc3181.yr2012.components;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Victor;
 import org.frc3181.yr2012.Hardware;
-import edu.wpi.first.wpilibj.Timer;
+
 /**
  * The roller that collects the balls.
  * @author Robbie

@@ -10,7 +10,7 @@ public class Wheel {
     private Victor mover;
     
     public Wheel(Victor spin){
-        mover=spin;
+        mover = spin;
     }
     
     public void moveBalls (){

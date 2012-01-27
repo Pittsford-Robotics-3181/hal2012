@@ -26,7 +26,7 @@ public class Hardware {
     public static final Victor launchBalls = new Victor(1,6);
     public static final Victor rolling = new Victor (1,7);
     public static final Victor tip = new Victor(1,8);
-    public static final Victor lift=new Victor(1,9);
+    public static final Victor lift = new Victor(1,9);
     
     // Joystick for Driving
     public static Joystick driveController = new Joystick(1);
@@ -47,7 +47,7 @@ public class Hardware {
     public static Roller collector = new Roller(rolling);
     // Tipper
     public static Tipper bridgeTip = new Tipper(tip);
-    //Wheel
+    // Wheel
     public static Wheel ballLift = new Wheel(lift);
     
     // Pseudo-hardware 

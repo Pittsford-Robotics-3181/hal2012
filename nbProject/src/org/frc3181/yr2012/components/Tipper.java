@@ -9,29 +9,37 @@ import edu.wpi.first.wpilibj.Timer;
  * @author Ben
  */
 public class Tipper {
-    /*
-     * Four fields:
-     * Tip: the Victor controlling the Tipper
-     * clock: controls time
-     * running: is the tipper operating?
-     * down: is the tipper down or moving down?
+    /**
+     * The Victor controlling the Tipper
      */
     private Victor Tip;
+    
+    /**
+     * Controls time.
+     */
     private Timer clock=new Timer();
+    
+    /**
+     * Is the tipper operating?
+     */
     private boolean running=false;
+    
+    /**
+     * Is the tipper down or moving down?
+     */
     private boolean down=false;
     
     /*
      * Constructs a Tipper
-     * @param TipMotor The victor used for Tip.
+     * @param TipMotor The Victor used for Tip.
      */
     public Tipper(Victor TipMotor){
     Tip=TipMotor;
     }
     
     /*
-     * controls the tipper.
-     * if the 3 button is pressed, the tipper changes position.
+     * Controls the tipper.
+     * If the 3 button is pressed, the tipper changes position.
      */
     public void controlTipper(){
         if(running){
@@ -41,7 +49,7 @@ public class Tipper {
             }
         }
         if(!running){
-            if(Hardware.driveController.getRawButton(3)==true){
+            if(Hardware.driveController.getRawButton(3) == true){
                  clock.reset();
                  clock.start();
                  Tip.set(down ? -.5 : .5);

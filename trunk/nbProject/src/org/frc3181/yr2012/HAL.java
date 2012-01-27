@@ -80,10 +80,10 @@ public class HAL extends IterativeRobot {
         Hardware.driveSystem.drive();
         
         //Control Roller
-        Hardware.Collector.rollerController();
+        Hardware.collector.rollerController();
         
         //Control Shooter
-        Hardware.BallLauncher.controlShooting();
+        Hardware.ballLauncher.controlShooting();
         
         //Tip Bridge if Necessary
         Hardware.bridgeTip.controlTipper();
@@ -94,6 +94,7 @@ public class HAL extends IterativeRobot {
      * @author Chris Cheng (2012)
      */
     public void updateDash() {
+        // TODO: Change this to the SmartDashboard.  Somehow.
         Dashboard low = DriverStation.getInstance().getDashboardPackerLow();
         low.addCluster(); {
             low.addString(state);

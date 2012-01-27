@@ -1,5 +1,4 @@
 package org.frc3181.yr2012.components;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Victor;
 import org.frc3181.yr2012.Hardware;
 import edu.wpi.first.wpilibj.Timer;
@@ -10,14 +9,19 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Shooter {
     /**
-     * Three Fields:
-     * aim: the Victor that controls the angle
-     * cannon: the Victor that controls the wheels to launch the balls
-     * delay: the timer that delays any shooter action during a shot.
+     * The Victor that controls the angle.
      */
     private Victor aim;
+    
+    /**
+     * The Victor that controls the wheels to launch the balls.
+     */
     private Victor cannon;
-    private Timer delay=new Timer();
+    
+    /**
+     * The Timer that delays any shooter action during a shot.
+     */
+    private Timer delay = new Timer();
     
     /**
      * constructs a new Shooter with the given victors.
@@ -25,8 +29,8 @@ public class Shooter {
      * @param ballLauncher the victor controlling motor used to launch the balls
      */
     public Shooter (Victor aimMotor, Victor ballLauncher){
-    aim=aimMotor;
-    cannon=ballLauncher;
+    aim = aimMotor;
+    cannon = ballLauncher;
     }
     
      /** 

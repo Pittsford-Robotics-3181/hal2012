@@ -16,8 +16,7 @@ public class Tipper {
     public static final double TIPPER_UP = 1;
     public static final double TIPPER_HALF_UP = 2;
     public static final double TIPPER_HALF_DOWN = 3;
-    public static final double TIPPER_DOWN=4;
-    
+    public static final double TIPPER_DOWN = 4;
     private Victor tipperLifter;
     private double targetHeight = TIPPER_BACK;
     private boolean goDown = true;
@@ -35,7 +34,7 @@ public class Tipper {
     /**
      * Actually tips the bridge, after ensuring the robot is not driving.
      */
-    private void TipBridge() {
+    private void tipBridge() {
         Hardware.driveSystem.setStop(true);
         running = true;
         tipperLifter.set(-1);
@@ -49,30 +48,30 @@ public class Tipper {
     private void readTipControls() {
         if (Hardware.driveController.getRawButton(3)) {
             running = true;
-            tipperLifter.set((TIPPER_UP < Hardware.sensorSet.findFoot()) ? 1 : -1);
+            tipperLifter.set((TIPPER_UP < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_UP;
-            goDown = (TIPPER_UP < Hardware.sensorSet.findFoot());
+            goDown = (TIPPER_UP < Sensors.getTipperDistance());
         } else if (Hardware.driveController.getRawButton(8)) {
             running = true;
-            tipperLifter.set((TIPPER_HALF_UP < Hardware.sensorSet.findFoot()) ? 1 : -1);
+            tipperLifter.set((TIPPER_HALF_UP < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_HALF_UP;
-            goDown = (TIPPER_HALF_UP < Hardware.sensorSet.findFoot());
+            goDown = (TIPPER_HALF_UP < Sensors.getTipperDistance());
         } else if (Hardware.driveController.getRawButton(9)) {
             running = true;
-            tipperLifter.set((TIPPER_HALF_DOWN < Hardware.sensorSet.findFoot()) ? 1 : -1);
+            tipperLifter.set((TIPPER_HALF_DOWN < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_HALF_DOWN;
-            goDown = (TIPPER_HALF_DOWN < Hardware.sensorSet.findFoot());
+            goDown = (TIPPER_HALF_DOWN < Sensors.getTipperDistance());
         } else if (Hardware.driveController.getRawButton(2)) {
             running = true;
-            tipperLifter.set((TIPPER_DOWN < Hardware.sensorSet.findFoot()) ? 1 : -1);
+            tipperLifter.set((TIPPER_DOWN < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_DOWN;
-            goDown= (TIPPER_DOWN < Hardware.sensorSet.findFoot());
+            goDown = (TIPPER_DOWN < Sensors.getTipperDistance());
         }
          else if (Hardware.driveController.getRawButton(7)) {
             running = true;
-            tipperLifter.set((TIPPER_BACK < Hardware.sensorSet.findFoot()) ? 1 : -1);
+            tipperLifter.set((TIPPER_BACK < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_BACK;
-            goDown= (TIPPER_BACK < Hardware.sensorSet.findFoot());
+            goDown= (TIPPER_BACK < Sensors.getTipperDistance());
         }
     }
 
@@ -81,23 +80,24 @@ public class Tipper {
      */
     public void controlTipper() {
         if (running) {
-            if (((targetHeight <= Hardware.sensorSet.findFoot()) && (goDown)) || ((targetHeight >= Hardware.sensorSet.findFoot()) && (!goDown))) {
+            if (((targetHeight <= Sensors.getTipperDistance()) && (goDown)) || ((targetHeight >= Sensors.getTipperDistance()) && (!goDown))) {
                 running = false;
                 tipperLifter.set(0);
             }
+
         }else {
-            if(Hardware.sensorSet.findFoot()==TIPPER_HALF_UP){
-            switch (Hardware.sensorSet.findBridge()) {
+            if(Sensors.getTipperDistance()==TIPPER_HALF_UP){
+            switch (Sensors.senseBridge()) {
                 case 0:
                     Hardware.driveSystem.setSlow(false);
                     readTipControls();
                     break;
-                case 1:
+                case Sensors.NEAR_BRIDGE:
                     Hardware.driveSystem.setSlow(true);
                     break;
-                case 2: {
+                case Sensors.AT_BRIDGE: {
                     Hardware.driveSystem.setStop(true);
-                    TipBridge();
+                    tipBridge();
                     break;
                 }
             }

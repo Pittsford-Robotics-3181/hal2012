@@ -3,7 +3,7 @@ package org.frc3181.yr2012;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.first.wpilibj.KinectStick;
 import org.frc3181.yr2012.components.*;
 
 /**
@@ -13,7 +13,9 @@ import org.frc3181.yr2012.components.*;
  * @author liam middlebrook
  */
 public class Hardware {
-    // Motors
+
+    // motors
+
     // Note that slot 1 refers to what appears to be the second slot
     // "slot 1" is the first three slots; "slot 2" is slots 5-7
     // Drive Motors
@@ -28,6 +30,8 @@ public class Hardware {
     public static final Jaguar roller = new Jaguar(1, 7);
     public static final Victor tip = new Victor(1, 8);
     public static final Jaguar conveyorMotor = new Jaguar(1, 9);
+    
+    public static KinectStick kinect = new KinectStick(0);
     // Drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
             Hardware.rearLeftMotor,
@@ -37,10 +41,8 @@ public class Hardware {
     public static Joystick driveController = new Joystick(1);
     // Joystick for Shooter
     public static Joystick shotController = new Joystick(2);
-    // Camera
-    public static final String cameraAddress = "10.31.81.10";
-    public static AxisCamera camera = AxisCamera.getInstance(cameraAddress);
-    // Shooter
+    
+   //Shooter
     public static Shooter ballLauncher = new Shooter(aimShooter, launchBalls);
     // Roller
     public static Roller collector = new Roller(roller);

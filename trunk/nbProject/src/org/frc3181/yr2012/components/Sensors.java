@@ -1,6 +1,5 @@
 package org.frc3181.yr2012.components;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * Our sensors.
@@ -17,12 +16,18 @@ import edu.wpi.first.wpilibj.DigitalInput;
  * @author robbiemarkwick
  */
 public class Sensors {
-    Ultrasonic front;
-    Ultrasonic back;
+   private Ultrasonic front;
+   private Ultrasonic back;
+   private Ultrasonic foot;
     
-    public Sensors(Ultrasonic S1, Ultrasonic S2){
+    public Sensors(Ultrasonic S1, Ultrasonic S2, Ultrasonic S3){
         front=S1;
         back=S2;
+        foot=S3;
+    }
+    
+    public double findFoot(){
+        return foot.getRangeInches();
     }
     
     /**

@@ -27,10 +27,10 @@ public class Hardware {
     // Non-Driving Motors
     public static final Victor aimShooter = new Victor(1,5);
     public static final Victor launchBalls = new Victor(1,6);
-    public static final Victor rolling = new Victor (1,7);
+    public static final Jaguar roller = new Jaguar(1,7);
     public static final Victor tip = new Victor(1,8);
     public static final Victor tipRetract = new Victor(1,10);
-    public static final Victor lift = new Victor(1,9);
+    public static final Jaguar conveyorMotor = new Jaguar(1,9);
     
     // Joystick for Driving
     public static Joystick driveController = new Joystick(1);
@@ -48,11 +48,11 @@ public class Hardware {
     // Shooter
     public static Shooter ballLauncher = new Shooter(aimShooter,launchBalls);
     // Roller
-    public static Roller collector = new Roller(rolling);
+    public static Roller collector = new Roller(roller);
     // Tipper
     public static Tipper bridgeTip = new Tipper(tip,tipRetract);
-    // Wheel
-    public static Wheel ballLift = new Wheel(lift);
+    // Conveyor
+    public static Conveyor ballLift = new Conveyor(conveyorMotor);
     
     //sensors
     //front bridge detector

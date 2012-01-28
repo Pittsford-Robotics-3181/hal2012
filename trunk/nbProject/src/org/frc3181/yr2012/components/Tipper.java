@@ -20,8 +20,8 @@ public class Tipper {
     private Victor Pull;
     private int targetDistance=1;
     private boolean up;
-    private boolean retracting;
-    private boolean extending;
+    private boolean retracting=false;
+    private boolean extending=false;
     private boolean running=false;
     
     /*
@@ -73,6 +73,10 @@ public class Tipper {
             targetDistance=4; 
             up=(4<Hardware.sensorSet.findFoot());
         }
+        if(Hardware.driveController.getRawButton(7))
+            retractTipper();
+        else if(Hardware.driveController.getRawButton(7))
+            extend();
     }
     private void retractTipper(){
          retracting=true;
@@ -84,6 +88,7 @@ public class Tipper {
     private void retract(){
         if(!Hardware.sensorSet.in.get()){
         Pull.set(1);
+        retracting=true;
         }
         else{
             Pull.set(0);

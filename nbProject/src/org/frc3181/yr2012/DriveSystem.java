@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.SpeedController;
  */
 public class DriveSystem extends RobotDrive {
 
+    private boolean slow;
+    private boolean stop;
     /**
      * Constructor.
      * @param frontLeftMotor
@@ -20,6 +22,8 @@ public class DriveSystem extends RobotDrive {
      */
     public DriveSystem(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor, SpeedController rearRightMotor) {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+        slow=false;
+        stop=false;
     }
 
     /**
@@ -41,13 +45,19 @@ public class DriveSystem extends RobotDrive {
             magnitude *= .5;
             rotation *= .5;
         }
-
+        //drive at half speed if trigger is pulled
+        if (slow){
+            magnitude *= .5;
+            rotation *= .5;
+        }
+        if(!stop){
         //call the drive method inherited from RobotDrive
         mecanumDrive_Polar(magnitude, direction, rotation);
 
         Hardware.DSOut.say(4, "Magnitude: "+magnitude);
         Hardware.DSOut.say(5, "Direction: "+direction);
         Hardware.DSOut.say(6, "Rotation:  "+rotation);
+        }
     }
 
     /**
@@ -66,6 +76,19 @@ public class DriveSystem extends RobotDrive {
         return Utils.toInt(cw) - Utils.toInt(ccw);
     }
 
+    /**
+     * Slows Robot as it approaches bridge.
+     */
+    public void setSlow(boolean b){
+        slow=b;
+    }
+    /**
+     * Stops the robot during tipping.
+     * @param b should the driving stop?
+     */
+    public void setStop(boolean b){
+        stop=b;
+    }
     /**
      * Allows the Robot to drive in any direction, as well as rotating.
      */

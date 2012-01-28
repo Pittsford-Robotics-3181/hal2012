@@ -12,13 +12,14 @@ public class Tipper {
 
     //Height constants
     //These WILL be changed.
+    public static final double TIPPER_BACK= 0;
     public static final double TIPPER_UP = 1;
     public static final double TIPPER_HALF_UP = 2;
     public static final double TIPPER_HALF_DOWN = 3;
     public static final double TIPPER_DOWN=4;
     
     private Victor tipperLifter;
-    private double targetHeight = TIPPER_UP;
+    private double targetHeight = TIPPER_BACK;
     private boolean goDown = true;
     private boolean running = false;
 
@@ -67,6 +68,12 @@ public class Tipper {
             targetHeight = TIPPER_DOWN;
             goDown= (TIPPER_DOWN < Hardware.sensorSet.findFoot());
         }
+         else if (Hardware.driveController.getRawButton(7)) {
+            running = true;
+            tipperLifter.set((TIPPER_BACK < Hardware.sensorSet.findFoot()) ? 1 : -1);
+            targetHeight = TIPPER_BACK;
+            goDown= (TIPPER_BACK < Hardware.sensorSet.findFoot());
+        }
     }
 
     /**
@@ -79,6 +86,7 @@ public class Tipper {
                 tipperLifter.set(0);
             }
         }else {
+            if(Hardware.sensorSet.findFoot()==TIPPER_HALF_UP){
             switch (Hardware.sensorSet.findBridge()) {
                 case 0:
                     Hardware.driveSystem.setSlow(false);
@@ -92,6 +100,7 @@ public class Tipper {
                     TipBridge();
                     break;
                 }
+            }
             }
         }
     }

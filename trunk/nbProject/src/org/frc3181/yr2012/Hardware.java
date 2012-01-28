@@ -1,14 +1,10 @@
 package org.frc3181.yr2012;
+
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import org.frc3181.yr2012.components.*;
-import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.Encoder;
-
-
-
 
 /**
  * This file contains our hardware declarations.
@@ -18,53 +14,41 @@ import edu.wpi.first.wpilibj.Encoder;
  */
 public class Hardware {
     // Motors
-    // Note that slot 1 refers to what appears to be slot 2
+    // Note that slot 1 refers to what appears to be the second slot
     // "slot 1" is the first three slots; "slot 2" is slots 5-7
     // Drive Motors
-    public static Jaguar frontLeftMotor = new Jaguar(/*slot*/1, /*channel*/1);
-    public static Jaguar rearLeftMotor = new Jaguar(/*slot*/1, /*channel*/2);
-    public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/3);
-    public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/4);
+
+    public static Jaguar frontLeftMotor = new Jaguar(/*slot*/1, /*channel*/ 1);
+    public static Jaguar rearLeftMotor = new Jaguar(/*slot*/1, /*channel*/ 2);
+    public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/ 3);
+    public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/ 4);
     // Non-Driving Motors
-    public static final Victor aimShooter = new Victor(1,5);
-    public static final Victor launchBalls = new Victor(1,6);
-    public static final Jaguar roller = new Jaguar(1,7);
-    public static final Victor tip = new Victor(1,8);
-    public static final Jaguar conveyorMotor = new Jaguar(1,9);
-    
-    // Joystick for Driving
-    public static Joystick driveController = new Joystick(1);
-    // Joystick for Shooter
-    public static Joystick shotController = new Joystick(2);
-    
-    // Camera
-    public static final String cameraAddress = "10.31.81.10";
-    public static AxisCamera camera = AxisCamera.getInstance(cameraAddress);
+    public static final Victor aimShooter = new Victor(1, 5);
+    public static final Victor launchBalls = new Victor(1, 6);
+    public static final Jaguar roller = new Jaguar(1, 7);
+    public static final Victor tip = new Victor(1, 8);
+    public static final Jaguar conveyorMotor = new Jaguar(1, 9);
     // Drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
             Hardware.rearLeftMotor,
             Hardware.frontRightMotor,
             Hardware.rearRightMotor);
+    // Joystick for Driving
+    public static Joystick driveController = new Joystick(1);
+    // Joystick for Shooter
+    public static Joystick shotController = new Joystick(2);
+    // Camera
+    public static final String cameraAddress = "10.31.81.10";
+    public static AxisCamera camera = AxisCamera.getInstance(cameraAddress);
     // Shooter
-    public static Shooter ballLauncher = new Shooter(aimShooter,launchBalls);
+    public static Shooter ballLauncher = new Shooter(aimShooter, launchBalls);
     // Roller
     public static Roller collector = new Roller(roller);
     // Tipper
     public static Tipper bridgeTip = new Tipper(tip);
     // Conveyor
     public static Conveyor ballLift = new Conveyor(conveyorMotor);
-    
-    //sensors
-    //front bridge detector
-    public static Ultrasonic bridgeSenseFront=new Ultrasonic(1,2);
-    //back bridge detector
-    public static Ultrasonic bridgeSenseBack=new Ultrasonic(3,4);
-    //foot sensor
-    public static Encoder findFoot=new Encoder(5,6);
-    //all the sensors
-    public static Sensors sensorSet=new Sensors(bridgeSenseFront, bridgeSenseBack,findFoot);
-    
-    
+    //sensors are in Sensors.java
     // Pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();
 }

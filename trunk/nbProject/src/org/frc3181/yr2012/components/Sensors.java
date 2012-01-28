@@ -1,49 +1,51 @@
 package org.frc3181.yr2012.components;
+
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Encoder;
+
 /**
- * Our sensors.
+ * Our sensors. Note that the sensor slots/channels must be changed!
  * @author Robbie
  * @author Ben
  */
-
-/**
- * Sensors needed for Tipper:
- * Detect if full up
- * Detect if full down
- * Detect if front of tipper is over bridge (slow down and prepare to tip)
- * Detect if back of tipper is over to bridge (ready to tip)
- * @author robbiemarkwick
- */
 public class Sensors {
-   private Ultrasonic front;
-   private Ultrasonic back;
-   private Encoder foot;
-   
-    public Sensors(Ultrasonic S1, Ultrasonic S2, Encoder S3){
-        front=S1;
-        back=S2;
-        foot=S3;
+    //front bridge detector
+
+    private static Ultrasonic frontSensor = new Ultrasonic(1, 2);
+    //back bridge detector
+    private static Ultrasonic backSensor = new Ultrasonic(3, 4);
+    //foot sensor
+    private static Encoder tipperSensor = new Encoder(5, 6);
+    //constants
+    public static final int AWAY_FROM_BRIDGE = 0;
+    public static final int NEAR_BRIDGE = 1;
+    public static final int AT_BRIDGE = 2;
+
+    /**
+     * Gets the angle/distance the tipper is positioned at. This method should
+     * probably be changed to return an angle, but it needs testing/calibration.
+     * @return The distance the tipper has moved from original position.
+     */
+    public static double getTipperDistance() {
+        return tipperSensor.getDistance();
     }
-    
-    public double findFoot(){
-        return foot.getDistance();
-    }
-    
+
     /**
      * Tells the Tipper and DriveSystem how close robot is to bridge.
      * Returns 0 if both sensors detect ground
      * Returns 1 if only front sensor detects bridge
      * Returns 2 if both sensors detect bridge.
+     * @return An int representing what the sensors see.
      */
-    public int findBridge(){
-        if(front.getRangeInches()<=5){ 
-            if(back.getRangeInches()<=5) 
-                return 2;
-            else
-                return 1;
+    public static int senseBridge() {
+        if (frontSensor.getRangeInches() <= 5) {
+            if (backSensor.getRangeInches() <= 5) {
+                return AT_BRIDGE;
+            } else {
+                return NEAR_BRIDGE;
+            }
+        } else {
+            return AWAY_FROM_BRIDGE;
         }
-        else
-            return 0;
     }
 }

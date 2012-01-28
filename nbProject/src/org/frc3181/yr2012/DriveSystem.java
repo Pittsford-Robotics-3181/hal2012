@@ -104,4 +104,5 @@ public class DriveSystem extends RobotDrive {
         double rotation = calculateRotation();
         mecanumDrive(magnitude, direction, rotation); //robot drives
     }
+    
 }

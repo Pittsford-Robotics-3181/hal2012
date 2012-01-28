@@ -72,7 +72,7 @@ public class HAL extends IterativeRobot {
      * This function is called periodically during operator control.
      */
     public void teleopPeriodic() {
-        AxisCamera cam = AxisCamera.getInstance("10.31.81.10");
+        
         //update dashboard
         updateDash();
 

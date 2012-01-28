@@ -38,6 +38,7 @@ public class Tipper {
         clock.start();
         running=true;
         Hardware.driveSystem.setStop(true);
+        Tip.set(down ? 1 : -1);
         
     }
     public void controlTipper(){

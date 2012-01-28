@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import org.frc3181.yr2012.components.*;
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.DigitalInput;
+
 
 
 /**
@@ -49,6 +52,14 @@ public class Hardware {
     public static Tipper bridgeTip = new Tipper(tip);
     // Wheel
     public static Wheel ballLift = new Wheel(lift);
+    
+    //sensors
+    //front bridge detector
+    public static Ultrasonic bridgeSenseFront=new Ultrasonic(1,2);
+    //back bridge detector
+    public static Ultrasonic bridgeSenseBack=new Ultrasonic(3,4);
+    
+    public static Sensors sensorSet=new Sensors(bridgeSenseFront, bridgeSenseBack);
     
     // Pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();

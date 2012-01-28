@@ -1,4 +1,5 @@
 package org.frc3181.yr2012.components;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Victor;
 import org.frc3181.yr2012.Hardware;
 import edu.wpi.first.wpilibj.Timer;
@@ -8,51 +9,54 @@ import edu.wpi.first.wpilibj.Timer;
  * @author Ben
  */
 public class Tipper {
-    /**
-     * The Victor controlling the Tipper
+    /*
+     * Four fields:
+     * Tip: the Victor controlling the Tipper
+     * clock: controls time
+     * running: is the tipper operating?
+     * down: is the tipper down or moving down?
      */
     private Victor Tip;
-    
-    /**
-     * Controls time.
-     */
     private Timer clock=new Timer();
-    
-    /**
-     * Is the tipper operating?
-     */
     private boolean running=false;
-    
-    /**
-     * Is the tipper down or moving down?
-     */
     private boolean down=false;
     
     /*
      * Constructs a Tipper
-     * @param TipMotor The Victor used for Tip.
+     * @param TipMotor The victor used for Tip.
      */
     public Tipper(Victor TipMotor){
     Tip=TipMotor;
     }
     
     /*
-     * Controls the tipper.
-     * If the 3 button is pressed, the tipper changes position.
+     * controls the tipper.
+     * if the 3 button is pressed, the tipper changes position.
      */
+    private void TipBridge(){
+        clock.reset();
+        clock.start();
+        running=true;
+        Hardware.driveSystem.setStop(true);
+        
+    }
     public void controlTipper(){
         if(running){
             if(clock.get()>=1000000){
                 running=false;
                 Tip.set(0);
+                Hardware.driveSystem.setStop(false);
             }
         }
-        if(!running){
-            if(Hardware.driveController.getRawButton(3) == true){
-                 clock.reset();
-                 clock.start();
-                 Tip.set(down ? -.5 : .5);
-                 down=!down;
+        else{
+            switch(Hardware.sensorSet.findBridge()){
+                case 0: Hardware.driveSystem.setSlow(false); break;
+                case 1: Hardware.driveSystem.setSlow(true); break;
+                case 2: {
+                            Hardware.driveSystem.setStop(true); 
+                            TipBridge(); 
+                            break;
+                        }
             }
         }
     }

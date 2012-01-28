@@ -11,21 +11,26 @@ public class Tipper {
     /*
      * Four fields:
      * Tip: the Victor controlling the Tipper
+     * Pull: the Victor that pulls the tipper in.
      * clock: controls time
      * running: is the tipper operating?
      * down: is the tipper down or moving down?
      */
     private Victor Tip;
+    private Victor Pull;
     private int targetDistance=1;
     private boolean up;
+    private boolean retracting;
+    private boolean extending;
     private boolean running=false;
     
     /*
      * Constructs a Tipper
      * @param TipMotor The victor used for Tip.
      */
-    public Tipper(Victor TipMotor){
+    public Tipper(Victor TipMotor, Victor PullMotor){
     Tip=TipMotor;
+    Pull=PullMotor;
     }
     
     /*
@@ -35,7 +40,7 @@ public class Tipper {
     private void TipBridge(){
         Hardware.driveSystem.setStop(true);
         running=true;
-        Tip.set(1);
+        Tip.set(-1);
         targetDistance=4; 
         up=false;
     }
@@ -69,12 +74,43 @@ public class Tipper {
             up=(4<Hardware.sensorSet.findFoot());
         }
     }
+    private void retractTipper(){
+         retracting=true;
+        running=true;
+            Tip.set(1);
+            targetDistance=1; 
+            up=(true);
+    }
+    private void retract(){
+        if(!Hardware.sensorSet.in.get()){
+        Pull.set(1);
+        }
+        else{
+            Pull.set(0);
+            retracting=false;
+        }
+    }
+    private void extend(){
+        if(!Hardware.sensorSet.out.get()){
+        Pull.set(-1);
+        }
+        else{
+            Pull.set(0);
+            extending=false;
+        }
+    }
     public void controlTipper(){
         if(running){
             if(((targetDistance<=Hardware.sensorSet.findFoot())&&(up))||((targetDistance>=Hardware.sensorSet.findFoot())&&(!up))){
                     running=false;
                     Tip.set(0);
                 }
+        }
+        else if(retracting){
+            retract();
+        }
+        else if(extending){
+        extend();
         }
         else{
             switch(Hardware.sensorSet.findBridge()){

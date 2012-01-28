@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import org.frc3181.yr2012.components.*;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+
 
 
 
@@ -29,7 +30,6 @@ public class Hardware {
     public static final Victor launchBalls = new Victor(1,6);
     public static final Jaguar roller = new Jaguar(1,7);
     public static final Victor tip = new Victor(1,8);
-    public static final Victor tipRetract = new Victor(1,10);
     public static final Jaguar conveyorMotor = new Jaguar(1,9);
     
     // Joystick for Driving
@@ -50,7 +50,7 @@ public class Hardware {
     // Roller
     public static Roller collector = new Roller(roller);
     // Tipper
-    public static Tipper bridgeTip = new Tipper(tip,tipRetract);
+    public static Tipper bridgeTip = new Tipper(tip);
     // Conveyor
     public static Conveyor ballLift = new Conveyor(conveyorMotor);
     
@@ -60,13 +60,9 @@ public class Hardware {
     //back bridge detector
     public static Ultrasonic bridgeSenseBack=new Ultrasonic(3,4);
     //foot sensor
-    public static Ultrasonic findFoot=new Ultrasonic(5,6);
-    //in Sensor
-    public static DigitalInput armIn=new DigitalInput(7);
-    //out Sensor
-    public static DigitalInput armOut=new DigitalInput(8);
+    public static Encoder findFoot=new Encoder(5,6);
     //all the sensors
-    public static Sensors sensorSet=new Sensors(bridgeSenseFront, bridgeSenseBack,findFoot,armIn,armOut);
+    public static Sensors sensorSet=new Sensors(bridgeSenseFront, bridgeSenseBack,findFoot);
     
     
     // Pseudo-hardware 

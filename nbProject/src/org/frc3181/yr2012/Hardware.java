@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import org.frc3181.yr2012.components.*;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 
 
@@ -28,6 +29,7 @@ public class Hardware {
     public static final Victor launchBalls = new Victor(1,6);
     public static final Victor rolling = new Victor (1,7);
     public static final Victor tip = new Victor(1,8);
+    public static final Victor tipRetract = new Victor(1,10);
     public static final Victor lift = new Victor(1,9);
     
     // Joystick for Driving
@@ -48,7 +50,7 @@ public class Hardware {
     // Roller
     public static Roller collector = new Roller(rolling);
     // Tipper
-    public static Tipper bridgeTip = new Tipper(tip);
+    public static Tipper bridgeTip = new Tipper(tip,tipRetract);
     // Wheel
     public static Wheel ballLift = new Wheel(lift);
     
@@ -59,8 +61,12 @@ public class Hardware {
     public static Ultrasonic bridgeSenseBack=new Ultrasonic(3,4);
     //foot sensor
     public static Ultrasonic findFoot=new Ultrasonic(5,6);
+    //in Sensor
+    public static DigitalInput armIn=new DigitalInput(7);
+    //out Sensor
+    public static DigitalInput armOut=new DigitalInput(8);
     //all the sensors
-    public static Sensors sensorSet=new Sensors(bridgeSenseFront, bridgeSenseBack,findFoot);
+    public static Sensors sensorSet=new Sensors(bridgeSenseFront, bridgeSenseBack,findFoot,armIn,armOut);
     
     
     // Pseudo-hardware 

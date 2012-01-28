@@ -105,4 +105,61 @@ public class DriveSystem extends RobotDrive {
         mecanumDrive(magnitude, direction, rotation); //robot drives
     }
     
+        private void mecanumDriveKinect(double X, double Y, double rotation) {
+        //make magnitude and rotation zero if they are small enough
+        X = Utils.checkForSmall(X);
+        Y= Utils.checkForSmall(Y);
+        rotation = Utils.checkForSmall(rotation);
+
+        //drive at half speed if trigger is pulled
+        if (Hardware.kinect.getTrigger()) {
+            X *= .5;
+            Y *= .5;
+            rotation *= .5;
+        }
+        //drive at half speed if trigger is pulled
+        if (slow) {
+            X *= .5;
+            Y *= .5;
+            rotation *= .5;
+        }
+
+        if (stop) {
+            mecanumDrive_Cartesian(0, 0, 0,0);
+        } else {
+            //call the drive method inherited from RobotDrive
+            mecanumDrive_Cartesian(X, Y, rotation,0);
+
+            Hardware.DSOut.say(4, "X: " + X);
+            Hardware.DSOut.say(5, "Y: " + Y);
+            Hardware.DSOut.say(6, "Rotation:  " + rotation);
+        }
+    }
+
+    /**
+     * Converts buttons 4 and 5 on joystick to rotation. There are four cases:
+     * neither pushed: no rotation
+     * just 4 pushed: counterclockwise rotation
+     * just 5 pushed: clockwise rotation
+     * both pushed: no rotation
+     * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
+     */
+    private double calculateRotationKinect() {
+        boolean ccw = Hardware.kinect.getRawButton(4);
+        boolean cw = Hardware.kinect.getRawButton(5);
+        //rotation is -1 for counterclockwise and +1 for clockwise
+        //for now, only full speed rotation is possible from this method
+        return Utils.toInt(cw) - Utils.toInt(ccw);
+    }
+
+    /**
+     * Allows the Robot to drive in any direction, as well as rotating.
+     */
+    public void driveKinect() {
+        double X=Hardware.kinect.getX();
+        double Y=Hardware.kinect.getY();
+        double rotation = calculateRotationKinect();
+        mecanumDriveKinect(X, Y, rotation); //robot drives
+    }
+    
 }

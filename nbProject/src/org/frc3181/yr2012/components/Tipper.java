@@ -71,7 +71,7 @@ public class Tipper {
     }
     public void controlTipper(){
         if(running){
-            if(((targetDistance>=Hardware.sensorSet.findFoot())&&(up))||((targetDistance<=Hardware.sensorSet.findFoot())&&(!up))){
+            if(((targetDistance<=Hardware.sensorSet.findFoot())&&(up))||((targetDistance>=Hardware.sensorSet.findFoot())&&(!up))){
                     running=false;
                     Tip.set(0);
                 }

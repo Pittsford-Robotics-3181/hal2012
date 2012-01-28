@@ -2,7 +2,6 @@ package org.frc3181.yr2012.components;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Victor;
 import org.frc3181.yr2012.Hardware;
-import edu.wpi.first.wpilibj.Timer;
 /**
  * The mechanism that tips the bridge.
  * @author Robbie
@@ -17,9 +16,9 @@ public class Tipper {
      * down: is the tipper down or moving down?
      */
     private Victor Tip;
-    private Timer clock=new Timer();
+    private int targetDistance=1;
+    private boolean up;
     private boolean running=false;
-    private boolean down=false;
     
     /*
      * Constructs a Tipper
@@ -34,24 +33,52 @@ public class Tipper {
      * if the 3 button is pressed, the tipper changes position.
      */
     private void TipBridge(){
-        clock.reset();
-        clock.start();
-        running=true;
         Hardware.driveSystem.setStop(true);
-        Tip.set(down ? 1 : -1);
-        
+        running=true;
+        Tip.set(1);
+        targetDistance=4; 
+        up=false;
+    }
+    private void readTipControls(){
+        if(Hardware.driveController.getRawButton(3))
+        {
+            running=true;
+            Tip.set((1<Hardware.sensorSet.findFoot()) ?1:-1);
+            targetDistance=1; 
+            up=(1<Hardware.sensorSet.findFoot());
+        }
+        else if(Hardware.driveController.getRawButton(8))
+        {
+            running=true;
+            Tip.set((2<Hardware.sensorSet.findFoot()) ?1:-1);
+            targetDistance=2; 
+            up=(2<Hardware.sensorSet.findFoot());
+        }
+         else if(Hardware.driveController.getRawButton(9))
+        {
+            running=true;
+            Tip.set((3<Hardware.sensorSet.findFoot()) ?1:-1);
+            targetDistance=3; 
+            up=(3<Hardware.sensorSet.findFoot());
+        }
+         else if(Hardware.driveController.getRawButton(2))
+        {
+            running=true;
+            Tip.set((4<Hardware.sensorSet.findFoot()) ?1:-1);
+            targetDistance=4; 
+            up=(4<Hardware.sensorSet.findFoot());
+        }
     }
     public void controlTipper(){
         if(running){
-            if(clock.get()>=1000000){
-                running=false;
-                Tip.set(0);
-                Hardware.driveSystem.setStop(false);
-            }
+            if(((targetDistance>=Hardware.sensorSet.findFoot())&&(up))||((targetDistance<=Hardware.sensorSet.findFoot())&&(!up))){
+                    running=false;
+                    Tip.set(0);
+                }
         }
         else{
             switch(Hardware.sensorSet.findBridge()){
-                case 0: Hardware.driveSystem.setSlow(false); break;
+                case 0: Hardware.driveSystem.setSlow(false); readTipControls(); break;
                 case 1: Hardware.driveSystem.setSlow(true); break;
                 case 2: {
                             Hardware.driveSystem.setStop(true); 

@@ -42,7 +42,7 @@ public class DriveSystem extends RobotDrive {
         rotation = Utils.checkForSmall(rotation);
 
         //drive at half speed if trigger is pulled
-        if (Hardware.driveController.getTrigger()) {
+        if (Hardware.driveJoystick.getTrigger()) {
             magnitude *= .5;
             rotation *= .5;
         }
@@ -73,23 +73,24 @@ public class DriveSystem extends RobotDrive {
      * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
      */
     private double calculateRotation() {
-        boolean ccw = Hardware.driveController.getRawButton(4);
-        boolean cw = Hardware.driveController.getRawButton(5);
+        boolean ccw = Hardware.driveJoystick.getRawButton(4);
+        boolean cw = Hardware.driveJoystick.getRawButton(5);
         //rotation is -1 for counterclockwise and +1 for clockwise
         //for now, only full speed rotation is possible from this method
         return Utils.toInt(cw) - Utils.toInt(ccw);
     }
 
     /**
-     * Slows Robot as it approaches bridge.
+     * Slows the robot.
+     * @param b Whether the robot should slow.
      */
     public void setSlow(boolean b) {
         slow = b;
     }
 
     /**
-     * Stops the robot during tipping.
-     * @param b should the driving stop?
+     * Stops the robot.
+     * @param b Whether the robot should stop.
      */
     public void setStop(boolean b) {
         stop = b;
@@ -99,41 +100,54 @@ public class DriveSystem extends RobotDrive {
      * Allows the Robot to drive in any direction, as well as rotating.
      */
     public void drive() {
-        double magnitude = Hardware.driveController.getMagnitude();
-        double direction = Hardware.driveController.getDirectionDegrees();
+        double magnitude = Hardware.driveJoystick.getMagnitude();
+        double direction = Hardware.driveJoystick.getDirectionDegrees();
         double rotation = calculateRotation();
         mecanumDrive(magnitude, direction, rotation); //robot drives
     }
+
     
-        private void mecanumDriveKinect(double X, double Y, double rotation) {
-        //make magnitude and rotation zero if they are small enough
-        X = Utils.checkForSmall(X);
-        Y= Utils.checkForSmall(Y);
-        rotation = Utils.checkForSmall(rotation);
-
-        //drive at half speed if trigger is pulled
-        if (Hardware.kinect.getTrigger()) {
-            X *= .5;
-            Y *= .5;
-            rotation *= .5;
-        }
-        //drive at half speed if trigger is pulled
-        if (slow) {
-            X *= .5;
-            Y *= .5;
-            rotation *= .5;
-        }
-
+    //kinect is commented out until we figure out what we want to do
+    /*
+    /**
+     * Use rectangular (Cartesian) coordinates to drive the robot. The Kinect
+     * works best with these coordinates, so this method should be used when
+     * using Kinect data only.
+     * @param x The x speed.
+     * @param y The y speed.
+     * @param rotation The rotation speed.
+     *
+    private void mecanumDriveKinect(double x, double y, double rotation) {
         if (stop) {
-            mecanumDrive_Cartesian(0, 0, 0,0);
+            x = 0;
+            y = 0;
+            rotation = 0;
         } else {
-            //call the drive method inherited from RobotDrive
-            mecanumDrive_Cartesian(X, Y, rotation,0);
+            //make magnitude and rotation zero if they are small enough
+            x = Utils.checkForSmall(x);
+            y = Utils.checkForSmall(y);
+            rotation = Utils.checkForSmall(rotation);
 
-            Hardware.DSOut.say(4, "X: " + X);
-            Hardware.DSOut.say(5, "Y: " + Y);
-            Hardware.DSOut.say(6, "Rotation:  " + rotation);
+            //drive at half speed if trigger is pulled
+            if (Hardware.driveJoystick.getTrigger()) {
+                x *= .5;
+                y *= .5;
+                rotation *= .5;
+            }
+            //drive at half speed if slowness is set
+            if (slow) {
+                x *= .5;
+                y *= .5;
+                rotation *= .5;
+            }
         }
+        
+        //call the drive method inherited from RobotDrive
+        mecanumDrive_Cartesian(x, y, rotation, 0);
+
+        Hardware.DSOut.say(4, "X: " + x);
+        Hardware.DSOut.say(5, "Y: " + y);
+        Hardware.DSOut.say(6, "Rotation:  " + rotation);
     }
 
     /**
@@ -143,10 +157,10 @@ public class DriveSystem extends RobotDrive {
      * just 5 pushed: clockwise rotation
      * both pushed: no rotation
      * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
-     */
+     *
     private double calculateRotationKinect() {
-        boolean ccw = Hardware.kinect.getRawButton(4);
-        boolean cw = Hardware.kinect.getRawButton(5);
+        boolean ccw = Hardware.leftArmKinect.getRawButton(4);
+        boolean cw = Hardware.leftArmKinect.getRawButton(5);
         //rotation is -1 for counterclockwise and +1 for clockwise
         //for now, only full speed rotation is possible from this method
         return Utils.toInt(cw) - Utils.toInt(ccw);
@@ -154,12 +168,11 @@ public class DriveSystem extends RobotDrive {
 
     /**
      * Allows the Robot to drive in any direction, as well as rotating.
-     */
+     *
     public void driveKinect() {
-        double X=Hardware.kinect.getX();
-        double Y=Hardware.kinect.getY();
+        double X = Hardware.leftArmKinect.getX();
+        double Y = Hardware.leftArmKinect.getY();
         double rotation = calculateRotationKinect();
         mecanumDriveKinect(X, Y, rotation); //robot drives
-    }
-    
+    }*/
 }

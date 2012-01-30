@@ -18,6 +18,7 @@ public class Roller {
      * Boolean determining, if the robot is in collection mode.
      */
     private boolean isCollecting = false;
+
     /** 
      * Constructs the Roller using the given motor.
      * @param collect
@@ -30,28 +31,24 @@ public class Roller {
      * rollerController allows the driver to turn the Roller on and off
      */
     public void rollerController() {
-        if (Hardware.shotController.getRawButton(2)) {
+        if (Hardware.ballJoystick.getRawButton(2)) {
             isCollecting = true;
         } else {
             isCollecting = false;
         }
-    updateRollerVelocity(isCollecting);
-
+        updateRollerVelocity(isCollecting);
     }
+
     /**
      * Private function to update the rollers velocity.
      * @param isCollecting 
      */
-    private void updateRollerVelocity(boolean isCollecting)
-    {
-        if(isCollecting)
-        {
-             collector.set(1.00);   
-        }else
-        {
-             collector.set(-1.00);   
-         }
-       
+    private void updateRollerVelocity(boolean isCollecting) {
+        if (isCollecting) {
+            collector.set(1.00);
+        } else {
+            collector.set(-1.00);
+        }
+
     }
 }
-

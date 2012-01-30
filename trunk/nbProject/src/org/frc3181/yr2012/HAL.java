@@ -102,8 +102,8 @@ public class HAL extends IterativeRobot {
         low.addCluster(); {
             low.addString(state);
             low.addCluster(); {  //Joystick position image info - size is 132 square
-                low.addShort((short) (Hardware.driveController.getX() * 66 + 66));
-                low.addShort((short) (Hardware.driveController.getY() * 66 + 66));
+                low.addShort((short) (Hardware.driveJoystick.getX() * 66 + 66));
+                low.addShort((short) (Hardware.driveJoystick.getY() * 66 + 66));
             } low.finalizeCluster();
         } low.finalizeCluster();
         low.commit();

@@ -46,28 +46,28 @@ public class Tipper {
      * Figure out what buttons are being pushed on joystick and act appropriately.
      */
     private void readTipControls() {
-        if (Hardware.driveController.getRawButton(3)) {
+        if (Hardware.driveJoystick.getRawButton(3)) {
             running = true;
             tipperLifter.set((TIPPER_UP < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_UP;
             goDown = (TIPPER_UP < Sensors.getTipperDistance());
-        } else if (Hardware.driveController.getRawButton(8)) {
+        } else if (Hardware.driveJoystick.getRawButton(8)) {
             running = true;
             tipperLifter.set((TIPPER_HALF_UP < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_HALF_UP;
             goDown = (TIPPER_HALF_UP < Sensors.getTipperDistance());
-        } else if (Hardware.driveController.getRawButton(9)) {
+        } else if (Hardware.driveJoystick.getRawButton(9)) {
             running = true;
             tipperLifter.set((TIPPER_HALF_DOWN < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_HALF_DOWN;
             goDown = (TIPPER_HALF_DOWN < Sensors.getTipperDistance());
-        } else if (Hardware.driveController.getRawButton(2)) {
+        } else if (Hardware.driveJoystick.getRawButton(2)) {
             running = true;
             tipperLifter.set((TIPPER_DOWN < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_DOWN;
             goDown = (TIPPER_DOWN < Sensors.getTipperDistance());
         }
-         else if (Hardware.driveController.getRawButton(7)) {
+         else if (Hardware.driveJoystick.getRawButton(7)) {
             running = true;
             tipperLifter.set((TIPPER_BACK < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_BACK;

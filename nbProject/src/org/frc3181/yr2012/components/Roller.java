@@ -11,18 +11,19 @@ import org.frc3181.yr2012.Hardware;
 public class Roller {
 
     /** 
-     * Controls the motor that collects the balls
+     * Speed Controller for motor.
      */
     private SpeedController collector;
-
     /**
-     * Gives the driver time to pull finger off of button.
+     * Boolean determining, if the robot is in collection mode.
      */
+    private boolean isCollecting = false;
     /** 
      * Constructs the Roller using the given motor.
+     * @param collect
      */
-    public Roller(SpeedController Collect) {
-        collector = Collect;
+    public Roller(SpeedController collect) {
+        collector = collect;
     }
 
     /**
@@ -30,11 +31,27 @@ public class Roller {
      */
     public void rollerController() {
         if (Hardware.shotController.getRawButton(2)) {
-            collector.set(1.00);
+            isCollecting = true;
         } else {
-            collector.set(-1.00);
+            isCollecting = false;
         }
-
+    updateRollerVelocity(isCollecting);
 
     }
+    /**
+     * Private function to update the rollers velocity.
+     * @param isCollecting 
+     */
+    private void updateRollerVelocity(boolean isCollecting)
+    {
+        if(isCollecting)
+        {
+             collector.set(1.00);   
+        }else
+        {
+             collector.set(-1.00);   
+         }
+       
+    }
 }
+

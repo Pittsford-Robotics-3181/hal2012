@@ -54,8 +54,8 @@ public class Shooter {
     public void controlShooting() {
         if (delay.get() >= 1000000) {
             cannon.set(0);
-            aimShot(Hardware.shotController.getY() / (-Math.sqrt(2.0000)));
-            if (Hardware.shotController.getTrigger()) {
+            aimShot(Hardware.ballJoystick.getY() / (-Math.sqrt(2.0000)));
+            if (Hardware.ballJoystick.getTrigger()) {
                 aimShot(0);
             }
             Shoot();

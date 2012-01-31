@@ -15,36 +15,49 @@ import org.frc3181.yr2012.Hardware;
  * @author Liam Middlebrook 2012
  */
 public class KinectHelper {
- 
+
     //Kinect Class from station;
     private Kinect kinect;
     private Skeleton kinectSkeleton;
+    //helper array
+    private Skeleton.tJointTypes[] joints = {tJointTypes.kHipCenter, tJointTypes.kSpine, tJointTypes.kShoulderCenter,
+        tJointTypes.kHead, tJointTypes.kShoulderLeft, tJointTypes.kElbowLeft,
+        tJointTypes.kWristLeft, tJointTypes.kHandLeft, tJointTypes.kShoulderRight,
+        tJointTypes.kElbowRight, tJointTypes.kWristRight, tJointTypes.kHandRight,
+        tJointTypes.kHipLeft, tJointTypes.kKneeLeft, tJointTypes.kAnkleLeft,
+        tJointTypes.kFootLeft, tJointTypes.kHipRight, tJointTypes.kKneeRight,
+        tJointTypes.kAnkleRight, tJointTypes.kFootRight};
+
     /**
      * Initialize the Kinect device.
      */
-    public void initKinect()
-    {
+    public void initKinect() {
         kinect = Hardware.kinect;
     }
-    private Skeleton getSkeleton()
-    {
-        if(kinectSkeleton != null)
-        {
+
+    private Skeleton getSkeleton() {
         return kinectSkeleton;
-        }
-        return null;
     }
-    private void updateSkeleton()
-    {
+
+    private void updateSkeleton() {
         kinectSkeleton = kinect.getSkeleton();
     }
+
     /**
      * Returns a joint object when given a tJointTypes value.
-     * @param jointID
-     * @return Joint
+     * @param jointID The joint ID of type tJointTypes.
+     * @return Joint The corresponding joint.
      */
-    public Joint getJoint(tJointTypes jointID)
-    {        
+    public Joint getJoint(tJointTypes jointID) {
         return kinectSkeleton.GetJoint(jointID);
+    }
+
+    /**
+     * Returns a joint object when given the integer index.
+     * @param jointID The integer index of a joint.
+     * @return The corresponding joint.
+     */
+    public Joint getJoint(int jointID) {
+        return kinectSkeleton.GetJoint(joints[jointID]);
     }
 }

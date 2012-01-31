@@ -15,6 +15,12 @@ import org.frc3181.yr2012.components.*;
  */
 public class Hardware {
 
+    /** TODO: add vision (continued below)
+     *
+     *Under basis of TCP Socket Server receiving doubles  from C++ :Love, Liam
+     * Possibly creating one extra thread to run the server on? or just modifying the sockets to send the real data after they sync in time.
+     */
+    
     // motors
     // Note that slot 1 refers to what appears to be the second slot
     // "slot 1" is the first three slots; "slot 2" is the fifth through seventh slots; 4 and 8 are always empty

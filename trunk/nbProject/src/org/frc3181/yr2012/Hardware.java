@@ -3,6 +3,7 @@ package org.frc3181.yr2012;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Kinect;
 import edu.wpi.first.wpilibj.KinectStick;
 import org.frc3181.yr2012.components.*;
 
@@ -28,7 +29,8 @@ public class Hardware {
     public static final Jaguar roller = new Jaguar(1, 7);
     public static final Victor tip = new Victor(1, 8);
     public static final Jaguar conveyorMotor = new Jaguar(1, 9);
-
+    
+    public static Kinect kinect = Kinect.getInstance();
     // Drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
             Hardware.rearLeftMotor,

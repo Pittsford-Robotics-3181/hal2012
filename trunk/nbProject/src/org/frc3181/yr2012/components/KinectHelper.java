@@ -13,6 +13,8 @@ import org.frc3181.yr2012.Hardware;
 /**
  *
  * @author Liam Middlebrook 2012
+ * //TODO: Implement motion detection based on body proportions from the spine or head joint.\
+ * 
  */
 public class KinectHelper {
 

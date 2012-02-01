@@ -5,7 +5,7 @@
 package org.frc3181.yr2012.autonomous;
 
 /**
- *Don't Do anything. Just sit there and have everyone else complain
+ *Don't Do anything. Just sit there and let everyone else complain
  * @author robbiemarkwick
  */
 public class Autonomous1 {

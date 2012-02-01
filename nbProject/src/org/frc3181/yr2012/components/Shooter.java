@@ -61,4 +61,14 @@ public class Shooter {
             Shoot();
         }
     }
+    
+    /*
+     * Autonomous shooting
+     */
+    public void autoShoot(){
+        cannon.set(1);
+    }
+    public void autoStop(){
+        cannon.set(0);
+    }
 }

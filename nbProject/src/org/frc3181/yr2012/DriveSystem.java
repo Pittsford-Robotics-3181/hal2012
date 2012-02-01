@@ -105,6 +105,15 @@ public class DriveSystem extends RobotDrive {
         double rotation = calculateRotation();
         mecanumDrive(magnitude, direction, rotation); //robot drives
     }
+    /**
+     * autonomous Driving.
+     * @param mag Magnitude
+     * @param dir Direction
+     * @param rot Rotation
+     */
+    public void autodrive(double mag, double dir, double rot) {
+        mecanumDrive(mag, dir, rot); //robot drives
+    }
 
     /*kinect is commented out until we figure out what we want to do
     /**

@@ -79,4 +79,26 @@ public class Tipper {
             }
             }
         }
+    public void autoHorizontal(){
+        tipperLifter.set((TIPPER_HALF < Sensors.getTipperDistance()) ? 1 : -1);
+            targetHeight = TIPPER_HALF;
     }
+    public void autoTip(){
+            tipperLifter.set(.25*(Sensors.getTipperDistance()-targetHeight));
+            if(Sensors.getTipperDistance()==TIPPER_HALF){
+            switch (Sensors.senseBridge()) {
+                case 0:
+                    Hardware.driveSystem.setSlow(false);
+                    break;
+                case Sensors.NEAR_BRIDGE:
+                    Hardware.driveSystem.setSlow(true);
+                    break;
+                case Sensors.AT_BRIDGE: {
+                    Hardware.driveSystem.setStop(true);
+                    tipBridge();
+                    break;
+                }
+            }
+            }
+        } 
+ }

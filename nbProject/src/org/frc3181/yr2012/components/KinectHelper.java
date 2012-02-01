@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.Skeleton.tJointTypes;
 import org.frc3181.yr2012.Hardware;
 
 /**
- *
+ * @author Ben
  * @author Liam Middlebrook 2012
- * //TODO: Implement motion detection based on body proportions from the spine or head joint.\
+ * //TODO: Implement motion detection based on body proportions from the spine or head joint.
  * 
  */
 public class KinectHelper {
@@ -22,13 +22,13 @@ public class KinectHelper {
     private Kinect kinect;
     private Skeleton kinectSkeleton;
     //helper array
-    private Skeleton.tJointTypes[] joints = {tJointTypes.kHipCenter, tJointTypes.kSpine, tJointTypes.kShoulderCenter,
-        tJointTypes.kHead, tJointTypes.kShoulderLeft, tJointTypes.kElbowLeft,
-        tJointTypes.kWristLeft, tJointTypes.kHandLeft, tJointTypes.kShoulderRight,
-        tJointTypes.kElbowRight, tJointTypes.kWristRight, tJointTypes.kHandRight,
-        tJointTypes.kHipLeft, tJointTypes.kKneeLeft, tJointTypes.kAnkleLeft,
-        tJointTypes.kFootLeft, tJointTypes.kHipRight, tJointTypes.kKneeRight,
-        tJointTypes.kAnkleRight, tJointTypes.kFootRight};
+    private Skeleton.tJointTypes[] joints = {tJointTypes.kHipCenter, tJointTypes.kSpine,
+        tJointTypes.kShoulderCenter, tJointTypes.kHead, tJointTypes.kShoulderLeft,
+        tJointTypes.kElbowLeft, tJointTypes.kWristLeft, tJointTypes.kHandLeft,
+        tJointTypes.kShoulderRight, tJointTypes.kElbowRight, tJointTypes.kWristRight,
+        tJointTypes.kHandRight, tJointTypes.kHipLeft, tJointTypes.kKneeLeft,
+        tJointTypes.kAnkleLeft, tJointTypes.kFootLeft, tJointTypes.kHipRight,
+        tJointTypes.kKneeRight, tJointTypes.kAnkleRight, tJointTypes.kFootRight};
 
     /**
      * Initialize the Kinect device.
@@ -38,6 +38,7 @@ public class KinectHelper {
     }
 
     private Skeleton getSkeleton() {
+        updateSkeleton();
         return kinectSkeleton;
     }
 

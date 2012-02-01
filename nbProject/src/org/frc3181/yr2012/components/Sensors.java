@@ -20,6 +20,15 @@ public class Sensors {
     public static final int AWAY_FROM_BRIDGE = 0;
     public static final int NEAR_BRIDGE = 1;
     public static final int AT_BRIDGE = 2;
+    //shooter encoders
+    public static Encoder leftShooterEncoder = new Encoder(/*a*/1, /*b*/2);
+    {
+        leftShooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
+    }
+    public static Encoder rightShooterEncoder = new Encoder(/*a*/3, /*b*/4);
+    {
+        rightShooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
+    }
 
     /**
      * Gets the angle/distance the tipper is positioned at. This method should

@@ -11,6 +11,10 @@ import org.frc3181.yr2012.Hardware;
  * @author robbiemarkwick
  */
 public class Autonomous2 {
+    /*
+     * TODO: NAME THE VARIABLES ACCORDINGLY BECAUSE I CAN'T UNDERSTAND THEM
+     * AND DO IT FAST 
+     */
     private static boolean b=false;
     private static boolean c=false;
     public static void run(){

@@ -10,4 +10,5 @@ package org.frc3181.yr2012.autonomous;
  */
 public class Autonomous1 {
     //Do nothing
+      public static void run(){}
 }

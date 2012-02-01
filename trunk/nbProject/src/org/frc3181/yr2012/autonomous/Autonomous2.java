@@ -23,7 +23,7 @@ public class Autonomous2 {
             c=Hardware.bridgeTip.autoTip(true);
         }
         if (c){
-            Hardware.driveSystem.autodrive(1,180,0);
+            Hardware.driveSystem.autodrive(0.001,180,0);
         }
     }
 }

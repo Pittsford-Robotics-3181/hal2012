@@ -84,7 +84,7 @@
             <compilation-unit>
                 <package-root>src</package-root>
                 <classpath mode="boot">${sunspot.bootclasspath}</classpath>
-                <classpath mode="compile">E:\Robotics 2012\javacv-bin;../../../../../sunspotfrcsdk/lib/WPILibJ/classes.jar</classpath>
+                <classpath mode="compile">C:/Documents and Settings/lowenstein benjamin/sunspotfrcsdk/lib/WPILibJ/classes.jar;E:\Robotics 2012\javacv-bin;C:\Users\Liam\sunspotfrcsdk\lib\WPILibJ\classes.jar;C:\Users\Chris Cheng\sunspotfrcsdk\lib\WPILibJ\classes.jar</classpath>
                 <built-to>build</built-to>
                 <source-level>1.7</source-level>
             </compilation-unit>

@@ -55,6 +55,7 @@ public class Shooter {
      */
     private void setAimPosition(double position) {
         //TODO: put something here that can aim the shooter
+        
     }
 
     public void shootAtSpeed(double speed) {
@@ -82,7 +83,7 @@ public class Shooter {
      * Turns the shooter into shot mode for 1 second
      * In shot mode, the cannon motor is turned on and the aiming motor is off.
      * @param anglechange the direction the shooter should move and how fast.
-     * @deprecated 
+     *  @deprecated 
      */
     private void shoot() {
         //cannon.set(1);
@@ -91,16 +92,17 @@ public class Shooter {
     }
 
     /**
-     * @deprecated
+     * 
      */
     public void controlShooting() {
         if (delay.get() >= 1000000) {
-            //cannon.set(0);
-            //aimShot(Hardware.ballJoystick.getY() / (-Math.sqrt(2.0000)));
+            stopShooter();
+            aim.set(Hardware.ballJoystick.getY() / (-Math.sqrt(2.0000)));
             if (Hardware.ballJoystick.getTrigger()) {
-                //aimShot(0);
+                shootAtSpeed(1);
+                 delay.reset();
+            delay.start();
             }
-            shoot();
         }
     }
 

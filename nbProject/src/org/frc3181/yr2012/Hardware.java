@@ -15,9 +15,9 @@ import org.frc3181.yr2012.components.*;
  */
 public class Hardware {
 
-    /** TODO: add vision (continued below)
+    /* TODO: add vision (continued below)
      *
-     *Under basis of TCP Socket Server receiving doubles  from C++ :Love, Liam
+     * Under basis of TCP Socket Server receiving doubles  from C++ :Love, Liam
      * Possibly creating one extra thread to run the server on? or just modifying the sockets to send the real data after they sync in time.
      */
     
@@ -51,7 +51,7 @@ public class Hardware {
     // Joystick for Shooter
     public static Joystick ballJoystick = new Joystick(2);
     
-    //Shooter
+    // Shooter
     public static Shooter ballLauncher = new Shooter(aimShooter, leftShooter, rightShooter);
     // Roller
     public static Roller collector = new Roller(roller);
@@ -61,10 +61,9 @@ public class Hardware {
     public static Conveyor ballLift = new Conveyor(conveyorMotor);
     
 
+    // Sensors are in Sensors.java
 
-    //sensors are in Sensors.java
-
-    //the two Kinect readers
+    // the two Kinect readers
     //public static KinectStick leftArmKinect = new KinectStick(1);
     //public static KinectStick rightArmKinect = new KinectStick(2);
 

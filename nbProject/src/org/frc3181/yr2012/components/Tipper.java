@@ -83,9 +83,18 @@ public class Tipper {
         tipperLifter.set((TIPPER_HALF < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_HALF;
     }
-    public void autoTip(){
+    /**
+     * autonomous tipping
+     * @param b has the tip been activated
+     * @return true if tipping got activated or tipper is full down.
+     */
+    public boolean autoTip(boolean b){
             tipperLifter.set(.25*(Sensors.getTipperDistance()-targetHeight));
-            if(Sensors.getTipperDistance()==TIPPER_HALF){
+            if(Sensors.getTipperDistance()>=TIPPER_DOWN)
+                   return true;
+            else if(b)
+                   return false;
+            else if(Sensors.getTipperDistance()==TIPPER_HALF){
             switch (Sensors.senseBridge()) {
                 case 0:
                     Hardware.driveSystem.setSlow(false);
@@ -96,9 +105,10 @@ public class Tipper {
                 case Sensors.AT_BRIDGE: {
                     Hardware.driveSystem.setStop(true);
                     tipBridge();
-                    break;
+                    return true;
                 }
             }
             }
-        } 
+            return false;
+        }
  }

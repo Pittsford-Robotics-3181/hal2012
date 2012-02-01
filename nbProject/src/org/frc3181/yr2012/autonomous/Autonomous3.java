@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj.Timer;
  * @author robbiemarkwick
  */
 public class Autonomous3 {
-    private static boolean b=true;
-    private static Timer t=new Timer();
-    private static double d=t.get();
+    private static boolean shotBalls=true;
+    private static Timer timer=new Timer();
+    private static double shotStartTime=timer.get();
       public static void run(){
-        if(b){
-            if(d+2<=t.get()){
+        if(shotBalls){
+            if(shotStartTime+2<=timer.get()){
                     Hardware.ballLauncher.autoShoot();
             }
             else{
                 Hardware.ballLauncher.autoStop();
-                b=false;
+                shotBalls=false;
             }
         }
         else

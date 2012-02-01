@@ -18,10 +18,10 @@ public class Autonomous3 {
       public static void run(){
         if(shotBalls){
             if(shotStartTime+2<=timer.get()){
-                    Hardware.ballLauncher.autoShoot();
+                    Hardware.ballLauncher.shootAtSpeed(1);
             }
             else{
-                Hardware.ballLauncher.autoStop();
+                Hardware.ballLauncher.stopShooter();
                 shotBalls=false;
             }
         }

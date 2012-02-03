@@ -1,9 +1,9 @@
 package org.frc3181.yr2012;
 
-import edu.wpi.first.wpilibj.Dashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The main class for our 2012 robot, HAL.
@@ -97,15 +97,6 @@ public class HAL extends IterativeRobot {
      * @author Chris Cheng (2012)
      */
     public void updateDash() {
-        // TODO: Change this to the SmartDashboard.  Somehow.
-        Dashboard low = DriverStation.getInstance().getDashboardPackerLow();
-        low.addCluster(); {
-            low.addString(state);
-            low.addCluster(); {  //Joystick position image info - size is 132 square
-                low.addShort((short) (Hardware.driveJoystick.getX() * 66 + 66));
-                low.addShort((short) (Hardware.driveJoystick.getY() * 66 + 66));
-            } low.finalizeCluster();
-        } low.finalizeCluster();
-        low.commit();
+        SmartDashboard.putString("state", state);
     }
 }

@@ -2,8 +2,10 @@ package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.frc3181.yr2012.components.Sensors;
 
 /**
  * The main class for our 2012 robot, HAL.
@@ -14,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Robbie Markwick
  */
 public class HAL extends IterativeRobot {
-
+    Timer tT = new Timer();
     String state = "";
 
     /**
@@ -32,6 +34,8 @@ public class HAL extends IterativeRobot {
         state = "Disabled";
         Hardware.DSOut.clearOutput();
         Hardware.DSOut.say(1, "State: " + state);
+        tT.stop();
+        tT.reset();
     }
 
     /**
@@ -46,6 +50,7 @@ public class HAL extends IterativeRobot {
      * This function is run when autonomous mode begins.
      */
     public void autonomousInit() {
+        tT.start();
         state = "Autonomous";
         Hardware.DSOut.clearOutput();
         Hardware.DSOut.say(1, "State: " + state);
@@ -55,6 +60,7 @@ public class HAL extends IterativeRobot {
      * This function is called periodically during autonomous.
      */
     public void autonomousPeriodic() {
+//        Hardware.driveSystem.mecanumDrive(.15,0,.25);
         updateDash();
     }
 
@@ -63,6 +69,7 @@ public class HAL extends IterativeRobot {
      * This function is run when teleop mode begins.
      */
     public void teleopInit() {
+        tT.start();
         state = "Teleoperated";
         Hardware.DSOut.clearOutput();
         Hardware.DSOut.say(1, "State: " + state);
@@ -77,7 +84,7 @@ public class HAL extends IterativeRobot {
         updateDash();
 
         //drive
-        Hardware.driveSystem.drive();
+        Hardware.driveSystem.mecanumDrive();
         
         //Control Roller
         Hardware.collector.rollerController();
@@ -97,6 +104,13 @@ public class HAL extends IterativeRobot {
      * @author Chris Cheng (2012)
      */
     public void updateDash() {
-        SmartDashboard.putString("state", state);
+        SmartDashboard.putString("State", state);
+        SmartDashboard.putDouble("Front Left", Math.floor(Hardware.frontLeftMotor.get() * 128));
+        SmartDashboard.putDouble("Front Right", Math.floor(Hardware.frontRightMotor.get() * 128));
+        SmartDashboard.putDouble("Rear Left", Math.floor(Hardware.rearLeftMotor.get() * 128));
+        SmartDashboard.putDouble("Rear Right", Math.floor(Hardware.rearRightMotor.get() * 128));
+        SmartDashboard.putDouble("Encoder Distance", /*Math.sin(tT.get())*/Sensors.testEncoder.getDistance());
+        SmartDashboard.putDouble("Encoder Rate", /*Math.cos(tT.get())*/Sensors.testEncoder.getRate());
+        SmartDashboard.putDouble("Time", tT.get());
     }
 }

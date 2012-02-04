@@ -30,8 +30,8 @@ public class Shooter {
     private double Kd = 0;
     private double minimumEncoderValue = 0;
     private double maximumEncoderValue = 0;
-    private PIDController leftCannonController;
-    private PIDController rightCannonController;
+    //private PIDController leftCannonController;
+    //private PIDController rightCannonController;
 
     /**
      * constructs a new Shooter with the given victors.
@@ -43,10 +43,10 @@ public class Shooter {
         aim = aimMotor;
         leftController = new ShooterMotorController(left);
         rightController = new ShooterMotorController(right);
-        leftCannonController = new PIDController(Kp, Ki, Kd, Sensors.leftShooterEncoder, leftController);
-        leftCannonController.setInputRange(minimumEncoderValue, maximumEncoderValue);
-        rightCannonController = new PIDController(Kp, Ki, Kd, Sensors.rightShooterEncoder, rightController);
-        rightCannonController.setInputRange(minimumEncoderValue, maximumEncoderValue);
+        //leftCannonController = new PIDController(Kp, Ki, Kd, Sensors.leftShooterEncoder, leftController);
+        //leftCannonController.setInputRange(minimumEncoderValue, maximumEncoderValue);
+        //rightCannonController = new PIDController(Kp, Ki, Kd, Sensors.rightShooterEncoder, rightController);
+        //rightCannonController.setInputRange(minimumEncoderValue, maximumEncoderValue);
     }
 
     /** 
@@ -59,22 +59,22 @@ public class Shooter {
     }
 
     public void shootAtSpeed(double speed) {
-        leftCannonController.setSetpoint(speed);
-        rightCannonController.setSetpoint(speed);
-        Sensors.leftShooterEncoder.start();
-        Sensors.rightShooterEncoder.start();
-        leftCannonController.enable();
-        rightCannonController.enable();
+        //leftCannonController.setSetpoint(speed);
+        //rightCannonController.setSetpoint(speed);
+        //Sensors.leftShooterEncoder.start();
+        //Sensors.rightShooterEncoder.start();
+        //leftCannonController.enable();
+        //rightCannonController.enable();
     }
     
     /**
      * Stop the shooter.
      */
     public void stopShooter(){
-        leftCannonController.disable();
+        /*leftCannonController.disable();
         rightCannonController.disable();
         leftCannonController.setSetpoint(0);
-        rightCannonController.setSetpoint(0);
+        rightCannonController.setSetpoint(0);*/
         Hardware.leftShooter.set(0);
         Hardware.rightShooter.set(0);       
     }

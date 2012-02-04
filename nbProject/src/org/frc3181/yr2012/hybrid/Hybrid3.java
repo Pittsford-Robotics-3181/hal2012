@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.frc3181.yr2012.autonomous;
+package org.frc3181.yr2012.hybrid;
 
 import org.frc3181.yr2012.Hardware;
 import edu.wpi.first.wpilibj.Timer;
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
  * shoot at a pre-determined basket, then waste time by spinning.
  * @author robbiemarkwick
  */
-public class Autonomous3 {
+public class Hybrid3 {
     private static boolean shotBalls=true;
     private static Timer timer=new Timer();
     private static double shotStartTime=timer.get();
@@ -26,6 +26,6 @@ public class Autonomous3 {
             }
         }
         else
-            Hardware.driveSystem.autodrive(0, 0, 1);//spin in circles to waste time
+            Hardware.driveSystem.mecanumDrive(0, 0, 1);//spin in circles to waste time
     }
 }

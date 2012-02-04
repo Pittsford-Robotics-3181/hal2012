@@ -2,6 +2,7 @@ package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is our robot's drive system, which implements mecanum wheels.
@@ -28,22 +29,19 @@ public class DriveSystem extends RobotDrive {
     }
 
     /**
-     * Drive method for Mecanum wheeled robots. A method for driving with
-     * Mecanum wheeled robots. There are 4 wheels on the robot, arranged so that
-     * the front and back wheels are toed in 45 degrees. When looking at the
-     * wheels from the top, the roller axles should form an X across the robot. 
+     * Drive method for Mecanum wheeled robots.
+     * A method for driving with Mecanum wheeled robots. There are 4 wheels on
+     * the robot, arranged so that the front and back wheels are toed in 45
+     * degrees. When looking at the wheels from the top, the roller axles should
+     * form an X across the robot.
      * @param magnitude The speed that the robot should drive in a given direction.
      * @param direction The direction the robot should drive in degrees. The direction and magnitude are independent of the rotation rate.
      * @param rotation The rate of rotation for the robot that is completely independent of the magnitude or direction. [-1.0..1.0]
      */
-    private void mecanumDrive(double magnitude, double direction, double rotation) {
+    public void mecanumDrive(double magnitude, double direction, double rotation) {
         if (stop) {
             magnitude = direction = rotation = 0;
         } else {
-            //make magnitude and rotation zero if they are small enough
-            magnitude = Utils.checkForSmall(magnitude);
-            rotation = Utils.checkForSmall(rotation);
-
             //drive at half speed if trigger is pulled
             if (Hardware.driveJoystick.getTrigger()) {
                 magnitude *= .5;
@@ -54,6 +52,14 @@ public class DriveSystem extends RobotDrive {
                 magnitude *= .5;
                 rotation *= .5;
             }
+
+            //analyze values and correct if necessary
+            //make magnitude and rotation zero if they are small enough
+            magnitude = Utils.checkForSmall(magnitude);
+            rotation = Utils.checkForSmall(rotation);
+            //constrain values to range
+            magnitude = Math.max(Math.min(magnitude, 1.0), 0.0);
+            rotation = Math.max(Math.min(rotation, 1.0), -1.0);
         }
 
         //call the drive method inherited from RobotDrive
@@ -62,6 +68,9 @@ public class DriveSystem extends RobotDrive {
         Hardware.DSOut.say(4, "Magnitude: " + magnitude);
         Hardware.DSOut.say(5, "Direction: " + direction);
         Hardware.DSOut.say(6, "Rotation:  " + rotation);
+        SmartDashboard.putDouble("Magnitude", magnitude * 100);
+        SmartDashboard.putDouble("Direction", (direction + 360) % 360);
+
     }
 
     /**
@@ -81,6 +90,16 @@ public class DriveSystem extends RobotDrive {
     }
 
     /**
+     * This method should be called to make the robot drive with joystick input.
+     */
+    public void mecanumDrive() {
+        double magnitude = Hardware.driveJoystick.getMagnitude();
+        double direction = Hardware.driveJoystick.getDirectionDegrees();
+        double rotation = calculateRotation();
+        mecanumDrive(magnitude, direction, rotation); //robot drives
+    }
+
+    /**
      * Slows the robot.
      * @param b Whether the robot should slow.
      */
@@ -94,25 +113,6 @@ public class DriveSystem extends RobotDrive {
      */
     public void setStop(boolean b) {
         stop = b;
-    }
-
-    /**
-     * Allows the Robot to drive in any direction, as well as rotating.
-     */
-    public void drive() {
-        double magnitude = Hardware.driveJoystick.getMagnitude();
-        double direction = Hardware.driveJoystick.getDirectionDegrees();
-        double rotation = calculateRotation();
-        mecanumDrive(magnitude, direction, rotation); //robot drives
-    }
-    /**
-     * autonomous Driving.
-     * @param mag Magnitude
-     * @param dir Direction
-     * @param rot Rotation
-     */
-    public void autodrive(double mag, double dir, double rot) {
-        mecanumDrive(mag, dir, rot); //robot drives
     }
 
     /*kinect is commented out until we figure out what we want to do

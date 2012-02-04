@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.Encoder;
  * @author Ben
  */
 public class Sensors {
-    //front bridge detector
+    public static Encoder testEncoder = new Encoder(13,14);
 
+    //front bridge detector
     private static Ultrasonic frontSensor = new Ultrasonic(1, 2);
     //back bridge detector
     private static Ultrasonic backSensor = new Ultrasonic(3, 4);
@@ -21,14 +22,14 @@ public class Sensors {
     public static final int NEAR_BRIDGE = 1;
     public static final int AT_BRIDGE = 2;
     //shooter encoders
-    public static Encoder leftShooterEncoder = new Encoder(/*a*/1, /*b*/2);
-    {
-        leftShooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
-    }
-    public static Encoder rightShooterEncoder = new Encoder(/*a*/3, /*b*/4);
-    {
-        rightShooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
-    }
+    //public static Encoder leftShooterEncoder = new Encoder(/*a*/1, /*b*/2);
+    //{
+    //    leftShooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
+    //}
+    //public static Encoder rightShooterEncoder = new Encoder(/*a*/3, /*b*/4);
+    //{
+    //    rightShooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
+    //}
 
     /**
      * Gets the angle/distance the tipper is positioned at. This method should

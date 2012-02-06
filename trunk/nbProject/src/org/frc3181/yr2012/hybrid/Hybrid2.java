@@ -18,16 +18,16 @@ public class Hybrid2 {
     private static boolean foundBridge=false;
     private static boolean tippedBridge=false;
     public static void run(){
-        if(foundBridge){
-        Hardware.bridgeTip.autoHorizontal();
-        Hardware.driveSystem.mecanumDrive(2,0,0);
-        foundBridge=Hardware.bridgeTip.autoTip(false);
-        }
-        if(foundBridge&&!tippedBridge){
-            tippedBridge=Hardware.bridgeTip.autoTip(true);
-        }
-        if (tippedBridge){
-            Hardware.driveSystem.mecanumDrive(0.001,180,0);
-        }
+//        if(foundBridge){
+//        Hardware.bridgeTip.autoHorizontal();
+//        Hardware.driveSystem.mecanumDrive(2,0,0);
+//        foundBridge=Hardware.bridgeTip.autoTip(false);
+//        }
+//        if(foundBridge&&!tippedBridge){
+//            tippedBridge=Hardware.bridgeTip.autoTip(true);
+//        }
+//        if (tippedBridge){
+//            Hardware.driveSystem.mecanumDrive(0.001,180,0);
+//        }
     }
 }

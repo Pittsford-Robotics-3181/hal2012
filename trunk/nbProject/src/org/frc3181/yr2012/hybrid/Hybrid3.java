@@ -16,16 +16,16 @@ public class Hybrid3 {
     private static Timer timer=new Timer();
     private static double shotStartTime=timer.get();
       public static void run(){
-        if(shotBalls){
-            if(shotStartTime+2<=timer.get()){
-                    Hardware.ballLauncher.shootAtSpeed(1);
-            }
-            else{
-                Hardware.ballLauncher.stopShooter();
-                shotBalls=false;
-            }
-        }
-        else
-            Hardware.driveSystem.mecanumDrive(0, 0, 1);//spin in circles to waste time
+//        if(shotBalls){
+//            if(shotStartTime+2<=timer.get()){
+//                    Hardware.ballLauncher.shootAtSpeed(1);
+//            }
+//            else{
+//                Hardware.ballLauncher.stopShooter();
+//                shotBalls=false;
+//            }
+//        }
+//        else
+//            Hardware.driveSystem.mecanumDrive(0, 0, 1);//spin in circles to waste time
     }
 }

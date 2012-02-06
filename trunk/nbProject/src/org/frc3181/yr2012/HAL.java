@@ -1,9 +1,7 @@
 package org.frc3181.yr2012;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc3181.yr2012.components.Sensors;
 
@@ -87,16 +85,16 @@ public class HAL extends IterativeRobot {
         Hardware.driveSystem.mecanumDrive();
         
         //Control Roller
-        Hardware.collector.rollerController();
+        //Hardware.collector.rollerController();
         
         //Control Shooter
-        Hardware.ballLauncher.controlShooting();
+        //Hardware.ballLauncher.controlShooting();
         
         //Tip Bridge if Necessary
-        Hardware.bridgeTip.controlTipper();
+        //Hardware.bridgeTip.controlTipper();
         
         //lift balls if present
-        Hardware.ballLift.moveBalls();    
+        //Hardware.ballLift.moveBalls();
     }
 
     /**
@@ -109,8 +107,8 @@ public class HAL extends IterativeRobot {
         SmartDashboard.putDouble("Front Right", Math.floor(Hardware.frontRightMotor.get() * 128));
         SmartDashboard.putDouble("Rear Left", Math.floor(Hardware.rearLeftMotor.get() * 128));
         SmartDashboard.putDouble("Rear Right", Math.floor(Hardware.rearRightMotor.get() * 128));
-        SmartDashboard.putDouble("Encoder Distance", /*Math.sin(tT.get())*/Sensors.testEncoder.getDistance());
-        SmartDashboard.putDouble("Encoder Rate", /*Math.cos(tT.get())*/Sensors.testEncoder.getRate());
+        SmartDashboard.putDouble("Encoder Distance", Sensors.testEncoder.getDistance());
+        SmartDashboard.putDouble("Encoder Rate", Sensors.testEncoder.getRate());
         SmartDashboard.putDouble("Time", tT.get());
     }
 }

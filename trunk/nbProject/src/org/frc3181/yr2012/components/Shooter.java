@@ -75,8 +75,8 @@ public class Shooter {
         rightCannonController.disable();
         leftCannonController.setSetpoint(0);
         rightCannonController.setSetpoint(0);*/
-        Hardware.leftShooter.set(0);
-        Hardware.rightShooter.set(0);       
+//        Hardware.leftShooter.set(0);
+//        Hardware.rightShooter.set(0);
     }
 
     /** 

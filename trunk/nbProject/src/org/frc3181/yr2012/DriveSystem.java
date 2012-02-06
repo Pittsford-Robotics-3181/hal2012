@@ -82,6 +82,12 @@ public class DriveSystem extends RobotDrive {
      * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
      */
     private double calculateRotation() {
+        if(Hardware.driveJoystick.getRawButton(8))
+            return -(Hardware.driveJoystick.getTwist() / 2 + .5);
+
+        if(Hardware.driveJoystick.getRawButton(9))
+            return +(Hardware.driveJoystick.getTwist() / 2 + .5);
+
         boolean ccw = Hardware.driveJoystick.getRawButton(4);
         boolean cw = Hardware.driveJoystick.getRawButton(5);
         //rotation is -1 for counterclockwise and +1 for clockwise

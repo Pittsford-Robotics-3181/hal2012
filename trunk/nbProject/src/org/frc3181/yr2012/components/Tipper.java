@@ -44,14 +44,14 @@ public class Tipper {
         if (Hardware.driveJoystick.getRawButton(3)) {
             tipperLifter.set((TIPPER_UP < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_UP;
-        } else if (Hardware.driveJoystick.getRawButton(6)) {
+        } else if (Hardware.driveJoystick.getRawButton(4)) {
             tipperLifter.set((TIPPER_HALF < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_HALF;
         } else if (Hardware.driveJoystick.getRawButton(2)) {
             tipperLifter.set((TIPPER_DOWN < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_DOWN;
         }
-         else if (Hardware.driveJoystick.getRawButton(7)) {
+         else if (Hardware.driveJoystick.getRawButton(5)) {
             tipperLifter.set((TIPPER_BACK < Sensors.getTipperDistance()) ? 1 : -1);
             targetHeight = TIPPER_BACK;
         }

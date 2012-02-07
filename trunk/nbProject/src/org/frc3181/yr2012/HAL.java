@@ -1,6 +1,8 @@
 package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Kinect;
+import edu.wpi.first.wpilibj.Skeleton.tJointTypes;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc3181.yr2012.components.Sensors;

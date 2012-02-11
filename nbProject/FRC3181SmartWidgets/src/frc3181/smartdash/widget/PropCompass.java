@@ -38,6 +38,7 @@ public class PropCompass extends StaticWidget {
                 double d = Robot.getTable().getDouble(propD.getValue());
                 double m = Robot.getTable().getDouble(propM.getValue());
                 g.drawLine(getSize().width/2, getSize().height/2, (int) ((getSize().width/2)+m*((getSize().width/2)*(Math.sin(Math.toRadians(d))))), (int) ((getSize().height/2)+m*((getSize().height/2)*(Math.cos(Math.toRadians(d))))));
+                repaint();
             }
         }
     }
@@ -45,7 +46,7 @@ public class PropCompass extends StaticWidget {
     @Override
     public void propertyChanged(Property prprt) {
     }
-    
+
     
     
 }

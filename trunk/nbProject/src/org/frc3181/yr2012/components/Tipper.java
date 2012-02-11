@@ -2,6 +2,7 @@ package org.frc3181.yr2012.components;
 
 import edu.wpi.first.wpilibj.Victor;
 import org.frc3181.yr2012.Hardware;
+import org.frc3181.yr2012.Utils;
 
 /**
  * The mechanism that tips the bridge.
@@ -61,8 +62,9 @@ public class Tipper {
      * Control tipper.
      */
     public void controlTipper() {
-            tipperLifter.set(.25*(Sensors.getTipperDistance()-targetHeight));
-            if(Sensors.getTipperDistance()==TIPPER_HALF){
+            if(!Sensors.getStopMoving())
+                tipperLifter.set(.25*Utils.checkForSmall(Sensors.getTipperDistance()-targetHeight,.1));
+            if(Utils.checkForSmall(Sensors.getTipperDistance()-TIPPER_HALF,.1)==0){
             switch (Sensors.senseBridge()) {
                 case 0:
                     Hardware.driveSystem.setSlow(false);

@@ -2,6 +2,7 @@ package org.frc3181.yr2012.components;
 
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * Our sensors. Note that the sensor slots/channels must be changed!
@@ -15,6 +16,10 @@ public class Sensors {
     private static Ultrasonic frontSensor = new Ultrasonic(1, 2);
     //back bridge detector
     private static Ultrasonic backSensor = new Ultrasonic(3, 4);
+    //full up stop
+    private static DigitalInput UpSensor =new DigitalInput(7);
+    //full down stop
+    private static DigitalInput DownSensor=new DigitalInput(8);
     //foot sensor
     private static Encoder tipperSensor = new Encoder(5, 6);
     //constants
@@ -41,6 +46,9 @@ public class Sensors {
         return tipperSensor.getDistance();
     }
 
+    public static boolean getStopMoving(){
+        return(!(UpSensor.get()||DownSensor.get()));
+    }
     /**
      * Tells the Tipper and DriveSystem how close robot is to bridge.
      * Returns 0 if both sensors detect ground

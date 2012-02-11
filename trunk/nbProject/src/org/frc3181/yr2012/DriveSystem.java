@@ -1,9 +1,7 @@
 package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.Kinect;
-import edu.wpi.first.wpilibj.KinectStick;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Skeleton.Joint;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,9 +15,9 @@ public class DriveSystem extends RobotDrive {
 
     private boolean slow;
     private boolean stop;
-    //KinectHelper kinect = new KinectHelper();
+    private static final boolean OVERRIDE_MECANUMDRIVE_POLAR = false;
+    public static final double RAMPING_MAX_CHANGE = .05;
     Kinect theKinect;
-
 
     /**
      * Constructor.
@@ -48,17 +46,15 @@ public class DriveSystem extends RobotDrive {
      */
     public void mecanumDrive(double magnitude, double direction, double rotation) {
         SmartDashboard.putInt("Skeleton track state", theKinect.getSkeleton().GetTrackState().value);
-        
+
         if (stop) {
             magnitude = direction = rotation = 0;
         } // <editor-fold defaultstate="collapsed" desc="Kinect Drive Code">
-        else if (theKinect.getSkeleton().GetAnkleLeft().getX() < -.7){
+        else if (theKinect.getSkeleton().GetAnkleLeft().getX() < -.7) {
             Hardware.DSOut.say(3, "Kinect: shoot");
-        }
-        //drive forwards
+        } //drive forwards
         else if ((theKinect.getSkeleton().GetHandLeft().getY() > theKinect.getSkeleton().GetHead().getY()) && (theKinect.getSkeleton().GetHandRight().getY() > theKinect.getSkeleton().GetHead().getY())) {
             if ((theKinect.getSkeleton().GetHandLeft().getZ() > theKinect.getSkeleton().GetHead().getZ() - .25) && (theKinect.getSkeleton().GetHandRight().getZ() > theKinect.getSkeleton().GetHead().getZ() - .25)) {
-
                 magnitude = .25;
                 direction = -180;//*/
                 Hardware.DSOut.say(3, "Kinect: forward");
@@ -102,19 +98,25 @@ public class DriveSystem extends RobotDrive {
             }
 
             //ramp
-            
+
         }
 
         //analyze values and correct if necessary
         //make magnitude and rotation zero if they are small enough
-        magnitude = Utils.checkForSmall(magnitude, .15);
-        rotation = Utils.checkForSmall(rotation, .15);
+        magnitude = Utils.checkForSmall(magnitude, .1);
+        rotation = Utils.checkForSmall(rotation, .1);
         //constrain values to range
         magnitude = Math.max(Math.min(magnitude, 1.0), 0.0);
         rotation = Math.max(Math.min(rotation, .5), -.5);
 
-        //call the drive method inherited from RobotDrive
-        mecanumDrive_Polar(magnitude, direction, rotation);
+        //We have this in case we need to have more control to setting speeds, e.g., encoders and/or PID/linear ramping.
+        if (OVERRIDE_MECANUMDRIVE_POLAR) {
+            //call our drive method
+            mecanumDrive_Polar(magnitude, direction, rotation);
+        } else {
+            //call the drive method inherited from RobotDrive
+            super.mecanumDrive_Polar(magnitude, direction, rotation);
+        }
 
         Hardware.DSOut.say(4, "Magnitude: " + magnitude);
         Hardware.DSOut.say(5, "Direction: " + direction);
@@ -168,5 +170,71 @@ public class DriveSystem extends RobotDrive {
      */
     public void setStop(boolean b) {
         stop = b;
+    }
+
+    /**
+     * Drive method for Mecanum wheeled robots. Overides default mecanumDrive_Polar in RobotDrive.
+     *
+     * A method for driving with Mecanum wheeled robots. There are 4 wheels
+     * on the robot, arranged so that the front and back wheels are toed in 45 degrees.
+     * When looking at the wheels from the top, the roller axles should form an X across the robot.
+     *
+     * @param magnitude The speed that the robot should drive in a given direction.
+     * @param direction The direction the robot should drive in degrees. The direction and maginitute are
+     * independent of the rotation rate.
+     * @param rotation The rate of rotation for the robot that is completely independent of
+     * the magnitute or direction. [-1.0..1.0]
+     */
+    public void mecanumDrive_Polar(double magnitude, double direction, double rotation) {
+        // Normalized for full power along the Cartesian axes.
+        magnitude = limit(magnitude) * Math.sqrt(2.0);
+        // The rollers are at 45 degree angles.
+        double dirInRad = (direction + 45.0) * 3.14159 / 180.0;
+        double cosD = Math.cos(dirInRad);
+        double sinD = Math.sin(dirInRad);
+
+        //Calculate speeds neceessary for mecanum drive.
+        double wheelSpeeds[] = new double[kMaxNumberOfMotors];
+        wheelSpeeds[MotorType.kFrontLeft.value] = rampTo(sinD * magnitude + rotation, Hardware.frontLeftMotor.get());
+        wheelSpeeds[MotorType.kFrontRight.value] = rampTo(cosD * magnitude - rotation, Hardware.frontRightMotor.get());
+        wheelSpeeds[MotorType.kRearLeft.value] = rampTo(cosD * magnitude + rotation, Hardware.rearLeftMotor.get());
+        wheelSpeeds[MotorType.kRearRight.value] = rampTo(sinD * magnitude - rotation, Hardware.rearRightMotor.get());
+
+        //Normalize all wheel speeds if the magnitude of any wheel is greater than 1.0.
+        normalize(wheelSpeeds);
+
+        //Set the speeds.
+        Hardware.frontLeftMotor.set(wheelSpeeds[MotorType.kFrontLeft.value] * m_invertedMotors[MotorType.kFrontLeft.value] * m_maxOutput);
+        Hardware.frontRightMotor.set(wheelSpeeds[MotorType.kFrontRight.value] * m_invertedMotors[MotorType.kFrontRight.value] * m_maxOutput);
+        Hardware.rearLeftMotor.set(wheelSpeeds[MotorType.kRearLeft.value] * m_invertedMotors[MotorType.kRearLeft.value] * m_maxOutput);
+        Hardware.rearRightMotor.set(wheelSpeeds[MotorType.kRearRight.value] * m_invertedMotors[MotorType.kRearRight.value] * m_maxOutput);
+    }
+    
+    /**
+     * Ramp from a given speed to a target speed using default max change.
+     * @param target The target speed.
+     * @param current The current speed.
+     * @return The ramped speed.
+     */
+    private double rampTo(double target, double current){
+        return rampTo(target, current, RAMPING_MAX_CHANGE);
+    }
+    
+    /**
+     * Ramp from a given speed to a target speed.
+     * @param target The target speed.
+     * @param current The current speed.
+     * @param maxChange The maximum allowed change in speed dt.
+     * @return The ramped speed.
+     */
+    private double rampTo(double target, double current, double maxChange){
+        double delta = target - current; //the proposed change
+        if (Math.abs(delta) > maxChange) { //proposed change is too large
+            //make actual change the max allowed, accounting for sign
+            delta = ((delta < 0) ? -1 : 1) * maxChange;
+        }
+        current += delta;
+        return current;
+
     }
 }

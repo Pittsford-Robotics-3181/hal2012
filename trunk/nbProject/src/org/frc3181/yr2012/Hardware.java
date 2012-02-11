@@ -1,11 +1,7 @@
 package org.frc3181.yr2012;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Kinect;
-import org.frc3181.yr2012.components.*;
 
 /**
  * This file contains our hardware declarations.
@@ -36,9 +32,6 @@ public class Hardware {
 //    public static final Jaguar roller = new Jaguar(1, 8);
 //    public static final Victor tip = new Victor(1, 9);
 //    public static final Jaguar conveyorMotor = new Jaguar(1, 10);
-    
-    // Kinect!
-    public static Kinect kinect = Kinect.getInstance();
 
     // Drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
@@ -62,10 +55,6 @@ public class Hardware {
     
 
     // Sensors are in Sensors.java
-
-    // the two Kinect readers
-    //public static KinectStick leftArmKinect = new KinectStick(1);
-    //public static KinectStick rightArmKinect = new KinectStick(2);
 
     // Pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();

@@ -1,6 +1,5 @@
 package org.frc3181.yr2012;
 
-import edu.wpi.first.wpilibj.Kinect;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,7 +16,6 @@ public class DriveSystem extends RobotDrive {
     private boolean stop;
     private static final boolean OVERRIDE_MECANUMDRIVE_POLAR = false;
     public static final double RAMPING_MAX_CHANGE = .05;
-    Kinect theKinect;
 
     /**
      * Constructor.
@@ -30,8 +28,6 @@ public class DriveSystem extends RobotDrive {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
         slow = false;
         stop = false;
-        //kinect.initKinect();
-        theKinect = Kinect.getInstance();
     }
 
     /**
@@ -45,43 +41,20 @@ public class DriveSystem extends RobotDrive {
      * @param rotation The rate of rotation for the robot that is completely independent of the magnitude or direction. [-1.0..1.0]
      */
     public void mecanumDrive(double magnitude, double direction, double rotation) {
-        SmartDashboard.putInt("Skeleton track state", theKinect.getSkeleton().GetTrackState().value);
-
         if (stop) {
             magnitude = direction = rotation = 0;
-        } // <editor-fold defaultstate="collapsed" desc="Kinect Drive Code">
-        else if (theKinect.getSkeleton().GetAnkleLeft().getX() < -.7) {
-            Hardware.DSOut.say(3, "Kinect: shoot");
-        } //drive forwards
-        else if ((theKinect.getSkeleton().GetHandLeft().getY() > theKinect.getSkeleton().GetHead().getY()) && (theKinect.getSkeleton().GetHandRight().getY() > theKinect.getSkeleton().GetHead().getY())) {
-            if ((theKinect.getSkeleton().GetHandLeft().getZ() > theKinect.getSkeleton().GetHead().getZ() - .25) && (theKinect.getSkeleton().GetHandRight().getZ() > theKinect.getSkeleton().GetHead().getZ() - .25)) {
-                magnitude = .25;
-                direction = -180;//*/
-                Hardware.DSOut.say(3, "Kinect: forward");
-            } else {
-                magnitude = .25;
-                direction = 0;//  */
-                Hardware.DSOut.say(3, "Kinect: backward");
-            }
-
-        } // </editor-fold>
-        else {
-            Hardware.DSOut.say(3, "");
+        } else {
             //perfect strafe
-            // backwards
-            if (Hardware.driveJoystick.getRawButton(2)) {
+            if (Hardware.driveJoystick.getRawButton(2)) { // backwards
                 magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
                 direction = -180;
-                //forwards
-            } else if (Hardware.driveJoystick.getRawButton(3)) {
+            } else if (Hardware.driveJoystick.getRawButton(3)) { //forwards
                 magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
                 direction = 0;
-                //left
-            } else if (Hardware.driveJoystick.getRawButton(4)) {
+            } else if (Hardware.driveJoystick.getRawButton(4)) { //left
                 magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
                 direction = -90;
-                //right
-            } else if (Hardware.driveJoystick.getRawButton(5)) {
+            } else if (Hardware.driveJoystick.getRawButton(5)) { //right
                 magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
                 direction = 90;
             }
@@ -96,9 +69,6 @@ public class DriveSystem extends RobotDrive {
                 magnitude *= .5;
                 rotation *= .5;
             }
-
-            //ramp
-
         }
 
         //analyze values and correct if necessary
@@ -111,7 +81,7 @@ public class DriveSystem extends RobotDrive {
 
         //We have this in case we need to have more control to setting speeds, e.g., encoders and/or PID/linear ramping.
         if (OVERRIDE_MECANUMDRIVE_POLAR) {
-            //call our drive method
+            //call our drive method, which ramps
             mecanumDrive_Polar(magnitude, direction, rotation);
         } else {
             //call the drive method inherited from RobotDrive

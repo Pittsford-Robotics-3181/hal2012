@@ -7,6 +7,7 @@ package frc3181.smartdash.widget;
 import edu.wpi.first.smartdashboard.gui.Widget;
 import edu.wpi.first.smartdashboard.properties.Property;
 import edu.wpi.first.smartdashboard.types.DataType;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JTextArea;
 
@@ -32,7 +33,8 @@ public class MessageBoxExt extends Widget {
     public void init() {
         ta = new JTextArea();
         ta.setPreferredSize(new Dimension(200,64));
-        ta.setEnabled(false);
+        ta.setEditable(false);
+        ta.setBackground(Color.white);
         setPreferredSize(new Dimension(200,64));
         this.add(ta);
     }

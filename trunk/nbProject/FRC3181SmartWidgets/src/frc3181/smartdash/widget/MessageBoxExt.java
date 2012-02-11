@@ -9,6 +9,7 @@ import edu.wpi.first.smartdashboard.properties.Property;
 import edu.wpi.first.smartdashboard.types.DataType;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -21,22 +22,31 @@ public class MessageBoxExt extends Widget {
     public static final DataType[] TYPES = { DataType.STRING };
     
     private JTextArea ta;
+    private String last = "";
 
     @Override
     public void setValue(Object o) {
+        String in = (String) o;
+        if(last.equals(in)) return;
+        ta.setRows(ta.getRows()+1);
         ta.append((String) o);
-        
-        ta.setSize(getSize());
+        last = in;
+        Dimension size = new Dimension();
+        size.width = getSize().width - 16;
+        size.height = ta.getRows() * 12;
+        ta.setSize(size);
     }
 
     @Override
     public void init() {
         ta = new JTextArea();
-        ta.setPreferredSize(new Dimension(200,64));
+        ta.setPreferredSize(new Dimension(184,12));
         ta.setEditable(false);
         ta.setBackground(Color.white);
+        JScrollPane sp = new JScrollPane(ta);
+        sp.setPreferredSize(new Dimension(200,64));
         setPreferredSize(new Dimension(200,64));
-        this.add(ta);
+        this.add(sp);
     }
 
     @Override

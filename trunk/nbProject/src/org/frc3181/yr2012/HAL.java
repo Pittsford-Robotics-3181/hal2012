@@ -108,6 +108,7 @@ public class HAL extends IterativeRobot {
         SmartDashboard.putDouble("Rear Right", Math.floor(Hardware.rearRightMotor.get() * 128));
         SmartDashboard.putDouble("Encoder Distance", Sensors.testEncoder.getDistance());
         SmartDashboard.putDouble("Encoder Rate", Sensors.testEncoder.getRate());
-        SmartDashboard.putDouble("Time", tT.get());
+        double t = tT.get();
+        SmartDashboard.putString("Time", (int) Math.floor(t / 60) + ":" + ((t % 60) < 10 ? "0" : "") + (int) Math.floor(t % 60));
     }
 }

@@ -37,6 +37,7 @@ public class Sensors {
      * @return The distance the tipper has moved from original position.
      */
     public static double getTipperDistance() {
+        // Note: Arm is 15 inches long.
         return tipperSensor.getDistance();
     }
 

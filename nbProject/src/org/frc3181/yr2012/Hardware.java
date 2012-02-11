@@ -37,7 +37,7 @@ public class Hardware {
 //    public static final Victor tip = new Victor(1, 9);
 //    public static final Jaguar conveyorMotor = new Jaguar(1, 10);
     
-    //Kinect!
+    // Kinect!
     public static Kinect kinect = Kinect.getInstance();
 
     // Drive system
@@ -69,4 +69,7 @@ public class Hardware {
 
     // Pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();
+    
+    // Globally-accessed variables
+    public static int autonoSelect = 0;
 }

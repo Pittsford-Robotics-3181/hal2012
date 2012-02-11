@@ -45,19 +45,19 @@ public class DriveSystem extends RobotDrive {
             magnitude = direction = rotation = 0;
         } else {
             //perfect strafe
-            if (Hardware.driveJoystick.getRawButton(2)) { // backwards
-                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
-                direction = -180;
-            } else if (Hardware.driveJoystick.getRawButton(3)) { //forwards
-                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
-                direction = 0;
-            } else if (Hardware.driveJoystick.getRawButton(4)) { //left
-                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
-                direction = -90;
-            } else if (Hardware.driveJoystick.getRawButton(5)) { //right
-                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
-                direction = 90;
-            }
+//            if (Hardware.driveJoystick.getRawButton(2)) { // backwards
+//                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
+//                direction = -180;
+//            } else if (Hardware.driveJoystick.getRawButton(3)) { //forwards
+//                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
+//                direction = 0;
+//            } else if (Hardware.driveJoystick.getRawButton(4)) { //left
+//                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
+//                direction = -90;
+//            } else if (Hardware.driveJoystick.getRawButton(5)) { //right
+//                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
+//                direction = 90;
+//            }
 
             //drive at half speed if trigger is pulled
             if (Hardware.driveJoystick.getTrigger()) {
@@ -69,6 +69,8 @@ public class DriveSystem extends RobotDrive {
                 magnitude *= .5;
                 rotation *= .5;
             }
+            magnitude *= (Hardware.driveJoystick.getTwist() + 1) / 2;
+            rotation *= (Hardware.driveJoystick.getTwist() + 1) / 2;
         }
 
         //analyze values and correct if necessary
@@ -105,15 +107,7 @@ public class DriveSystem extends RobotDrive {
      * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
      */
     private double calculateRotation() {
-        if (Hardware.driveJoystick.getRawButton(8)) {
-            return -(Hardware.driveJoystick.getTwist() / 4 + .25);
-        }
-
-        if (Hardware.driveJoystick.getRawButton(9)) {
-            return +(Hardware.driveJoystick.getTwist() / 4 + .25);
-        }
-
-        return 0;
+        return Hardware.driveJoystick.getThrottle();
     }
 
     /**

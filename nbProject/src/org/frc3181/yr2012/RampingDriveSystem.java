@@ -1,33 +1,9 @@
 package org.frc3181.yr2012;
 
-import edu.wpi.first.wpilibj.RobotDrive;
+import com.sun.squawk.util.MathUtils;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-/*
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- * WE AREN'T USING THIS RIGHT NOW!!!
- * WE ARE USING RAMPINGDRIVESYSTEM INSTEAD!!!
- */
 
 /**
  * This is our robot's drive system, which implements mecanum wheels.
@@ -35,12 +11,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Ben
  * @author Liam
  */
-public class DriveSystem extends RobotDrive {
+public class RampingDriveSystem {
 
     private boolean slow;
     private boolean stop;
-    private static final boolean OVERRIDE_MECANUMDRIVE_POLAR = true;
-    public static final double RAMPING_MAX_CHANGE = .025;
+    public static final double RAMPING_MAX_CHANGE = .035;
+    private SpeedController frontLeftMotor, frontRightMotor, rearLeftMotor, rearRightMotor;
     private double frontLeftSpeed, frontRightSpeed, rearLeftSpeed, rearRightSpeed;
 
     /**
@@ -48,10 +24,13 @@ public class DriveSystem extends RobotDrive {
      * @param frontLeftMotor
      * @param rearLeftMotor
      * @param frontRightMotor
-     * @param rearRightMotor 
+     * @param rearRightMotor
      */
-    public DriveSystem(SpeedController frontLeftMotor, SpeedController rearLeftMotor, SpeedController frontRightMotor, SpeedController rearRightMotor) {
-        super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+    public RampingDriveSystem(SpeedController frontLeft, SpeedController rearLeft, SpeedController frontRight, SpeedController rearRight) {
+        frontLeftMotor = frontLeft;
+        frontRightMotor = frontRight;
+        rearLeftMotor = rearLeft;
+        rearRightMotor = rearRight;
         slow = false;
         stop = false;
     }
@@ -87,8 +66,8 @@ public class DriveSystem extends RobotDrive {
 
             //drive at half speed if trigger is pulled
             if (Hardware.driveJoystick.getTrigger()) {
-                //magnitude *= .5;
-                //rotation *= .5;
+                magnitude *= .5;
+                rotation *= .5;
             }
             //drive at half speed if the variable says so
             if (slow) {
@@ -99,28 +78,19 @@ public class DriveSystem extends RobotDrive {
             rotation *= (Hardware.driveJoystick.getTwist() + 1) / 2;
         }
 
-        //analyze values and correct if necessary
-        //make magnitude and rotation zero if they are small enough
-        magnitude = Utils.checkForSmall(magnitude, .1);
-        rotation = Utils.checkForSmall(rotation, .1);
         //constrain values to range
         magnitude = Math.max(Math.min(magnitude, 1.0), 0.0);
         rotation = Math.max(Math.min(rotation, .5), -.5);
 
-        //We have this in case we need to have more control to setting speeds, e.g., encoders and/or PID/linear ramping.
-        if (Hardware.driveJoystick.getTrigger()&&OVERRIDE_MECANUMDRIVE_POLAR) {
-            //call our drive method, which ramps
-            mecanumDrive_Polar(magnitude, direction, rotation);
-        } else {
-            //call the drive method inherited from RobotDrive
-            super.mecanumDrive_Polar(magnitude, direction, rotation);
-        }
+        //call our drive method, which ramps
+        mecanumDrive_Polar(magnitude, direction, rotation);
 
         Hardware.DSOut.say(4, "Magnitude: " + magnitude);
         Hardware.DSOut.say(5, "Direction: " + direction);
         Hardware.DSOut.say(6, "Rotation:  " + rotation);
         SmartDashboard.putDouble("Magnitude", magnitude * 100);
-        SmartDashboard.putDouble("Direction", (direction + 360) % 360);
+        SmartDashboard.putDouble("Direction", direction);
+        SmartDashboard.putDouble("Rotation", Math.floor(rotation * 100));
 
     }
 
@@ -143,7 +113,6 @@ public class DriveSystem extends RobotDrive {
         double magnitude = Hardware.driveJoystick.getMagnitude();
         double direction = Hardware.driveJoystick.getDirectionDegrees();
         double rotation = calculateRotation();
-        SmartDashboard.putDouble("Rotation", Math.floor(rotation * 100));
         mecanumDrive(magnitude, direction, rotation); //robot drives
     }
 
@@ -180,12 +149,12 @@ public class DriveSystem extends RobotDrive {
         // Normalized for full power along the Cartesian axes.
         magnitude = limit(magnitude) * Math.sqrt(2.0);
         // The rollers are at 45 degree angles.
-        double dirInRad = (direction + 45.0) * 3.14159 / 180.0;
+        double dirInRad = (direction + 45.0) * Math.PI / 180.0;
         double cosD = Math.cos(dirInRad);
         double sinD = Math.sin(dirInRad);
 
         //Calculate speeds neceessary for mecanum drive.
-        double wheelSpeeds[] = new double[kMaxNumberOfMotors];
+        double wheelSpeeds[] = new double[4];
         wheelSpeeds[MotorType.kFrontLeft.value] = rampTo(sinD * magnitude + rotation, frontLeftSpeed);
         wheelSpeeds[MotorType.kFrontRight.value] = rampTo(cosD * magnitude - rotation, frontRightSpeed);
         wheelSpeeds[MotorType.kRearLeft.value] = rampTo(cosD * magnitude + rotation, rearLeftSpeed);
@@ -199,28 +168,43 @@ public class DriveSystem extends RobotDrive {
         rearLeftSpeed = wheelSpeeds[MotorType.kRearLeft.value];
         rearRightSpeed = wheelSpeeds[MotorType.kRearRight.value];
 
-//        SmartDashboard.putDouble("Front Left", Math.floor(frontLeftSpeed * 128));
-//        SmartDashboard.putDouble("Front Right", Math.floor(frontRightSpeed * 128));
-//        SmartDashboard.putDouble("Rear Left", Math.floor(rearLeftSpeed * 128));
-//        SmartDashboard.putDouble("Rear Right", Math.floor(rearRightSpeed * 128));
         //Set the speeds.
-        Hardware.frontLeftMotor.set(wheelSpeeds[MotorType.kFrontLeft.value] * m_invertedMotors[MotorType.kFrontLeft.value] * m_maxOutput);
-        Hardware.frontRightMotor.set(wheelSpeeds[MotorType.kFrontRight.value] * m_invertedMotors[MotorType.kFrontRight.value] * m_maxOutput);
-        Hardware.rearLeftMotor.set(wheelSpeeds[MotorType.kRearLeft.value] * m_invertedMotors[MotorType.kRearLeft.value] * m_maxOutput);
-        Hardware.rearRightMotor.set(wheelSpeeds[MotorType.kRearRight.value] * m_invertedMotors[MotorType.kRearRight.value] * m_maxOutput);
+        frontLeftMotor.set(Utils.checkForSmall(wheelSpeeds[MotorType.kFrontLeft.value], .1));
+        frontRightMotor.set(Utils.checkForSmall(wheelSpeeds[MotorType.kFrontRight.value], .1));
+        rearLeftMotor.set(Utils.checkForSmall(wheelSpeeds[MotorType.kRearLeft.value], .1));
+        rearRightMotor.set(Utils.checkForSmall(wheelSpeeds[MotorType.kRearRight.value], .1));
 
+        calculateActualParams();
     }
-    
+
+    private void calculateActualParams() {
+        double magnitude1 = (frontLeftMotor.get() + rearRightMotor.get()) / 2;
+        double magnitude2 = (rearLeftMotor.get() + frontRightMotor.get()) / 2;
+        double magnitude = MathUtils.pow(MathUtils.pow(magnitude1, 2) + MathUtils.pow(magnitude2, 2), .5);
+        SmartDashboard.putDouble("actual M", magnitude * 100);
+
+        double direction = MathUtils.atan((frontLeftMotor.get() + rearRightMotor.get()) / (frontRightMotor.get() + rearLeftMotor.get()));
+        if (Double.isNaN(direction)) {
+            SmartDashboard.putDouble("actual D", 0);
+        } else {
+            direction = Math.toDegrees(direction) - 45.0 + ((frontRightMotor.get() + rearLeftMotor.get()) < 0 ? 180 : 0);
+            SmartDashboard.putDouble("actual D", direction);
+        }
+
+        double rotation = (frontLeftMotor.get() - rearRightMotor.get()) / 2;
+        SmartDashboard.putDouble("actual R", Math.floor(rotation * 100));
+    }
+
     /**
      * Ramp from a given speed to a target speed using default max change.
      * @param target The target speed.
      * @param current The current speed.
      * @return The ramped speed.
      */
-    private double rampTo(double target, double current){
+    private double rampTo(double target, double current) {
         return rampTo(target, current, RAMPING_MAX_CHANGE);
     }
-    
+
     /**
      * Ramp from a given speed to a target speed.
      * @param target The target speed.
@@ -228,7 +212,7 @@ public class DriveSystem extends RobotDrive {
      * @param maxChange The maximum allowed change in speed dt.
      * @return The ramped speed.
      */
-    private double rampTo(double target, double current, double maxChange){
+    private double rampTo(double target, double current, double maxChange) {
         double delta = target - current; //the proposed change
         if (Math.abs(delta) > maxChange) { //proposed change is too large
             //make actual change the max allowed, accounting for sign
@@ -237,5 +221,37 @@ public class DriveSystem extends RobotDrive {
         current += delta;
         return current;
 
+    }
+
+    /**
+     * Limit motor values to the -1.0 to +1.0 range.
+     */
+    protected static double limit(double num) {
+        if (num > 1.0) {
+            return 1.0;
+        }
+        if (num < -1.0) {
+            return -1.0;
+        }
+        return num;
+    }
+
+    /**
+     * Normalize all wheel speeds if the magnitude of any wheel is greater than 1.0.
+     */
+    protected static void normalize(double wheelSpeeds[]) {
+        double maxMagnitude = Math.abs(wheelSpeeds[0]);
+        int i;
+        for (i = 1; i < 4; i++) {
+            double temp = Math.abs(wheelSpeeds[i]);
+            if (maxMagnitude < temp) {
+                maxMagnitude = temp;
+            }
+        }
+        if (maxMagnitude > 1.0) {
+            for (i = 0; i < 4; i++) {
+                wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
+            }
+        }
     }
 }

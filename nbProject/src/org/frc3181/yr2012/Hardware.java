@@ -34,7 +34,7 @@ public class Hardware {
 //    public static final Jaguar conveyorMotor = new Jaguar(1, 10);
 
     // Drive system
-    public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
+    public static RampingDriveSystem driveSystem = new RampingDriveSystem(Hardware.frontLeftMotor,
             Hardware.rearLeftMotor,
             Hardware.frontRightMotor,
             Hardware.rearRightMotor);

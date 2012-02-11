@@ -29,7 +29,7 @@ public class MessageBoxExt extends Widget {
         String in = (String) o;
         if(last.equals(in)) return;
         ta.setRows(ta.getRows()+1);
-        ta.append("\n"+(String) o);
+        ta.append("\n"+in);
         last = in;
         Dimension size = new Dimension();
         size.width = getSize().width - 16;

@@ -47,7 +47,7 @@ public class Sensors {
     }
 
     public static boolean getStopMoving(){
-        return(!(UpSensor.get()||DownSensor.get()));
+        return((UpSensor.get()||DownSensor.get()));
     }
     /**
      * Tells the Tipper and DriveSystem how close robot is to bridge.

@@ -25,6 +25,8 @@ public class DSOutput {
      * @param msg What message to display
      */
     public void say(int ln, String msg) {
+        if(msg == null)
+            msg = "null message passed";
         // DriverStationLCD.kLineLength=21
         // Add 21 spaces to clear the rest of the line
         msg += "                     ";

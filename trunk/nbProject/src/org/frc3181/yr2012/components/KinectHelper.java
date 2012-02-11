@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.frc3181.yr2012.components;
 
 import edu.wpi.first.wpilibj.Kinect;
@@ -76,7 +72,7 @@ public class KinectHelper {
     public void updateSkeleton() {
         kinectSkeleton = kinect.getSkeleton();
 
-        //SmartDashboard.putInt("track state", kinectSkeleton.GetTrackState().value);
+        SmartDashboard.putInt("track state", kinectSkeleton.GetTrackState().value);
     }
 
     /**

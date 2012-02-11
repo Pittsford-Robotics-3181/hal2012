@@ -1,11 +1,11 @@
 package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.Kinect;
+import edu.wpi.first.wpilibj.KinectStick;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Skeleton.tJointTypes;
+import edu.wpi.first.wpilibj.Skeleton.Joint;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.frc3181.yr2012.components.KinectHelper;
 
 /**
  * This is our robot's drive system, which implements mecanum wheels.
@@ -17,7 +17,9 @@ public class DriveSystem extends RobotDrive {
 
     private boolean slow;
     private boolean stop;
-    KinectHelper kinect = new KinectHelper();
+    //KinectHelper kinect = new KinectHelper();
+    Kinect theKinect;
+
 
     /**
      * Constructor.
@@ -30,7 +32,8 @@ public class DriveSystem extends RobotDrive {
         super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
         slow = false;
         stop = false;
-        kinect.initKinect();
+        //kinect.initKinect();
+        theKinect = Kinect.getInstance();
     }
 
     /**
@@ -44,30 +47,30 @@ public class DriveSystem extends RobotDrive {
      * @param rotation The rate of rotation for the robot that is completely independent of the magnitude or direction. [-1.0..1.0]
      */
     public void mecanumDrive(double magnitude, double direction, double rotation) {
-       kinect.updateSkeleton();
+        SmartDashboard.putInt("Skeleton track state", theKinect.getSkeleton().GetTrackState().value);
+        
         if (stop) {
             magnitude = direction = rotation = 0;
+        } // <editor-fold defaultstate="collapsed" desc="Kinect Drive Code">
+        else if (theKinect.getSkeleton().GetAnkleLeft().getX() < -.7){
+            Hardware.DSOut.say(3, "Kinect: shoot");
         }
-        // <editor-fold defaultstate="collapsed" desc="Kinect Drive Code">
-        
-       //drive forwards
-        else if ((kinect.getSkeleton().GetHandLeft().getY() > kinect.getSkeleton().GetHead().getY()) && (kinect.getSkeleton().GetHandRight().getY() > kinect.getSkeleton().GetHead().getY())) {
-       if ((kinect.getSkeleton().GetHandLeft().getZ() > kinect.getSkeleton().GetHead().getZ() -.25) && (kinect.getSkeleton().GetHandRight().getZ() > kinect.getSkeleton().GetHead().getZ()-.25)) {
+        //drive forwards
+        else if ((theKinect.getSkeleton().GetHandLeft().getY() > theKinect.getSkeleton().GetHead().getY()) && (theKinect.getSkeleton().GetHandRight().getY() > theKinect.getSkeleton().GetHead().getY())) {
+            if ((theKinect.getSkeleton().GetHandLeft().getZ() > theKinect.getSkeleton().GetHead().getZ() - .25) && (theKinect.getSkeleton().GetHandRight().getZ() > theKinect.getSkeleton().GetHead().getZ() - .25)) {
 
-            magnitude = .5;
-            direction = -180;//*/
-
-        }else{
-            magnitude = .5;
-            direction = 0;//*/
+                magnitude = .25;
+                direction = -180;//*/
+                Hardware.DSOut.say(3, "Kinect: forward");
+            } else {
+                magnitude = .25;
+                direction = 0;//  */
+                Hardware.DSOut.say(3, "Kinect: backward");
             }
 
-        }
-    
-
-// </editor-fold>
+        } // </editor-fold>
         else {
-
+            Hardware.DSOut.say(3, "");
             //perfect strafe
             // backwards
             if (Hardware.driveJoystick.getRawButton(2)) {
@@ -87,28 +90,25 @@ public class DriveSystem extends RobotDrive {
                 direction = 90;
             }
 
-
-
             //drive at half speed if trigger is pulled
             if (Hardware.driveJoystick.getTrigger()) {
                 magnitude *= .5;
                 rotation *= .5;
             }
-            //drive at half speed if trigger is pulled
+            //drive at half speed if the variable says so
             if (slow) {
                 magnitude *= .5;
                 rotation *= .5;
             }
 
-
+            //ramp
+            
         }
-
-
 
         //analyze values and correct if necessary
         //make magnitude and rotation zero if they are small enough
-        magnitude = Utils.checkForSmall(magnitude);
-        rotation = Utils.checkForSmall(rotation);
+        magnitude = Utils.checkForSmall(magnitude, .15);
+        rotation = Utils.checkForSmall(rotation, .15);
         //constrain values to range
         magnitude = Math.max(Math.min(magnitude, 1.0), 0.0);
         rotation = Math.max(Math.min(rotation, .5), -.5);
@@ -125,11 +125,11 @@ public class DriveSystem extends RobotDrive {
     }
 
     /**
-     * Converts buttons 4 and 5 on joystick to rotation. There are four cases:
+     * Converts buttons 8 and 9 on joystick to rotation. There are four cases:
      * neither pushed: no rotation
-     * just 4 pushed: counterclockwise rotation
-     * just 5 pushed: clockwise rotation
-     * both pushed: no rotation
+     * just 8 pushed: counterclockwise rotation
+     * just 9 pushed: clockwise rotation
+     * both pushed: counterclockwise rotation
      * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
      */
     private double calculateRotation() {
@@ -141,12 +141,7 @@ public class DriveSystem extends RobotDrive {
             return +(Hardware.driveJoystick.getTwist() / 4 + .25);
         }
 
-        return 0;/*
-        boolean ccw = Hardware.driveJoystick.getRawButton(4);
-        boolean cw = Hardware.driveJoystick.getRawButton(5);
-        //rotation is -1 for counterclockwise and +1 for clockwise
-        //for now, only full speed rotation is possible from this method
-        return Utils.toInt(cw) - Utils.toInt(ccw);*/
+        return 0;
     }
 
     /**
@@ -174,72 +169,4 @@ public class DriveSystem extends RobotDrive {
     public void setStop(boolean b) {
         stop = b;
     }
-
-    /*kinect is commented out until we figure out what we want to do
-    /**
-     * Use rectangular (Cartesian) coordinates to drive the robot. The Kinect
-     * works best with these coordinates, so this method should be used when
-     * using Kinect data only.
-     * @param x The x speed.
-     * @param y The y speed.
-     * @param rotation The rotation speed.
-     *
-    private void mecanumDriveKinect(double x, double y, double rotation) {
-    if (stop) {
-    x = 0;
-    y = 0;
-    rotation = 0;
-    } else {
-    //make magnitude and rotation zero if they are small enough
-    x = Utils.checkForSmall(x);
-    y = Utils.checkForSmall(y);
-    rotation = Utils.checkForSmall(rotation);
-    
-    //drive at half speed if trigger is pulled
-    if (Hardware.driveJoystick.getTrigger()) {
-    x *= .5;
-    y *= .5;
-    rotation *= .5;
-    }
-    //drive at half speed if slowness is set
-    if (slow) {
-    x *= .5;
-    y *= .5;
-    rotation *= .5;
-    }
-    }
-    
-    //call the drive method inherited from RobotDrive
-    mecanumDrive_Cartesian(x, y, rotation, 0);
-    
-    Hardware.DSOut.say(4, "X: " + x);
-    Hardware.DSOut.say(5, "Y: " + y);
-    Hardware.DSOut.say(6, "Rotation:  " + rotation);
-    }
-    
-    /**
-     * Converts buttons 4 and 5 on joystick to rotation. There are four cases:
-     * neither pushed: no rotation
-     * just 4 pushed: counterclockwise rotation
-     * just 5 pushed: clockwise rotation
-     * both pushed: no rotation
-     * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
-     *
-    private double calculateRotationKinect() {
-    boolean ccw = Hardware.leftArmKinect.getRawButton(4);
-    boolean cw = Hardware.leftArmKinect.getRawButton(5);
-    //rotation is -1 for counterclockwise and +1 for clockwise
-    //for now, only full speed rotation is possible from this method
-    return Utils.toInt(cw) - Utils.toInt(ccw);
-    }
-    
-    /**
-     * Allows the Robot to drive in any direction, as well as rotating.
-     *
-    public void driveKinect() {
-    double X = Hardware.leftArmKinect.getX();
-    double Y = Hardware.leftArmKinect.getY();
-    double rotation = calculateRotationKinect();
-    mecanumDriveKinect(X, Y, rotation); //robot drives
-    }*/
 }

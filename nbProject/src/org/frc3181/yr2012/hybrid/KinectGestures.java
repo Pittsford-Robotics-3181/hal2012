@@ -149,6 +149,27 @@ public class KinectGestures {
         }
         return false;
     }
+    /**
+     * If driving, left hand and right hand are both left of head.
+     * @return Whether to strafe left.
+     */
+    public boolean getStrafeLeft() {
+        if (isDriving()) {
+            return (getSkeleton().GetHandLeft().getX() < getSkeleton().GetHead().getX() - .25) && (getSkeleton().GetHandRight().getX() < getSkeleton().GetHead().getX() - .25);
+        }
+        return false;
+    }
+
+    /**
+     * If driving, left hand and right hand are both left of head.
+     * @return Whether to strafes right.
+     */
+    public boolean getStrafeRight() {
+        if (isDriving()) {
+            return (getSkeleton().GetHandLeft().getX() > getSkeleton().GetHead().getX() + .25) && (getSkeleton().GetHandRight().getX() > getSkeleton().GetHead().getX() + .25);
+        }
+        return false;
+    }
 
     /**
      * If left ankle is out enough.

@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Robbie Markwick
  * @author Ben
  * @author Liam
+ * @deprecated Use RampingDriveSystem instead.
  */
 public class DriveSystem extends RobotDrive {
 

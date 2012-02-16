@@ -1,5 +1,6 @@
 package org.frc3181.yr2012.hybrid;
 
+import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.Kinect;
 import edu.wpi.first.wpilibj.Skeleton;
 import edu.wpi.first.wpilibj.Skeleton.Joint;
@@ -15,9 +16,9 @@ import org.frc3181.yr2012.Hardware;
 public class KinectGestures {
 
     //Kinect Class from station;
-    private Kinect kinect;
+    private static Kinect kinect;
     //helper array
-    private Skeleton.tJointTypes[] joints = {tJointTypes.kHipCenter, tJointTypes.kSpine,
+    private static Skeleton.tJointTypes[] joints = {tJointTypes.kHipCenter, tJointTypes.kSpine,
         tJointTypes.kShoulderCenter, tJointTypes.kHead, tJointTypes.kShoulderLeft,
         tJointTypes.kElbowLeft, tJointTypes.kWristLeft, tJointTypes.kHandLeft,
         tJointTypes.kShoulderRight, tJointTypes.kElbowRight, tJointTypes.kWristRight,
@@ -31,7 +32,7 @@ public class KinectGestures {
     /**
      * Initialize the Kinect device.
      */
-    public void initKinect() {
+    public static void initKinect() {
         kinect = Kinect.getInstance();
     }
 
@@ -43,7 +44,7 @@ public class KinectGestures {
      * @param direction Which of the x, y, and z axes to measure along.
      * @return Whether the joints are close enough.
      */
-    public boolean jointWithinRange(Joint joint1, Joint joint2, double range, int direction) {
+    public static boolean jointWithinRange(Joint joint1, Joint joint2, double range, int direction) {
         switch (direction) {
             case X:
                 return Math.abs(joint1.getX() - joint2.getX()) <= range;
@@ -60,7 +61,7 @@ public class KinectGestures {
      * Gets the skeleton from the Kinect.
      * @return The skeleton.
      */
-    public Skeleton getSkeleton() {
+    public static Skeleton getSkeleton() {
         return kinect.getSkeleton();
     }
 
@@ -83,9 +84,6 @@ public class KinectGestures {
         return kinect.getSkeleton().GetJoint(joints[jointID]);
     }
 
-    
-    
-    
     /* * * * * * * * * * * * * * * * * * * * * * * * * * *\
      *    ___  ____  ___  ____  __  __  ____  ____  ___  *
      *   / __)( ___)/ __)(_  _)(  )(  )(  _ \( ___)/ __) *
@@ -96,34 +94,31 @@ public class KinectGestures {
      * read certain gestures from the Kinect and tell us *
      * what we should be doing.                          *
     \* * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    
-    
     /* Check if the robot should be driving, i.e. both hands above head.
      * @return Whether to drive.
      */
-    public boolean isDriving() {
+    public static boolean isDriving() {
         return (getSkeleton().GetHandLeft().getY() > getSkeleton().GetHead().getY()) && (getSkeleton().GetHandRight().getY() > getSkeleton().GetHead().getY());
     }
 
     /**
-     * If driving and both hands are back.
+     * If driving and both hands are forward.
      * @return Whether to drive forward.
      */
-    public boolean getDriveForward() {
+    public static boolean getDriveForward() {
         if (isDriving()) {
-            return (getSkeleton().GetHandLeft().getZ() > getSkeleton().GetHead().getZ() - .25) && (getSkeleton().GetHandRight().getZ() > getSkeleton().GetHead().getZ() - .25);
+            return (getSkeleton().GetHandLeft().getZ() < getSkeleton().GetHead().getZ() - .25) && (getSkeleton().GetHandRight().getZ() < getSkeleton().GetHead().getZ() - .25);
         }
         return false;
     }
 
     /**
-     * If driving and both hands are forward.
+     * If driving and both hands are back.
      * @return Whether to drive back.
      */
-    public boolean getDriveBackward() {
+    public static boolean getDriveBackward() {
         if (isDriving()) {
-            return (getSkeleton().GetHandLeft().getZ() < getSkeleton().GetHead().getZ() - .25) && (getSkeleton().GetHandRight().getZ() < getSkeleton().GetHead().getZ() - .25);
+            return (getSkeleton().GetHandLeft().getZ() > getSkeleton().GetHead().getZ() - .25) && (getSkeleton().GetHandRight().getZ() > getSkeleton().GetHead().getZ() - .25);
         }
         return false;
     }
@@ -132,7 +127,7 @@ public class KinectGestures {
      * If driving, left hand is back, and right hand is forward.
      * @return Whether to turn left.
      */
-    public boolean getTurnLeft() {
+    public static boolean getTurnLeft() {
         if (isDriving()) {
             return (getSkeleton().GetHandLeft().getZ() > getSkeleton().GetHead().getZ() - .25) && (getSkeleton().GetHandRight().getZ() < getSkeleton().GetHead().getZ() - .25);
         }
@@ -143,19 +138,20 @@ public class KinectGestures {
      * If driving, left hand is forward, and right hand is back.
      * @return Whether to turn right.
      */
-    public boolean getTurnRight() {
+    public static boolean getTurnRight() {
         if (isDriving()) {
             return (getSkeleton().GetHandLeft().getZ() < getSkeleton().GetHead().getZ() - .25) && (getSkeleton().GetHandRight().getZ() > getSkeleton().GetHead().getZ() - .25);
         }
         return false;
     }
+
     /**
      * If driving, left hand and right hand are both left of head.
      * @return Whether to strafe left.
      */
-    public boolean getStrafeLeft() {
+    public static boolean getStrafeLeft() {
         if (isDriving()) {
-            return (getSkeleton().GetHandLeft().getX() < getSkeleton().GetHead().getX() - .25) && (getSkeleton().GetHandRight().getX() < getSkeleton().GetHead().getX() - .25);
+            return (getSkeleton().GetHandLeft().getX() < getSkeleton().GetHead().getX()) && (getSkeleton().GetHandRight().getX() < getSkeleton().GetHead().getX());
         }
         return false;
     }
@@ -164,9 +160,9 @@ public class KinectGestures {
      * If driving, left hand and right hand are both left of head.
      * @return Whether to strafes right.
      */
-    public boolean getStrafeRight() {
+    public static boolean getStrafeRight() {
         if (isDriving()) {
-            return (getSkeleton().GetHandLeft().getX() > getSkeleton().GetHead().getX() + .25) && (getSkeleton().GetHandRight().getX() > getSkeleton().GetHead().getX() + .25);
+            return (getSkeleton().GetHandLeft().getX() > getSkeleton().GetHead().getX()) && (getSkeleton().GetHandRight().getX() > getSkeleton().GetHead().getX());
         }
         return false;
     }
@@ -175,7 +171,55 @@ public class KinectGestures {
      * If left ankle is out enough.
      * @return Whether to shoot.
      */
-    public boolean getShoot() {
+    public static boolean getShoot() {
         return getSkeleton().GetAnkleLeft().getX() < -.7;
+    }
+
+    /**NEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEW**/
+    /**
+     * This method returns the angle (in degrees) of the vector pointing from Origin to Measured
+     * projected to the XY plane. If the mirrored parameter is true the vector is flipped about the Y-axis.
+     * Mirroring is used to avoid the region where the atan2 function is discontinuous
+     * @param origin The Skeleton Joint to use as the origin point
+     * @param measured The Skeleton Joint to use as the endpoint of the vector
+     * @param mirrored Whether to mirror the X coordinate of the joint about the Y-axis
+     * @return The angle in degrees
+     */
+    public static double AngleXY(Skeleton.Joint origin, Skeleton.Joint measured, boolean mirrored) {
+        return Math.toDegrees(MathUtils.atan2(measured.getY() - origin.getY(),
+                (mirrored) ? (origin.getX() - measured.getX()) : (measured.getX() - origin.getX())));
+    }
+
+    /**
+     * This method takes an input, an input range, and an output range,
+     * and uses them to scale and constrain the input to the output range
+     * @param input The input value to be manipulated
+     * @param inputMin The minimum value of the input range
+     * @param inputMax The maximum value of the input range
+     * @param outputMin The minimum value of the output range
+     * @param outputMax The maximum value of the output range
+     * @return The output value scaled and constrained to the output range
+     */
+    public static double CoerceToRange(double input, double inputMin, double inputMax, double outputMin, double outputMax) {
+        /* Determine the center of the input range and output range */
+        double inputCenter = Math.abs(inputMax - inputMin) / 2 + inputMin;
+        double outputCenter = Math.abs(outputMax - outputMin) / 2 + outputMin;
+
+        /* Scale the input range to the output range */
+        double scale = (outputMax - outputMin) / (inputMax - inputMin);
+
+        /* Apply the transformation */
+        double result = (input + -inputCenter) * scale + outputCenter;
+
+        /* Constrain to the output range */
+        return Math.max(Math.min(result, outputMax), outputMin);
+    }
+
+    public static double getLeftArmValue() {
+        return CoerceToRange(AngleXY(kinect.getSkeleton().GetShoulderLeft(), kinect.getSkeleton().GetWristLeft(), true), -70, 70, -1, 1);
+    }
+
+    public static double getRightArmValue() {
+        return CoerceToRange(AngleXY(kinect.getSkeleton().GetShoulderRight(), kinect.getSkeleton().GetWristRight(), false), -70, 70, -1, 1);
     }
 }

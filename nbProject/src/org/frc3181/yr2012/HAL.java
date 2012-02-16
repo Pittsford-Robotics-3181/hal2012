@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc3181.yr2012.components.Sensors;
+import org.frc3181.yr2012.hybrid.HybridKinect;
+import org.frc3181.yr2012.hybrid.KinectGestures;
 
 /**
  * The main class for our 2012 robot, HAL.
@@ -22,7 +24,7 @@ public class HAL extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        //nothing here yet
+        KinectGestures.initKinect();
     }
 
     /**
@@ -58,6 +60,7 @@ public class HAL extends IterativeRobot {
      * This function is called periodically during autonomous.
      */
     public void autonomousPeriodic() {
+        HybridKinect.run();
         updateDash();
     }
 

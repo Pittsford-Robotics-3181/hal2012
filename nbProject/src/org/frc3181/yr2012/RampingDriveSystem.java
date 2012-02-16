@@ -145,7 +145,7 @@ public class RampingDriveSystem {
      * @param rotation The rate of rotation for the robot that is completely independent of
      * the magnitute or direction. [-1.0..1.0]
      */
-    public void mecanumDrive_Polar(double magnitude, double direction, double rotation) {
+    private void mecanumDrive_Polar(double magnitude, double direction, double rotation) {
         // Normalized for full power along the Cartesian axes.
         magnitude = limit(magnitude) * Math.sqrt(2.0);
         // The rollers are at 45 degree angles.

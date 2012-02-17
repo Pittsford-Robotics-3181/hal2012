@@ -97,17 +97,7 @@ public class HAL extends IterativeRobot {
         
         //lift balls if present
         //Hardware.ballLift.moveBalls();
-        
-        
-//        lite component code
-//        if(Hardware.driveJoystick.getRawButton(8)){
-//            //tip
-//            Hardware.driveSystem.setStop(true);
-//            Hardware.bridgeTip.tip();
-//        }else{
-//            Hardware.driveSystem.setStop(false);
-//        }
-         
+
     }
 
     /**

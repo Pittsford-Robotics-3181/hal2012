@@ -4,7 +4,7 @@
  */
 package frc3181.smartdash.widget;
 
-import edu.wpi.first.smartdashboard.gui.Widget;
+import edu.wpi.first.smartdashboard.gui.StaticWidget;
 import edu.wpi.first.smartdashboard.properties.Property;
 import edu.wpi.first.smartdashboard.types.DataType;
 import edu.wpi.first.smartdashboard.robot.Robot;
@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.networking.NetworkTable;
  *
  * @author Chris Cheng
  */
-public class FRC3181Widget extends Widget {
+public class FRC3181Widget extends StaticWidget {
     
     public static final String NAME = "3181 Dashboard Widget";
     public static final DataType[] TYPES = { DataType.getType("3181 Custom Packet") };
@@ -38,11 +38,6 @@ public class FRC3181Widget extends Widget {
 
     @Override
     public void propertyChanged(Property prprt) {
-    }
-
-    @Override
-    public void setValue(Object o) {
-        ;
     }
     
 }

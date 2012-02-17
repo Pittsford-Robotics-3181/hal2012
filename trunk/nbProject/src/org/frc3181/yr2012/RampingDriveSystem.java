@@ -95,11 +95,7 @@ public class RampingDriveSystem {
     }
 
     /**
-     * Converts buttons 8 and 9 on joystick to rotation. There are four cases:
-     * neither pushed: no rotation
-     * just 8 pushed: counterclockwise rotation
-     * just 9 pushed: clockwise rotation
-     * both pushed: counterclockwise rotation
+     * Convert throttle (twist on the joystick) to rotation speed.
      * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
      */
     private double calculateRotation() {
@@ -125,7 +121,7 @@ public class RampingDriveSystem {
     }
 
     /**
-     * Stops the robot.
+     * Stops the robot (or disables the stop).
      * @param b Whether the robot should stop.
      */
     public void setStop(boolean b) {
@@ -177,6 +173,9 @@ public class RampingDriveSystem {
         calculateActualParams();
     }
 
+    /**
+     * Find the magnitude, direction, and rotation the robot is actually driving at and put them on the Smart Dashboard.
+     */
     private void calculateActualParams() {
         double magnitude1 = (frontLeftMotor.get() + rearRightMotor.get()) / 2;
         double magnitude2 = (rearLeftMotor.get() + frontRightMotor.get()) / 2;

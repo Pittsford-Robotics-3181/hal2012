@@ -10,12 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * @author liam middlebrook
  */
 public class Hardware {
-
-    /* TODO: add vision (continued below)
-     *
-     * Under basis of TCP Socket Server receiving doubles  from C++ :Love, Liam
-     * Possibly creating one extra thread to run the server on? or just modifying the sockets to send the real data after they sync in time.
-     */
+    //TODO: Get image data from SmartDashboard or camera or DriverStation or something, and do stuff with it.
     
     // motors
     // Note that slot 1 refers to what appears to be the second slot
@@ -44,6 +39,7 @@ public class Hardware {
     // Joystick for Shooter
     public static Joystick ballJoystick = new Joystick(2);
     
+    //TODO: Probably, we want these to be the litecomponent parts. Make sure you import the correct ones and change vars accordingly.
     // Shooter
 //    public static Shooter ballLauncher = new Shooter(aimShooter, leftShooter, rightShooter);
 //    // Roller
@@ -54,7 +50,7 @@ public class Hardware {
 //    public static Conveyor ballLift = new Conveyor(conveyorMotor);
     
 
-    // Sensors are in Sensors.java
+    // Sensors are in Sensors.java instead of here.
 
     // Pseudo-hardware 
     public static DSOutput DSOut = new DSOutput();

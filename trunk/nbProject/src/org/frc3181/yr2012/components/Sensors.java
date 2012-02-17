@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
  * Our sensors. Note that the sensor slots/channels must be changed!
  * @author Robbie
  * @author Ben
+ * @deprecated Use litecomponents.Sensors
  */
 public class Sensors {
     public static Encoder testEncoder = new Encoder(13,14);
@@ -26,15 +27,11 @@ public class Sensors {
     public static final int AWAY_FROM_BRIDGE = 0;
     public static final int NEAR_BRIDGE = 1;
     public static final int AT_BRIDGE = 2;
-    //shooter encoders
-    //public static Encoder leftShooterEncoder = new Encoder(/*a*/1, /*b*/2);
-    //{
-    //    leftShooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
-    //}
-    //public static Encoder rightShooterEncoder = new Encoder(/*a*/3, /*b*/4);
-    //{
-    //    rightShooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
-    //}
+    //shooter encoder
+    public static Encoder shooterEncoder = new Encoder(/*a*/3, /*b*/4);
+    {
+        shooterEncoder.setPIDSourceParameter(Encoder.PIDSourceParameter.kRate);
+    }
 
     /**
      * Gets the angle/distance the tipper is positioned at. This method should

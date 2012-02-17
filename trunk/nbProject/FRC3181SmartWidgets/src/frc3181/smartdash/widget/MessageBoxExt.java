@@ -27,14 +27,14 @@ public class MessageBoxExt extends Widget {
     @Override
     public void setValue(Object o) {
         String in = (String) o;
-        if(last.equals(in)) return;
+        if(last.equals(in) || last.isEmpty()) { last = ""; return; }
         ta.setRows(ta.getRows()+1);
         ta.append("\n"+in);
         last = in;
         Dimension size = new Dimension();
         size.width = getSize().width - 16;
         size.height = ta.getRows() * 12;
-        ta.setSize(size);
+        ta.setPreferredSize(size);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MessageBoxExt extends Widget {
         ta.setEditable(false);
         ta.setBackground(Color.white);
         JScrollPane sp = new JScrollPane(ta);
-        sp.setPreferredSize(new Dimension(200,64));
+        sp.setPreferredSize(new Dimension(200,128));
         setPreferredSize(new Dimension(200,128));
         this.add(sp);
     }

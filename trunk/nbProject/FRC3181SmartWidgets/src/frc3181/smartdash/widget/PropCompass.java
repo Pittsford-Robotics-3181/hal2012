@@ -42,13 +42,13 @@ public class PropCompass extends StaticWidget {
         g.setColor(Color.red);
         g.drawOval(1, 1, size.width-1, size.height-1); //r = 64
         double d = 0.0;
-        if(!(propD.getValue().isEmpty()))
+        if(Robot.getTable().containsKey(propD.getValue()))
             d = Robot.getTable().getDouble(propD.getValue());
         double m = 0.0;
-        if(!(propM.getValue().isEmpty()))
+        if(Robot.getTable().containsKey(propM.getValue()))
             m = Robot.getTable().getDouble(propM.getValue()) / 100;
         double r = 0.0;
-        if(!(propR.getValue().isEmpty()))
+        if(Robot.getTable().containsKey(propR.getValue()))
             r = Robot.getTable().getDouble(propR.getValue()) / 100 * 360;
         g.drawLine(getSize().width/2, getSize().height/2, (int) ((getSize().width/2)+m*((getSize().width/2)*(Math.sin(Math.toRadians(d))))), (int) ((getSize().height/2)-m*((getSize().height/2)*(Math.cos(Math.toRadians(d))))));
         g.drawArc(getSize().width/4, getSize().height/4, getSize().width/2, getSize().height/2, 90, (int) (0-r));
@@ -60,7 +60,6 @@ public class PropCompass extends StaticWidget {
     }
     
     class CompassThread extends Thread {
-        boolean destroyed = false;
         
         public CompassThread() {
             super("PropCompassThread");

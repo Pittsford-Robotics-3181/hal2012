@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
  * The shooter.
  * @author Robbie
  * @author Ben
+ * @deprecated Use litecomponents.Shooter
  */
 public class Shooter {
 
@@ -68,7 +69,7 @@ public class Shooter {
     }
     
     /**
-     * Stop the shooter.
+     * Stop the shooter. Shouldn't be called.
      */
     public void stopShooter(){
         /*leftCannonController.disable();

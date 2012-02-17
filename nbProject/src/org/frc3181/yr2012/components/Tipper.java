@@ -8,6 +8,7 @@ import org.frc3181.yr2012.Utils;
  * The mechanism that tips the bridge.
  * @author Robbie
  * @author Ben
+ * @deprecated Use litecomponents.Tipper
  */
 public class Tipper {
 

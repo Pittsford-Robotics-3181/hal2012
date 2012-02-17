@@ -1,13 +1,11 @@
-package org.frc3181.yr2012.components;
+package org.frc3181.yr2012.litecomponents;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import org.frc3181.yr2012.Hardware;
 
 /**
  * The roller that collects the balls.
- * @author Robbie
  * @author Ben
- * @deprecated Use litecomponents.Roller
  */
 public class Roller {
 
@@ -37,14 +35,14 @@ public class Roller {
         } else {
             isCollecting = false;
         }
-        updateRollerVelocity(isCollecting);
+        updateRollerVelocity();
     }
 
     /**
      * Private function to update the rollers velocity.
      * @param isCollecting 
      */
-    private void updateRollerVelocity(boolean isCollecting) {
+    private void updateRollerVelocity() {
         if (isCollecting) {
             collector.set(1.00);
         } else {

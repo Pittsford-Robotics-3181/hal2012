@@ -10,6 +10,12 @@ import edu.wpi.first.smartdashboard.robot.Robot;
 import java.awt.Dimension;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 import javax.swing.JLabel;
 
 /**
@@ -26,8 +32,8 @@ public class CamTrack2012 extends StaticWidget {
     public void init() {
         ctThread.start();
         JLabel l = new JLabel("Don't delete me, please!\nI manage the Camera Tracker!");
-        setPreferredSize(new Dimension(64, 128));
-        l.setPreferredSize(new Dimension(64, 128));
+        setPreferredSize(new Dimension(128, 256));
+        l.setPreferredSize(new Dimension(128, 256));
         add(l);
     }
 
@@ -39,6 +45,7 @@ public class CamTrack2012 extends StaticWidget {
 
 class CamTrackThread extends Thread {
     private Socket skt;
+    private Scanner scnr;
     
     public CamTrackThread() {
         super("CamTrackThread");
@@ -52,8 +59,110 @@ class CamTrackThread extends Thread {
         ObjectInputStream input;
         try {
             input = new ObjectInputStream(skt.getInputStream());
-            while(true) { if(input.available() > 0) { Robot.getTable().putString("CamTrack", (String) input.readObject()); } }
+            while(true) { if(input.available() > 0) {
+                String in = (String) input.readObject();
+                String[] alpha = Pattern.compile(";").split(in);
+                CamPoint[] beta = new CamPoint[alpha.length];
+                double ax = 0, ay = 0;
+                for(int i = 0; i < alpha.length; i++) {
+                    String[] charlie = Pattern.compile(",").split(alpha[i]);
+                    beta[i] = new CamPoint(Integer.parseInt(charlie[1]),Integer.parseInt(charlie[2]));
+                }
+                ax = CamPoint.averageX(beta); ay = CamPoint.averageY(beta);
+                ArrayList<CamPoint> xy = new ArrayList<CamPoint>(1), xY = new ArrayList<CamPoint>(1), Xy = new ArrayList<CamPoint>(1), XY = new ArrayList<CamPoint>(1);
+                //Ben wanted a comment: lowercase means less than average, uppercase means more than average.
+                for(int i = 0; i < beta.length; i++) {
+                    if(beta[i].x >= ax && beta[i].y >= ay) XY.add(beta[i]);
+                    if(beta[i].x <= ax && beta[i].y >= ay) xY.add(beta[i]);
+                    if(beta[i].x >= ax && beta[i].y <= ay) Xy.add(beta[i]);
+                    if(beta[i].x <= ax && beta[i].y <= ay) xy.add(beta[i]);
+                }
+                
+                Double[] dist = new Double[xy.size()];
+                for(int i = 0; i < xy.size(); i++) {
+                    dist[i] = Math.sqrt(Math.pow(xy.get(i).x - ax, 2) + Math.pow(xy.get(i).y - ay, 2));
+                }
+                Double[] dists = new Double[xy.size()];
+                System.arraycopy(dist, 0, dists, 0, dist.length);
+                Arrays.sort(dists, Collections.reverseOrder());
+                for(int i = 0; i < dist.length; i++) {
+                    if(dists[1].doubleValue() == dist[i].doubleValue()) {
+                        Robot.getTable().putDouble("blx", xy.get(i).x);
+                        Robot.getTable().putDouble("bly", xy.get(i).y);
+                    }
+                }
+                
+                dist = new Double[xY.size()];
+                for(int i = 0; i < xY.size(); i++) {
+                    dist[i] = Math.sqrt(Math.pow(xY.get(i).x - ax, 2) + Math.pow(xY.get(i).y - ay, 2));
+                }
+                dists = new Double[xY.size()];
+                System.arraycopy(dist, 0, dists, 0, dist.length);
+                Arrays.sort(dists, Collections.reverseOrder());
+                for(int i = 0; i < dist.length; i++) {
+                    if(dists[1].doubleValue() == dist[i].doubleValue()) {
+                        Robot.getTable().putDouble("tlx", xY.get(i).x);
+                        Robot.getTable().putDouble("tly", xY.get(i).y);
+                    }
+                }
+                
+                dist = new Double[Xy.size()];
+                for(int i = 0; i < Xy.size(); i++) {
+                    dist[i] = Math.sqrt(Math.pow(Xy.get(i).x - ax, 2) + Math.pow(Xy.get(i).y - ay, 2));
+                }
+                dists = new Double[Xy.size()];
+                System.arraycopy(dist, 0, dists, 0, dist.length);
+                Arrays.sort(dists, Collections.reverseOrder());
+                for(int i = 0; i < dist.length; i++) {
+                    if(dists[1].doubleValue() == dist[i].doubleValue()) {
+                        Robot.getTable().putDouble("brx", Xy.get(i).x);
+                        Robot.getTable().putDouble("bry", Xy.get(i).y);
+                    }
+                }
+                
+                dist = new Double[XY.size()];
+                for(int i = 0; i < XY.size(); i++) {
+                    dist[i] = Math.sqrt(Math.pow(XY.get(i).x - ax, 2) + Math.pow(XY.get(i).y - ay, 2));
+                }
+                dists = new Double[XY.size()];
+                System.arraycopy(dist, 0, dists, 0, dist.length);
+                Arrays.sort(dists, Collections.reverseOrder());
+                for(int i = 0; i < dist.length; i++) {
+                    if(dists[1].doubleValue() == dist[i].doubleValue()) {
+                        Robot.getTable().putDouble("trx", XY.get(i).x);
+                        Robot.getTable().putDouble("try", XY.get(i).y);
+                    }
+                }
+            } }
         } catch (Exception ex) {}
      }
         
+}
+
+class CamPoint {
+    public int x;
+    public int y;
+    
+    public CamPoint(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    public static double averageX(CamPoint[] pts) {
+        double rtn = 0.0;
+        for(int i = 0; i < pts.length; i++) {
+            rtn += pts[i].x;
+        }
+        rtn /= pts.length;
+        return rtn;
+    }
+    
+    public static double averageY(CamPoint[] pts) {
+        double rtn = 0.0;
+        for(int i = 0; i < pts.length; i++) {
+            rtn += pts[i].y;
+        }
+        rtn /= pts.length;
+        return rtn;
+    }
 }

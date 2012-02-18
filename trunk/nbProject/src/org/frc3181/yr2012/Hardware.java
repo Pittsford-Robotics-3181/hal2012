@@ -16,10 +16,10 @@ public class Hardware {
     // Note that slot 1 refers to what appears to be the second slot
     // "slot 1" is the first three slots; "slot 2" is the fifth through seventh slots; 4 and 8 are always empty
     // Drive Motors
-    public static Jaguar frontLeftMotor = new Jaguar(/*slot*/1, /*channel*/ 7);
-    public static Jaguar rearLeftMotor = new Jaguar(/*slot*/1, /*channel*/ 6);
-    public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/ 4);
-    public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/ 5);
+    public static Jaguar frontLeftMotor = new Jaguar(/*slot*/1, /*channel*/ 1);
+    public static Jaguar rearLeftMotor = new Jaguar(/*slot*/1, /*channel*/ 2);
+    public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/ 3);
+    public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/ 4);
     // Non-Driving Motors
 //    public static final Victor aimShooter = new Victor(1, 6);
 //    public static final Victor leftShooter = new Victor(1, 7);

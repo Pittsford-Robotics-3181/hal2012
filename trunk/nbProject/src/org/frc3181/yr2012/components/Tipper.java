@@ -35,8 +35,10 @@ public class Tipper {
      */
     private void tipBridge() {
         Hardware.driveSystem.setStop(true);
-        tipperLifter.set(-1);
-        targetHeight = TIPPER_DOWN;
+        if(Sensors.tipperAtBottom()) return;
+        else
+            tipperLifter.set(-1);
+            targetHeight = TIPPER_DOWN;
     }
 
     /**
@@ -67,18 +69,20 @@ public class Tipper {
                 tipperLifter.set(.25*Utils.checkForSmall(Sensors.getTipperDistance()-targetHeight,.1));
             if(Utils.checkForSmall(Sensors.getTipperDistance()-TIPPER_HALF,.1)==0){
             switch (Sensors.senseBridge()) {
-                case 0:
+                case Sensors.AWAY_FROM_BRIDGE:
                     Hardware.driveSystem.setSlow(false);
+                    Hardware.driveSystem.setStop(true);
                     readTipControls();
                     break;
                 case Sensors.NEAR_BRIDGE:
                     Hardware.driveSystem.setSlow(true);
+                    Hardware.driveSystem.setStop(false);
                     break;
-                case Sensors.AT_BRIDGE: {
+                case Sensors.AT_BRIDGE:
+                    Hardware.driveSystem.setSlow(false);
                     Hardware.driveSystem.setStop(true);
                     tipBridge();
                     break;
-                }
             }
             }
         }
@@ -99,17 +103,20 @@ public class Tipper {
                    return false;
             else if(Sensors.getTipperDistance()==TIPPER_HALF){
             switch (Sensors.senseBridge()) {
-                case 0:
+                case Sensors.AWAY_FROM_BRIDGE:
                     Hardware.driveSystem.setSlow(false);
+                    Hardware.driveSystem.setStop(true);
+                    readTipControls();
                     break;
                 case Sensors.NEAR_BRIDGE:
                     Hardware.driveSystem.setSlow(true);
+                    Hardware.driveSystem.setStop(false);
                     break;
-                case Sensors.AT_BRIDGE: {
+                case Sensors.AT_BRIDGE:
+                    Hardware.driveSystem.setSlow(false);
                     Hardware.driveSystem.setStop(true);
                     tipBridge();
-                    return true;
-                }
+                    break;
             }
             }
             return false;

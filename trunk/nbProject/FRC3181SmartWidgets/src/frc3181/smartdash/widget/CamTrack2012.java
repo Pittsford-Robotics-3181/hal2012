@@ -87,8 +87,8 @@ class CamTrackThread extends Thread {
                 Arrays.sort(dists, Collections.reverseOrder());
                 for(int i = 0; i < dist.length; i++) {
                     if(dists[1].doubleValue() == dist[i].doubleValue()) {
-                        Robot.getTable().putDouble("blx", xy.get(i).x);
-                        Robot.getTable().putDouble("bly", xy.get(i).y);
+                        Robot.getTable().putInt("blx", xy.get(i).x);
+                        Robot.getTable().putInt("bly", xy.get(i).y);
                     }
                 }
                 
@@ -101,8 +101,8 @@ class CamTrackThread extends Thread {
                 Arrays.sort(dists, Collections.reverseOrder());
                 for(int i = 0; i < dist.length; i++) {
                     if(dists[1].doubleValue() == dist[i].doubleValue()) {
-                        Robot.getTable().putDouble("tlx", xY.get(i).x);
-                        Robot.getTable().putDouble("tly", xY.get(i).y);
+                        Robot.getTable().putInt("tlx", xY.get(i).x);
+                        Robot.getTable().putInt("tly", xY.get(i).y);
                     }
                 }
                 
@@ -115,8 +115,8 @@ class CamTrackThread extends Thread {
                 Arrays.sort(dists, Collections.reverseOrder());
                 for(int i = 0; i < dist.length; i++) {
                     if(dists[1].doubleValue() == dist[i].doubleValue()) {
-                        Robot.getTable().putDouble("brx", Xy.get(i).x);
-                        Robot.getTable().putDouble("bry", Xy.get(i).y);
+                        Robot.getTable().putInt("brx", Xy.get(i).x);
+                        Robot.getTable().putInt("bry", Xy.get(i).y);
                     }
                 }
                 
@@ -129,8 +129,8 @@ class CamTrackThread extends Thread {
                 Arrays.sort(dists, Collections.reverseOrder());
                 for(int i = 0; i < dist.length; i++) {
                     if(dists[1].doubleValue() == dist[i].doubleValue()) {
-                        Robot.getTable().putDouble("trx", XY.get(i).x);
-                        Robot.getTable().putDouble("try", XY.get(i).y);
+                        Robot.getTable().putInt("trx", XY.get(i).x);
+                        Robot.getTable().putInt("try", XY.get(i).y);
                     }
                 }
             } }

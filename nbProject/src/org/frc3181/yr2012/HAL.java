@@ -3,7 +3,7 @@ package org.frc3181.yr2012;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.frc3181.yr2012.components.Sensors;
+import org.frc3181.yr2012.litecomponents.Sensors;
 import org.frc3181.yr2012.hybrid.HybridKinect;
 import org.frc3181.yr2012.hybrid.KinectGestures;
 
@@ -110,8 +110,6 @@ public class HAL extends IterativeRobot {
         SmartDashboard.putDouble("Front Right", Math.floor(Hardware.frontRightMotor.get() * 128));
         SmartDashboard.putDouble("Rear Left", Math.floor(Hardware.rearLeftMotor.get() * 128));
         SmartDashboard.putDouble("Rear Right", Math.floor(Hardware.rearRightMotor.get() * 128));
-        SmartDashboard.putDouble("Encoder Distance", Sensors.testEncoder.getDistance());
-        SmartDashboard.putDouble("Encoder Rate", Sensors.testEncoder.getRate());
         double t = tT.get();
         SmartDashboard.putString("Time", (int) Math.floor(t / 60) + ":" + ((t % 60) < 10 ? "0" : "") + (int) Math.floor(t % 60));
     }

@@ -6,6 +6,7 @@ import org.frc3181.yr2012.Hardware;
 /**
  * The roller that collects the balls.
  * @author Ben
+ * @author Robbie
  */
 public class Roller {
 

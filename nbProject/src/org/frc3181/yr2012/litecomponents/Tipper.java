@@ -15,6 +15,7 @@ public class Tipper {
     private static final double Ki = 0;
     private static final double Kd = 0;
     private static final double MIN_ENCODER_VALUE = 0;
+    private static final double MID_ENCODER_VALUE = 0;
     private static final double MAX_ENCODER_VALUE = 0;
     private PIDController tipperController;
 

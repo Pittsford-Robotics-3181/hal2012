@@ -2,6 +2,8 @@ package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Victor;
+import org.frc3181.yr2012.components.Tipper;
 
 /**
  * This file contains our hardware declarations.
@@ -25,7 +27,7 @@ public class Hardware {
 //    public static final Victor leftShooter = new Victor(1, 7);
 //    public static final Victor rightShooter = new Victor(1, 1);
 //    public static final Jaguar roller = new Jaguar(1, 8);
-//    public static final Victor tip = new Victor(1, 9);
+    public static final Victor tip = new Victor(1, 9);
 //    public static final Jaguar conveyorMotor = new Jaguar(1, 10);
 
     // Drive system
@@ -44,8 +46,8 @@ public class Hardware {
 //    public static Shooter ballLauncher = new Shooter(aimShooter, leftShooter, rightShooter);
 //    // Roller
 //    public static Roller collector = new Roller(roller);
-//    // Tipper
-//    public static Tipper bridgeTip = new Tipper(tip);
+    // Tipper
+    public static Tipper bridgeTip = new Tipper(tip);
 //    // Conveyor
 //    public static Conveyor ballLift = new Conveyor(conveyorMotor);
     

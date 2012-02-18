@@ -68,4 +68,11 @@ public class Sensors {
             return AWAY_FROM_BRIDGE;
         }
     }
+    
+    public static boolean tipperAtTop() {
+        return UpSensor.get();
+    }
+    public static boolean tipperAtBottom() {
+        return DownSensor.get();
+    }
 }

@@ -23,12 +23,24 @@ public class Shooter {
     /**
      * Set the shooting motor to a given speed. Varying the speed varies the
      * distance the balls will go!
+     * This will also ramp up and down the shooter motor to a hundered points.
      * @param speed The speed to shoot at.
      */
     public void shootAtSpeed(double speed) {
-        if(speed < 0)
+        if(speed > 0)
             return;
-        shooterWheel.set(speed);
+        if(speed == shooterWheel.get()){
+        return;
+        }
+        if(shooterWheel.get() > speed)
+        {
+            shooterWheel.set(shooterWheel.get()-.01);
+        }
+
+        if(shooterWheel.get() < speed)
+        {
+            shooterWheel.set(shooterWheel.get() +.01);
+        }
     }
     
     /**

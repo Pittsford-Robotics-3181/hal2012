@@ -67,15 +67,15 @@ public class RampingDriveSystem {
             //drive at half speed if trigger is pulled
             if (Hardware.driveJoystick.getTrigger()) {
                 magnitude *= .5;
-                rotation *= .5;
+                //rotation *= .5;
             }
             //drive at half speed if the variable says so
             if (slow) {
                 magnitude *= .5;
-                rotation *= .5;
+                //rotation *= .5;
             }
             magnitude *= (Hardware.driveJoystick.getTwist() + 1) / 2;
-            rotation *= (Hardware.driveJoystick.getTwist() + 1) / 2;
+           // rotation *= (Hardware.driveJoystick.getTwist() + 1) / 2;
         }
 
         //constrain values to range
@@ -99,7 +99,7 @@ public class RampingDriveSystem {
      * @return The calculated rotation. Negative is counterclockwise, positive is clockwise.
      */
     private double calculateRotation() {
-        return Hardware.driveJoystick.getThrottle();
+        return Utils.checkForSmall(Hardware.driveJoystick.getThrottle(),.1);
     }
 
     /**
@@ -166,9 +166,9 @@ public class RampingDriveSystem {
 
         //Set the speeds.
         frontLeftMotor.set(Utils.checkForSmall(wheelSpeeds[MotorType.kFrontLeft.value], .1));
-        frontRightMotor.set(Utils.checkForSmall(wheelSpeeds[MotorType.kFrontRight.value], .1));
+        frontRightMotor.set(1*Utils.checkForSmall(wheelSpeeds[MotorType.kFrontRight.value], .1));
         rearLeftMotor.set(Utils.checkForSmall(wheelSpeeds[MotorType.kRearLeft.value], .1));
-        rearRightMotor.set(Utils.checkForSmall(wheelSpeeds[MotorType.kRearRight.value], .1));
+        rearRightMotor.set(1*Utils.checkForSmall(wheelSpeeds[MotorType.kRearRight.value], .1));
 
         calculateActualParams();
     }

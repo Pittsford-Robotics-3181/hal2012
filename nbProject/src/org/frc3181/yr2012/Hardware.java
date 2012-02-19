@@ -2,6 +2,8 @@ package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
+import org.frc3181.yr2012.litecomponents.AlianceNotifier;
+import org.frc3181.yr2012.litecomponents.Shooter;
 import edu.wpi.first.wpilibj.Victor;
 import org.frc3181.yr2012.components.Tipper;
 
@@ -23,7 +25,7 @@ public class Hardware {
     public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/ 3);
     public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/ 4);
     // Non-Driving Motors
-//    public static final Victor aimShooter = new Victor(1, 6);
+    public static Victor shooter = new Victor(/*slot*/1, /*channel*/ 7);
 //    public static final Victor leftShooter = new Victor(1, 7);
 //    public static final Victor rightShooter = new Victor(1, 1);
 //    public static final Jaguar roller = new Jaguar(1, 8);
@@ -43,7 +45,9 @@ public class Hardware {
     
     //TODO: Probably, we want these to be the litecomponent parts. Make sure you import the correct ones and change vars accordingly.
     // Shooter
-//    public static Shooter ballLauncher = new Shooter(aimShooter, leftShooter, rightShooter);
+   public static Shooter ballLauncher = new Shooter(shooter);
+   //notifier
+   public static AlianceNotifier lights = new AlianceNotifier();
 //    // Roller
 //    public static Roller collector = new Roller(roller);
     // Tipper

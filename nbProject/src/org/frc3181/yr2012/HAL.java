@@ -1,6 +1,9 @@
 package org.frc3181.yr2012;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick.ButtonType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc3181.yr2012.litecomponents.Sensors;
@@ -18,13 +21,15 @@ import org.frc3181.yr2012.hybrid.KinectGestures;
 public class HAL extends IterativeRobot {
     Timer tT = new Timer();
     String state = "";
-
+    double doShoot = 0;
+    DriverStation driveStation = DriverStation.getInstance();
     /**
      * This function is run when the robot starts up and should be
      * used for any initialization code.
      */
     public void robotInit() {
         KinectGestures.initKinect();
+        Hardware.lights.setAlliance(driveStation.getAlliance());
     }
 
     /**
@@ -90,8 +95,15 @@ public class HAL extends IterativeRobot {
         //Hardware.collector.rollerController();
         
         //Control Shooter
-        //Hardware.ballLauncher.controlShooting();
-        
+        if(Hardware.driveJoystick.getRawButton(5))
+        {
+            doShoot = -.5;
+        }
+        else{
+            doShoot = 0;
+        }
+        Hardware.ballLauncher.shootAtSpeed(doShoot);
+
         //Tip Bridge if Necessary
         //Hardware.bridgeTip.controlTipper();
         

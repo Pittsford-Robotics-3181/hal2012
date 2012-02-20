@@ -40,7 +40,7 @@ public class DriveSystem extends RobotDrive {
 
     private boolean slow;
     private boolean stop;
-    private static final boolean OVERRIDE_MECANUMDRIVE_POLAR = true;
+    private static final boolean OVERRIDE_MECANUMDRIVE_POLAR = false;
     public static final double RAMPING_MAX_CHANGE = .025;
     private double frontLeftSpeed, frontRightSpeed, rearLeftSpeed, rearRightSpeed;
 
@@ -72,44 +72,50 @@ public class DriveSystem extends RobotDrive {
             magnitude = direction = rotation = 0;
         } else {
             //perfect strafe
-//            if (Hardware.driveJoystick.getRawButton(2)) { // backwards
-//                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
-//                direction = -180;
-//            } else if (Hardware.driveJoystick.getRawButton(3)) { //forwards
-//                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
-//                direction = 0;
-//            } else if (Hardware.driveJoystick.getRawButton(4)) { //left
-//                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
-//                direction = -90;
-//            } else if (Hardware.driveJoystick.getRawButton(5)) { //right
-//                magnitude = Hardware.driveJoystick.getTwist() / 3 + .333;
-//                direction = 90;
-//            }
+            if (ControlScheme.perfectStrafeBackwards) { // backwards
+                
+                direction = -180;
+            } else if (ControlScheme.perfectStrafeForwards) { //forwards
+                direction = 0;
+            } else if (ControlScheme.perfectStrafeLeft) { //left
+                direction = -90;
+            } else if (ControlScheme.perfectStrafeRight) { //right
+                direction = 90;
+            }
 
             //drive at half speed if trigger is pulled
-            if (Hardware.driveJoystick.getTrigger()) {
-                //magnitude *= .5;
-                //rotation *= .5;
-            }
-            //drive at half speed if the variable says so
-            if (slow) {
+            if (ControlScheme.slowRobotDrive || slow) {
                 magnitude *= .5;
                 rotation *= .5;
             }
-            magnitude *= (Hardware.driveJoystick.getTwist() + 1) / 2;
-            rotation *= (Hardware.driveJoystick.getTwist() + 1) / 2;
+
+            if(ControlScheme.rotateLeft)
+            {
+
+                rotation = 1;
+
+
+            }
+            if(ControlScheme.rotateRight)
+            {
+
+                rotation  =-1;
+
+
+            }
+            magnitude *=Hardware.driveJoystick.getTwist();
         }
 
         //analyze values and correct if necessary
         //make magnitude and rotation zero if they are small enough
-        magnitude = Utils.checkForSmall(magnitude, .1);
+        magnitude = Utils.checkForSmall(magnitude, .01);
         rotation = Utils.checkForSmall(rotation, .1);
         //constrain values to range
         magnitude = Math.max(Math.min(magnitude, 1.0), 0.0);
         rotation = Math.max(Math.min(rotation, .5), -.5);
 
         //We have this in case we need to have more control to setting speeds, e.g., encoders and/or PID/linear ramping.
-        if (Hardware.driveJoystick.getTrigger()&&OVERRIDE_MECANUMDRIVE_POLAR) {
+        if (ControlScheme.slowRobotDrive&&OVERRIDE_MECANUMDRIVE_POLAR) {
             //call our drive method, which ramps
             mecanumDrive_Polar(magnitude, direction, rotation);
         } else {

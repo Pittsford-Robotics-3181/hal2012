@@ -1,13 +1,12 @@
 package org.frc3181.yr2012;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick.ButtonType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc3181.yr2012.litecomponents.Sensors;
 import org.frc3181.yr2012.hybrid.HybridKinect;
+
 import org.frc3181.yr2012.hybrid.KinectGestures;
 
 /**
@@ -21,7 +20,6 @@ import org.frc3181.yr2012.hybrid.KinectGestures;
 public class HAL extends IterativeRobot {
     Timer tT = new Timer();
     String state = "";
-    double doShoot = 0;
     DriverStation driveStation = DriverStation.getInstance();
     /**
      * This function is run when the robot starts up and should be
@@ -48,6 +46,8 @@ public class HAL extends IterativeRobot {
      */
     public void disabledPeriodic() {
         updateDash();
+        Hardware.lights.whiteOff();
+        Hardware.lights.setAlliance(driveStation.getAlliance());
     }
 
     //------------$*$*$*$*$*$*$*$*AUTONOMOUS METHODS*$*$*$*$*$*$*$*$------------//
@@ -59,14 +59,18 @@ public class HAL extends IterativeRobot {
         state = "Autonomous";
         Hardware.DSOut.clearOutput();
         Hardware.DSOut.say(1, "State: " + state);
+        Hardware.lights.setAlliance(driveStation.getAlliance());
+        Hardware.lights.whiteOn();
     }
 
     /**
      * This function is called periodically during autonomous.
      */
     public void autonomousPeriodic() {
+        Hardware.lights.setAlliance(driveStation.getAlliance());
         HybridKinect.run();
         updateDash();
+        Hardware.lights.whiteOn();
     }
 
     //------------$*$*$*$*$*$*$*$*TELEOP METHODS*$*$*$*$*$*$*$*$------------//
@@ -78,32 +82,51 @@ public class HAL extends IterativeRobot {
         state = "Teleoperated";
         Hardware.DSOut.clearOutput();
         Hardware.DSOut.say(1, "State: " + state);
+        Hardware.lights.setAlliance(driveStation.getAlliance());
+        Hardware.lights.whiteOn();
+        Hardware.bridgeTip.moveTipperTo(0);
     }
 
     /**
      * This function is called periodically during operator control.
      */
     public void teleopPeriodic() {
+        ControlScheme.update();
+        Hardware.lights.setAlliance(driveStation.getAlliance());
+        Hardware.lights.whiteOn();
         
         //update dashboard
         updateDash();
 
         //drive
-        Hardware.driveSystem.mecanumDrive();
+        //Hardware.driveSystem.mecanumDrive();
         
         //Control Roller
-        //Hardware.collector.rollerController();
+        Hardware.collector.rollerController();
         
         //Control Shooter
-        if(Hardware.driveJoystick.getRawButton(5))
+        if(ControlScheme.isShooting)
         {
-            doShoot = -.5;
+            Hardware.ballLauncher.shootAtSpeed(-1);
         }
-        else{
-            doShoot = 0;
+        else {
+            Hardware.ballLauncher.shootAtSpeed(0);
         }
-        Hardware.ballLauncher.shootAtSpeed(doShoot);
 
+        //Control Tipper
+        if(ControlScheme.tipperUp){
+            Hardware.bridgeTip.moveTipperUp(5);
+        }
+
+        else if (ControlScheme.tipperDown) {
+            Hardware.bridgeTip.moveTipperDown(5);
+        }else{
+            Hardware.tip.set(0);
+        }
+
+        //Control the stopper peg thing
+        Hardware.stopper.stopperController();
+        
         //Tip Bridge if Necessary
         //Hardware.bridgeTip.controlTipper();
         
@@ -124,5 +147,8 @@ public class HAL extends IterativeRobot {
         SmartDashboard.putDouble("Rear Right", Math.floor(Hardware.rearRightMotor.get() * 128));
         double t = tT.get();
         SmartDashboard.putString("Time", (int) Math.floor(t / 60) + ":" + ((t % 60) < 10 ? "0" : "") + (int) Math.floor(t % 60));
+
+        SmartDashboard.putInt("Encoder", Sensors.tipperSensor.get());
+        SmartDashboard.putBoolean("Lower Limit Switch", Sensors.lowLimit.get());
     }
 }

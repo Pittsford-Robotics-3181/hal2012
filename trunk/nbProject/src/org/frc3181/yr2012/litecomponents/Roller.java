@@ -1,6 +1,7 @@
 package org.frc3181.yr2012.litecomponents;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import org.frc3181.yr2012.ControlScheme;
 import org.frc3181.yr2012.Hardware;
 
 /**
@@ -31,7 +32,7 @@ public class Roller {
      * rollerController allows the driver to turn the Roller on and off
      */
     public void rollerController() {
-        if (Hardware.ballJoystick.getRawButton(2)) {
+        if (ControlScheme.collectingBalls) {
             isCollecting = true;
         } else {
             isCollecting = false;
@@ -49,6 +50,8 @@ public class Roller {
         } else {
             collector.set(-1.00);
         }
+
+        Hardware.DSOut.say(4,"Roller: " + isCollecting);
 
     }
 }

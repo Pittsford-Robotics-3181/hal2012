@@ -1,5 +1,6 @@
 package org.frc3181.yr2012.litecomponents;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 
 /**
@@ -7,11 +8,19 @@ import edu.wpi.first.wpilibj.Encoder;
  * @author Ben
  */
 public class Sensors {
-    public static Encoder tipperSensor = new Encoder(5, 6);
+    /**
+     * The Encoder to sense the Tipper's angle.
+     */
+    public static Encoder tipperSensor = new Encoder(1, 2);
     {
         tipperSensor.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
     }
-    
+
+    /**
+     * The limit switch to stop the tipper from moving past the lower bound.
+     */
+    public static DigitalInput lowLimit = new DigitalInput(3);
+
     /**
      * Get how far the tipper has moved since the robot was started.
      * This will probably only be used to put data on the SmartDashboard.

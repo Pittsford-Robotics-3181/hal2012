@@ -1,7 +1,9 @@
 package org.frc3181.yr2012.litecomponents;
 
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedController;
+import org.frc3181.yr2012.Hardware;
 
 /**
  * The mechanism that tips the bridge.
@@ -30,28 +32,44 @@ public class Tipper {
         Sensors.tipperSensor.start();
         tipperController.enable();
     }
-    
+    public SpeedController getTipperMotor(){
+    return tipperMotor;
+    }
+    public double getTipperPosition()
+    {
+        return tipperController.getSetpoint();
+    }
     /**
      * Move the tipper to a certain position.
      * @param position The value we want the encoder to be at.
      */    
     public void moveTipperTo(double position){
-        tipperController.setSetpoint(position);
+        //TODO: Determine which is going *downward*, setpoint is less than position, or more than?
+        SmartDashboard.putDouble("Tipper PID Setpoint", tipperController.getSetpoint());
+        SmartDashboard.putDouble("Tipper Desired Destination", position);
+        Hardware.DSOut.say(6, "Limit switch: " + Sensors.lowLimit.get());
+        if(tipperController.getSetpoint() < position && !(Sensors.lowLimit.get())) return;
+        
     }
     
     //TODO: Decide which of MAX_ENCODER_VALUE and MIN_ENCODER_VALUE is up and which is down.
     /**
      * Move tipper all the way up.
      */
-    public void moveTipperUp(){
-        moveTipperTo(MAX_ENCODER_VALUE);
+    public void moveTipperUp(double value){
+       
+        moveTipperTo(getTipperPosition() - value);
+        tipperMotor.set(-value/10);
     }
     
     /**
      * Move tipper all the way down.
      */
-    public void moveTipperDown(){
-        moveTipperTo(MIN_ENCODER_VALUE);
+    public void moveTipperDown(double value){
+        if(getTipperPosition() + value < 130){
+        moveTipperTo(getTipperPosition() + value);
+        tipperMotor.set(value/10);
+    }
     }
 
  }

@@ -18,9 +18,9 @@ public class Sensors {
     //back bridge detector
     private static Ultrasonic backSensor = new Ultrasonic(3, 4);
     //full up stop
-    private static DigitalInput UpSensor =new DigitalInput(7);
+    private static DigitalInput UpSensor = new DigitalInput(7);
     //full down stop
-    private static DigitalInput DownSensor=new DigitalInput(8);
+    private static DigitalInput DownSensor = new DigitalInput(8);
     //foot sensor
     private static Encoder tipperSensor = new Encoder(5, 6);
     //constants

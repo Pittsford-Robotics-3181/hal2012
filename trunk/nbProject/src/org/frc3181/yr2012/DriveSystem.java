@@ -34,7 +34,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Robbie Markwick
  * @author Ben
  * @author Liam
- * @deprecated Use RampingDriveSystem instead.
  */
 public class DriveSystem extends RobotDrive {
 
@@ -152,7 +151,7 @@ public class DriveSystem extends RobotDrive {
     public void mecanumDrive() {
         double magnitude = Hardware.driveJoystick.getMagnitude();
         double direction = Hardware.driveJoystick.getDirectionDegrees();
-        double rotation = calculateRotation();
+        double rotation =0;// calculateRotation();
         SmartDashboard.putDouble("Rotation", Math.floor(rotation * 100));
         mecanumDrive(magnitude, direction, rotation); //robot drives
     }

@@ -16,6 +16,7 @@ public class Stopper {
      */
     private Servo collector1;
     private Servo collector2;
+    
     /**
      * Boolean determining, if the robot is in collection mode.
      */
@@ -47,6 +48,14 @@ public class Stopper {
         else{
             ballNotPrimed = false;
         }//*/
+        updateStopperPosition();
+    }
+    
+    /**
+     * autonomous version of the above
+     */
+    public void autoStopperController(boolean lowerGate) {
+        isShooting=lowerGate;
         updateStopperPosition();
     }
 

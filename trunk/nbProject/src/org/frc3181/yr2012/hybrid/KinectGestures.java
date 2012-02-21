@@ -175,6 +175,17 @@ public class KinectGestures {
     public static boolean getShoot() {
         return getSkeleton().GetAnkleLeft().getX() < -.7;
     }
+    
+    /**
+     * If left ankle is out enough to tip down.
+     * @return Whether to shoot.
+     */
+    public static boolean getTipDown() {
+        return getSkeleton().GetAnkleRight().getZ() > .7;
+    }
+    public static boolean getTipUp() {
+        return getSkeleton().GetAnkleRight().getZ() < -.7;
+    }
 
     /**NEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEW**/
     /**

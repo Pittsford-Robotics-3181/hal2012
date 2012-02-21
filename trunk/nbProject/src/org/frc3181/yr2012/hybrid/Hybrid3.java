@@ -4,7 +4,7 @@ import org.frc3181.yr2012.Hardware;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- * shoot at a pre-determined basket, then waste time by spinning.
+ * shoot at a pre-determined basket, then sit there.
  * @author robbiemarkwick
  */
 public class Hybrid3 {
@@ -22,6 +22,6 @@ public class Hybrid3 {
 //            }
 //        }
 //        else
-//            Hardware.driveSystem.mecanumDrive(0, 0, 1);//spin in circles to waste time
+//            Hardware.driveSystem.mecanumDrive(0, 0, 0);
     }
 }

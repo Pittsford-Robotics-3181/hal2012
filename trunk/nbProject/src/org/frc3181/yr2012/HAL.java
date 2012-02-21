@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.frc3181.yr2012.hybrid.*;
 import org.frc3181.yr2012.litecomponents.Sensors;
-import org.frc3181.yr2012.hybrid.HybridKinect;
 
 import org.frc3181.yr2012.hybrid.KinectGestures;
 
@@ -63,6 +63,7 @@ public class HAL extends IterativeRobot {
         Hardware.DSOut.say(1, "State: " + state);
         Hardware.lights.setAlliance(driveStation.getAlliance());
         Hardware.lights.whiteOn();
+        updateDash();
     }
 
     /**
@@ -70,9 +71,15 @@ public class HAL extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Hardware.lights.setAlliance(driveStation.getAlliance());
-        HybridKinect.run();
         updateDash();
         Hardware.lights.whiteOn();
+        
+        switch(autono) {
+            case(0): Hybrid1.run(); //Do nothing
+            case(1): Hybrid2.run(); //Tip the bridge
+            case(2): Hybrid3.run(); //Shoot
+            case(4): HybridKinect.run(); //Kinect mode
+        }
     }
 
     //------------$*$*$*$*$*$*$*$*TELEOP METHODS*$*$*$*$*$*$*$*$------------//

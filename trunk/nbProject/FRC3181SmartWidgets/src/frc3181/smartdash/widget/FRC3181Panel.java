@@ -55,7 +55,7 @@ public class FRC3181Panel extends javax.swing.JPanel {
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Do nothing", "Tip the bridge", "Shoot and spin" };
+            String[] strings = { "Do nothing", "Tip the bridge", "Shoot", "Kinect mode" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });

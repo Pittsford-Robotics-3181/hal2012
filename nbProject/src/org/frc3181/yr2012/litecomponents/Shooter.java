@@ -11,6 +11,7 @@ public class Shooter {
      * The speed controller that controls the wheel to launch the balls.
      */
     private SpeedController shooterWheel;
+    private boolean on=false;
 
     /**
      * Construct a new Shooter with the given speed controller.
@@ -27,6 +28,13 @@ public class Shooter {
      * @param speed The speed to shoot at.
      */
     public void shootAtSpeed(double speed) {
+        double avgSpeed=0;
+        if(speed<0&&!on){
+            Sensors.timer.reset();
+            Sensors.timer.start();
+            avgSpeed=Sensors.avgRevsPerMin();
+        }
+        on=speed!=0;
         if(speed > 0)
             return;
         if(speed == shooterWheel.get()){
@@ -34,12 +42,12 @@ public class Shooter {
         }
         if(shooterWheel.get() > speed)  //if it needs to spin up...
         {
-            shooterWheel.set(shooterWheel.get()-.01);
+            shooterWheel.set(avgSpeed-.01);
         }
 
         if(shooterWheel.get() < speed)  //if it needs to slow down...
         {
-            shooterWheel.set(shooterWheel.get() +.01);
+            shooterWheel.set(avgSpeed +.01);
         }
     }
     

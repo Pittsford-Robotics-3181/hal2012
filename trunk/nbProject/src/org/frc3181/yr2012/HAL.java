@@ -66,7 +66,7 @@ public class HAL extends IterativeRobot {
         updateDash();
         switch(autono) {
             case(0): break; //Do nothing
-            case(1): break; //Tip the bridge
+            case(1): Hybrid2.init();break; //Tip the bridge
             case(2): Hybrid3.init(); break;//Shoot
             case(4): break; //Kinect mode
         }

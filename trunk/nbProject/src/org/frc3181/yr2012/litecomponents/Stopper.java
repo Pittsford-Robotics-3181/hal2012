@@ -19,8 +19,8 @@ public class Stopper {
     /**
      * Boolean determining, if the robot is in collection mode.
      */
-    private boolean isCollecting = false;
-
+    private boolean isShooting = false;
+    private boolean ballNotPrimed = true;
     /** 
      * Constructs the Roller using the given motor.
      * @param collect
@@ -35,12 +35,19 @@ public class Stopper {
      */
     public void stopperController() {
         if (ControlScheme.releaseBallForShooting) {
-            isCollecting = false;
+            isShooting = false;
         } else {
-            isCollecting = true;
+            isShooting = true;
         }
+        /*if(sensor reading a ball present)
+        {
+            ballNotPrimed = true;
+        }
+        else{
+            ballNotPrimed = false;
+        }//*/
         updateStopperPosition();
-        Hardware.DSOut.say(3, "Is blocked " + isCollecting);
+        Hardware.DSOut.say(3, "Is blocked " + isShooting);
     }
 
     /**
@@ -48,13 +55,18 @@ public class Stopper {
      * @param isCollecting 
      */
     private void updateStopperPosition() {
-        if (isCollecting) {
-            collector1.setAngle(170);
-            collector2.setAngle(90);
-        } else {
-            collector1.setAngle(40);
-            collector2.setAngle(0);
+        if (isShooting) {
+            collector1.setAngle(170); 
+        }else{
+            collector1.setAngle(0);
             }
+        /*
+        if(ballNotPrimed) {
+            collector2.setAngle(0);
+        }else{
+            collector2.setAngle(170);
+            }
+        //*/
         }
 
     }

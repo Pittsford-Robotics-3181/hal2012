@@ -131,7 +131,7 @@
                       <StringArray count="3">
                         <StringItem index="0" value="Do nothing"/>
                         <StringItem index="1" value="Tip the bridge"/>
-                        <StringItem index="2" value=""/>
+                        <StringItem index="2" value="Shoot and spin"/>
                       </StringArray>
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>

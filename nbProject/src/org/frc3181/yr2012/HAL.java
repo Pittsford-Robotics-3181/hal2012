@@ -20,7 +20,9 @@ import org.frc3181.yr2012.hybrid.KinectGestures;
 public class HAL extends IterativeRobot {
     Timer tT = new Timer();
     String state = "";
+    int autono = 0;
     DriverStation driveStation = DriverStation.getInstance();
+    
     /**
      * This function is run when the robot starts up and should be
      * used for any initialization code.
@@ -150,5 +152,6 @@ public class HAL extends IterativeRobot {
 
         SmartDashboard.putInt("Encoder", Sensors.tipperSensor.get());
         SmartDashboard.putBoolean("Lower Limit Switch", Sensors.lowLimit.get());
+        try {autono = SmartDashboard.getInt("Autonomous");} catch (Exception ex) {}
     }
 }

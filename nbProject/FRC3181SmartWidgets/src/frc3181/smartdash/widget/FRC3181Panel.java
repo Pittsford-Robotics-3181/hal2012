@@ -10,15 +10,22 @@
  */
 package frc3181.smartdash.widget;
 
+import edu.wpi.first.smartdashboard.robot.Robot;
+
 /**
  *
  * @author Chris Cheng
  */
 public class FRC3181Panel extends javax.swing.JPanel {
 
+    private PanelThread thrd;
+
     /** Creates new form FRC3181Panel */
     public FRC3181Panel() {
         initComponents();
+        jList1.setSelectedIndex(0);
+        thrd = new PanelThread(this);
+        thrd.start();
     }
 
     /** This method is called from within the constructor to
@@ -48,7 +55,7 @@ public class FRC3181Panel extends javax.swing.JPanel {
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Do nothing", "Tip the bridge", "" };
+            String[] strings = { "Do nothing", "Tip the bridge", "Shoot and spin" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -115,4 +122,20 @@ public class FRC3181Panel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
+}
+
+class PanelThread extends Thread {
+    FRC3181Panel panel;
+    
+    public PanelThread(FRC3181Panel input) {
+        super("FRC3181Panel");
+        panel = input;
+    }
+
+    @Override
+    public void run() {
+        if(Robot.getTable().containsKey("State"))
+            panel.jLabel2.setText(Robot.getTable().getString("State"));
+        Robot.getTable().putInt("Autonomous", panel.jList1.getSelectedIndex());
+    }
 }

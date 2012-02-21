@@ -64,6 +64,12 @@ public class HAL extends IterativeRobot {
         Hardware.lights.setAlliance(driveStation.getAlliance());
         Hardware.lights.whiteOn();
         updateDash();
+        switch(autono) {
+            case(0): break; //Do nothing
+            case(1): break; //Tip the bridge
+            case(2): Hybrid3.init(); break;//Shoot
+            case(4): break; //Kinect mode
+        }
     }
 
     /**
@@ -75,10 +81,10 @@ public class HAL extends IterativeRobot {
         Hardware.lights.whiteOn();
         
         switch(autono) {
-            case(0): Hybrid1.run(); //Do nothing
-            case(1): Hybrid2.run(); //Tip the bridge
-            case(2): Hybrid3.run(); //Shoot
-            case(4): HybridKinect.run(); //Kinect mode
+            case(0): Hybrid1.run(); break; //Do nothing
+            case(1): Hybrid2.run(); break;//Tip the bridge
+            case(2): Hybrid3.run(); break;//Shoot
+            case(4): HybridKinect.run(); break;//Kinect mode
         }
     }
 
@@ -116,7 +122,7 @@ public class HAL extends IterativeRobot {
         //Control Shooter
         if(ControlScheme.isShooting)
         {
-            Hardware.ballLauncher.shootAtSpeed(-.5);
+            Hardware.ballLauncher.shootAtSpeed(-1);
         }
         else {
             Hardware.ballLauncher.shootAtSpeed(0);

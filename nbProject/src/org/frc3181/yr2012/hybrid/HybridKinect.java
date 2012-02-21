@@ -13,10 +13,17 @@ public class HybridKinect {
         double magnitude = 0;
         double direction = 0;
         double rotation = 0;
-        
+        Hardware.ballLauncher.shootAtSpeed(-1.0);
 
-        
-        if (KinectGestures.isDriving()) {
+
+         if(KinectGestures.getShoot())
+        {
+            Hardware.stopper.autoStopperController(true);
+        }
+         else{
+            Hardware.stopper.autoStopperController(false);
+            
+          if (KinectGestures.isDriving()) {
             if (KinectGestures.getStrafeLeft()) {
                 magnitude = .5;
                 direction = -90;
@@ -42,13 +49,10 @@ public class HybridKinect {
             } else {
                 Hardware.DSOut.say(3, "Kinect: driving?");
             }
-        }else if(KinectGestures.getShoot())
-        {
-            Hardware.ballLauncher.shootAtSpeed(1.0);
-        }else{
+          }else{
             Hardware.DSOut.say(3, "Kinect: not moving");
-            Hardware.ballLauncher.shootAtSpeed(0.0);
-        }//*/
+          }
+         }//*/
         Hardware.driveSystem.mecanumDrive(magnitude, direction, rotation);
     }
 }

@@ -52,8 +52,8 @@ public static void update()
  */
  collectingBalls = Hardware.ballJoystick.getRawButton(4);
  isShooting = Hardware.ballJoystick.getRawButton(5);
- tipperUp = Hardware.ballJoystick.getRawButton(3);
- tipperDown = Hardware.ballJoystick.getRawButton(2);
+ tipperUp = Hardware.ballJoystick.getRawButton(2);
+ tipperDown = Hardware.ballJoystick.getRawButton(3);
  releaseBallForShooting = Hardware.ballJoystick.getTrigger();
 }
 }

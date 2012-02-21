@@ -8,20 +8,36 @@ import edu.wpi.first.wpilibj.Timer;
  * @author robbiemarkwick
  */
 public class Hybrid3 {
-    private static boolean shotBalls=true;
+    private static boolean shooting=false;
     private static Timer timer=new Timer();
-    private static double shotStartTime=timer.get();
-      public static void run(){
-//        if(shotBalls){
-//            if(shotStartTime+2<=timer.get()){
-//                    Hardware.ballLauncher.shootAtSpeed(1);
-//            }
-//            else{
-//                Hardware.ballLauncher.stopShooter();
-//                shotBalls=false;
-//            }
-//        }
-//        else
-//            Hardware.driveSystem.mecanumDrive(0, 0, 0);
+    private static byte ballsShot=0;
+    public static void init(){
+        Hardware.ballLauncher.shootAtSpeed(-1);
+        timer.reset();
+        timer.start();
     }
+      public static void run(){
+          if(shooting){
+            if(timer.get()>=500000){
+                    Hardware.stopper.autoStopperController(false);
+                    shooting=false;
+                    timer.reset();
+                    timer.start();
+                }   
+          }
+          else{
+            if(ballsShot<2){
+                if(timer.get()>=5010000){
+                    Hardware.stopper.autoStopperController(true);
+                    shooting=true;
+                    timer.reset();
+                    timer.start();
+                }   
+            }
+            else{
+              Hardware.driveSystem.mecanumDrive(.25, 180, 0);
+
+            }
+          }
+     }
 }

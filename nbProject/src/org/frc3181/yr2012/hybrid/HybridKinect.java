@@ -15,10 +15,20 @@ public class HybridKinect {
         double rotation = 0;
         Hardware.ballLauncher.shootAtSpeed(-1.0);
 
-
+        if(KinectGestures.getTipDown())
+        {
+            Hardware.bridgeTip.moveTipperDown(10);
+        }
+        else if (KinectGestures.getTipUp()){
+            Hardware.bridgeTip.moveTipperUp(10);
+        }
+        else
+        {
+            Hardware.tip.set(0);
+        }
          if(KinectGestures.getShoot())
         {
-            Hardware.stopper.autoStopperController(true);
+            Hardware.bridgeTip.moveTipperDown(10);
         }
          else{
             Hardware.stopper.autoStopperController(false);

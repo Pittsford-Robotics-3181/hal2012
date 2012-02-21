@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedController;
 import org.frc3181.yr2012.Hardware;
+import org.frc3181.yr2012.Utils;
 
 /**
  * The mechanism that tips the bridge.
@@ -31,6 +32,9 @@ public class Tipper {
         tipperController.setInputRange(MIN_ENCODER_VALUE, MAX_ENCODER_VALUE);
         Sensors.tipperSensor.start();
         tipperController.enable();
+    }
+    public boolean isMiddle(){
+        return (Utils.checkForSmall(MID_ENCODER_VALUE-Sensors.tipperSensor.get(),.3)==0);
     }
     public SpeedController getTipperMotor(){
     return tipperMotor;
@@ -66,9 +70,14 @@ public class Tipper {
      * Move tipper all the way down.
      */
     public void moveTipperDown(double value){
+        if(Sensors.lowLimit.get()!=true){
         if(getTipperPosition() + value < 130){
         moveTipperTo(getTipperPosition() + value);
         tipperMotor.set(value/10);
+        }   
+        else{
+            Hardware.tip.set(0);
+        }
     }
     }
 

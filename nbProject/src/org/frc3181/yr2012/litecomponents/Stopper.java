@@ -39,7 +39,8 @@ public class Stopper {
         } else {
             isShooting = true;
         }
-        /*if(sensor reading a ball present)
+        Hardware.DSOut.say(3, "Value: " + Sensors.ballSensor.get());
+        if(!Sensors.ballSensor.get())
         {
             ballNotPrimed = true;
         }
@@ -47,7 +48,6 @@ public class Stopper {
             ballNotPrimed = false;
         }//*/
         updateStopperPosition();
-        Hardware.DSOut.say(3, "Is blocked " + isShooting);
     }
 
     /**
@@ -60,11 +60,11 @@ public class Stopper {
         }else{
             collector1.setAngle(0);
             }
-        /*
+        
         if(ballNotPrimed) {
-            collector2.setAngle(0);
+            collector2.setAngle(100);
         }else{
-            collector2.setAngle(170);
+            collector2.setAngle(160);
             }
         //*/
         }

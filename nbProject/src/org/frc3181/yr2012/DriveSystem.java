@@ -73,14 +73,17 @@ public class DriveSystem extends RobotDrive {
         } else {
             //perfect strafe
             if (ControlScheme.perfectStrafeBackwards) { // backwards
-                
                 direction = -180;
+                magnitude = 1;
             } else if (ControlScheme.perfectStrafeForwards) { //forwards
                 direction = 0;
+                magnitude = 1;
             } else if (ControlScheme.perfectStrafeLeft) { //left
                 direction = -90;
+                magnitude = 1;
             } else if (ControlScheme.perfectStrafeRight) { //right
                 direction = 90;
+                magnitude = 1;
             }
 
             //drive at half speed if trigger is pulled
@@ -115,13 +118,13 @@ public class DriveSystem extends RobotDrive {
         rotation = Math.max(Math.min(rotation, .5), -.5);
 
         //We have this in case we need to have more control to setting speeds, e.g., encoders and/or PID/linear ramping.
-        if (ControlScheme.slowRobotDrive&&OVERRIDE_MECANUMDRIVE_POLAR) {
+        /*if (ControlScheme.slowRobotDrive&&OVERRIDE_MECANUMDRIVE_POLAR) {
             //call our drive method, which ramps
             mecanumDrive_Polar(magnitude, direction, rotation);
-        } else {
+        } else {//*/
             //call the drive method inherited from RobotDrive
             super.mecanumDrive_Polar(magnitude, direction, rotation);
-        }
+        //}
 
         Hardware.DSOut.say(4, "Magnitude: " + magnitude);
         Hardware.DSOut.say(5, "Direction: " + direction);

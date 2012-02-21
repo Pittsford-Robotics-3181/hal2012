@@ -46,9 +46,9 @@ public class Roller {
      */
     private void updateRollerVelocity() {
         if (isCollecting) {
-            collector.set(.25);
+            collector.set(1);
         } else {
-            collector.set(-.25);
+            collector.set(0);
         }
 
         Hardware.DSOut.say(4,"Roller: " + isCollecting);

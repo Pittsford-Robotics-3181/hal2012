@@ -99,7 +99,7 @@ public class HAL extends IterativeRobot {
         updateDash();
 
         //drive
-        //Hardware.driveSystem.mecanumDrive();
+        Hardware.driveSystem.mecanumDrive();
         
         //Control Roller
         Hardware.collector.rollerController();
@@ -107,7 +107,7 @@ public class HAL extends IterativeRobot {
         //Control Shooter
         if(ControlScheme.isShooting)
         {
-            Hardware.ballLauncher.shootAtSpeed(-1);
+            Hardware.ballLauncher.shootAtSpeed(-.5);
         }
         else {
             Hardware.ballLauncher.shootAtSpeed(0);
@@ -115,11 +115,11 @@ public class HAL extends IterativeRobot {
 
         //Control Tipper
         if(ControlScheme.tipperUp){
-            Hardware.bridgeTip.moveTipperUp(5);
+            Hardware.bridgeTip.moveTipperUp(10);
         }
 
         else if (ControlScheme.tipperDown) {
-            Hardware.bridgeTip.moveTipperDown(5);
+            Hardware.bridgeTip.moveTipperDown(10);
         }else{
             Hardware.tip.set(0);
         }

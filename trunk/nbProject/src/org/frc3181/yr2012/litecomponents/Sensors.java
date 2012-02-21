@@ -1,7 +1,12 @@
 package org.frc3181.yr2012.litecomponents;
 
+import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.AnalogModule;
+import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SensorBase;
+import edu.wpi.first.wpilibj.buttons.AnalogIOButton;
 
 /**
  * Our sensor(s).
@@ -15,7 +20,7 @@ public class Sensors {
     {
         tipperSensor.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
     }
-
+    public static DigitalInput ballSensor = new DigitalInput(4);
     /**
      * The limit switch to stop the tipper from moving past the lower bound.
      */

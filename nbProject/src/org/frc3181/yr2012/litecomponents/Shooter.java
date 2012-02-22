@@ -34,18 +34,19 @@ public class Shooter {
             Sensors.timer.start();
             avgSpeed=Sensors.avgRevsPerMin();
         }
+
         on=speed!=0;
         if(speed > 0)
             return;
-        if(speed == shooterWheel.get()){
+        if(avgSpeed==2000){
         return;
         }
-        if(shooterWheel.get() > speed)  //if it needs to spin up...
+        if(avgSpeed > 2000)  //if it needs to spin up...
         {
             shooterWheel.set(avgSpeed-.01);
         }
 
-        if(shooterWheel.get() < speed)  //if it needs to slow down...
+        if(avgSpeed < 2000)  //if it needs to slow down...
         {
             shooterWheel.set(avgSpeed +.01);
         }

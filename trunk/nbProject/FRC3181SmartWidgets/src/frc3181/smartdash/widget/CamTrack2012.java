@@ -13,10 +13,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Pattern;
-import javax.swing.JLabel;
 
 /**
  *
@@ -26,15 +23,16 @@ public class CamTrack2012 extends StaticWidget {
     
     public static final String NAME = "Camera Tracking Facilitator for 2012";
     
-    CamTrackThread ctThread = new CamTrackThread();
+    CamTrackThread ctThread = new CamTrackThread(this);
+    
+    CamTrack2012Panel panel;
 
     @Override
     public void init() {
         ctThread.start();
-        JLabel l = new JLabel("Don't delete me, please!\nI manage the Camera Tracker!");
-        setPreferredSize(new Dimension(128, 256));
-        l.setPreferredSize(new Dimension(128, 256));
-        add(l);
+        panel = new CamTrack2012Panel();
+        setPreferredSize(new Dimension(256, 128));
+        add(panel);
     }
 
     @Override
@@ -45,10 +43,11 @@ public class CamTrack2012 extends StaticWidget {
 
 class CamTrackThread extends Thread {
     private Socket skt;
-    private Scanner scnr;
+    private CamTrack2012 wdgt;
     
-    public CamTrackThread() {
+    public CamTrackThread(CamTrack2012 input) {
         super("CamTrackThread");
+        wdgt = input;
         try {
             skt = new Socket("localhost", 3181);
         } catch (Exception ex) {}
@@ -89,6 +88,7 @@ class CamTrackThread extends Thread {
                     if(dists[1].doubleValue() == dist[i].doubleValue()) {
                         Robot.getTable().putInt("blx", xy.get(i).x);
                         Robot.getTable().putInt("bly", xy.get(i).y);
+                        wdgt.panel.bl.setText("(" + xy.get(i).x + "," + xy.get(i).y + ")");
                     }
                 }
                 
@@ -103,6 +103,7 @@ class CamTrackThread extends Thread {
                     if(dists[1].doubleValue() == dist[i].doubleValue()) {
                         Robot.getTable().putInt("tlx", xY.get(i).x);
                         Robot.getTable().putInt("tly", xY.get(i).y);
+                        wdgt.panel.tl.setText("(" + xY.get(i).x + "," + xY.get(i).y + ")");
                     }
                 }
                 
@@ -117,6 +118,7 @@ class CamTrackThread extends Thread {
                     if(dists[1].doubleValue() == dist[i].doubleValue()) {
                         Robot.getTable().putInt("brx", Xy.get(i).x);
                         Robot.getTable().putInt("bry", Xy.get(i).y);
+                        wdgt.panel.br.setText("(" + Xy.get(i).x + "," + Xy.get(i).y + ")");
                     }
                 }
                 
@@ -131,8 +133,13 @@ class CamTrackThread extends Thread {
                     if(dists[1].doubleValue() == dist[i].doubleValue()) {
                         Robot.getTable().putInt("trx", XY.get(i).x);
                         Robot.getTable().putInt("try", XY.get(i).y);
+                        wdgt.panel.tr.setText("(" + XY.get(i).x + "," + XY.get(i).y + ")");
                     }
                 }
+                
+                Robot.getTable().putDouble("cx", ax);
+                Robot.getTable().putDouble("cy", ay);
+                wdgt.panel.c.setText("(" + ax + "," + ay + ")");
             } }
         } catch (Exception ex) {}
      }

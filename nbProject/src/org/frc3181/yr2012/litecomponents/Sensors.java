@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.AnalogModule;
 import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.SensorBase;
@@ -29,6 +30,7 @@ public class Sensors {
      * The limit switch to stop the tipper from moving past the lower bound.
      */
     public static DigitalInput lowLimit = new DigitalInput(3);
+    //public static AnalogChannel battery = new AnalogChannel(DriverStation.kBatteryChannel);
 
     /**
      * Get how far the tipper has moved since the robot was started.

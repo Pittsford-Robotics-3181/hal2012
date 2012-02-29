@@ -109,7 +109,7 @@ public class HAL extends IterativeRobot {
         ControlScheme.update();
         Hardware.lights.setAlliance(driveStation.getAlliance());
         Hardware.lights.whiteOn();
-        
+        //Hardware.DSOut.say(2, "Voltage: " + Sensors.battery.getValue());
         //update dashboard
         updateDash();
 
@@ -122,7 +122,7 @@ public class HAL extends IterativeRobot {
         //Control Shooter
         if(ControlScheme.isShooting)
         {
-            Hardware.ballLauncher.shootAtSpeed(-1);
+            Hardware.ballLauncher.shootAtSpeed(-.9);
         }
         else {
             Hardware.ballLauncher.shootAtSpeed(0);
@@ -130,11 +130,11 @@ public class HAL extends IterativeRobot {
 
         //Control Tipper
         if(ControlScheme.tipperUp){
-            Hardware.bridgeTip.moveTipperUp(10);
+            Hardware.bridgeTip.moveTipperUp(5);
         }
 
         else if (ControlScheme.tipperDown) {
-            Hardware.bridgeTip.moveTipperDown(10);
+            Hardware.bridgeTip.moveTipperDown(5);
         }else{
             Hardware.tip.set(0);
         }

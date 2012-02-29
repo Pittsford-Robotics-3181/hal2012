@@ -1,5 +1,6 @@
 package org.frc3181.yr2012.litecomponents;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SpeedController;
 import org.frc3181.yr2012.ControlScheme;
 import org.frc3181.yr2012.Hardware;
@@ -15,6 +16,7 @@ public class Roller {
      * Speed Controller for motor.
      */
     private SpeedController collector;
+    private SpeedController collector2;
     /**
      * Boolean determining, if the robot is in collection mode.
      */
@@ -24,8 +26,9 @@ public class Roller {
      * Constructs the Roller using the given motor.
      * @param collect
      */
-    public Roller(SpeedController collect) {
+    public Roller(SpeedController collect, SpeedController collect2) {
         collector = collect;
+        collector2= collect2;
     }
 
     /**
@@ -33,10 +36,9 @@ public class Roller {
      */
     public void rollerController() {
         if (ControlScheme.collectingBalls) {
-            isCollecting = true;
-        } else {
-            isCollecting = false;
+    isCollecting = !isCollecting;
         }
+        SmartDashboard.putBoolean("Collecting", isCollecting);
         updateRollerVelocity();
     }
 
@@ -47,11 +49,13 @@ public class Roller {
     private void updateRollerVelocity() {
         if (isCollecting) {
             collector.set(1);
+            collector2.set(1);
         } else {
             collector.set(0);
+            collector2.set(0);
         }
 
-        Hardware.DSOut.say(4,"Roller: " + isCollecting);
+        //Hardware.DSOut.say(2,"Roller: " + isCollecting);
 
     }
 }

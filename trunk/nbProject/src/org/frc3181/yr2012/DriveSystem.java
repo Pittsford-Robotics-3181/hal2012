@@ -94,18 +94,18 @@ public class DriveSystem extends RobotDrive {
             if(ControlScheme.rotateLeft)
             {
 
-                rotation = 1;
+                rotation = -1;
 
 
             }
             if(ControlScheme.rotateRight)
             {
 
-                rotation  =-1;
+                rotation  =1;
 
 
             }
-            magnitude *=Hardware.driveJoystick.getTwist();
+            magnitude *= (Hardware.driveJoystick.getTwist() + 1) / 2;
         }
 
         //analyze values and correct if necessary

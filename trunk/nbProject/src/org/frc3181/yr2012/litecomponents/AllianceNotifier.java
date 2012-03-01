@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Solenoid;
  *
  * @author Liam Middlebrook
  */
-public class AlianceNotifier {
+public class AllianceNotifier {
 Solenoid redSpike = new Solenoid(/*module*/1,/*port number*/1);
 Solenoid blueSpike = new Solenoid(/*module*/1,/*port number*/2);
 Solenoid whiteSpike = new Solenoid(/*module*/1,/*port number*/3);

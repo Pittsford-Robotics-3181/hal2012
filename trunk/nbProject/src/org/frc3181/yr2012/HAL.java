@@ -17,7 +17,7 @@ import org.frc3181.yr2012.hybrid.KinectGestures;
  * @author Liam Middlebrook
  * @author Robbie Markwick
  */
-public class HAL extends IterativeRobot {
+public class HAL extends IterativeRobot implements DeathMachine {
     Timer tT = new Timer();
     String state = "";
     int autono = 0;
@@ -166,5 +166,28 @@ public class HAL extends IterativeRobot {
         SmartDashboard.putInt("Encoder", Sensors.tipperSensor.get());
         SmartDashboard.putBoolean("Lower Limit Switch", Sensors.lowLimit.get());
         try {autono = SmartDashboard.getInt("Autonomous");} catch (Exception ex) {}
+    }
+
+    /**
+     * How we dispose of those who bother us (e.g., beat us in a match).
+     * Also, how we live up to our robot's name.
+     */
+    public void killPeople() {
+        //become HAL9000
+        Hardware.DSOut.say(1, "I can't let you do that, Dave.");
+        Hardware.DSOut.say(2, "I can't let you do that, Dave.");
+        Hardware.DSOut.say(3, "I can't let you do that, Dave.");
+        Hardware.DSOut.say(4, "I can't let you do that, Dave.");
+        Hardware.DSOut.say(5, "I can't let you do that, Dave.");
+        Hardware.DSOut.say(6, "I can't let you do that, Dave.");
+    }
+
+    /**
+     * Method implemented because of interface DeathMachine.
+     * @return How many people we've killed.
+     */
+    public int numKilled() {
+        //it's over 9000!!!
+        return 9001;
     }
 }

@@ -3,7 +3,7 @@ package org.frc3181.yr2012;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
-import org.frc3181.yr2012.litecomponents.AlianceNotifier;
+import org.frc3181.yr2012.litecomponents.AllianceNotifier;
 import org.frc3181.yr2012.litecomponents.Shooter;
 import edu.wpi.first.wpilibj.Victor;
 import org.frc3181.yr2012.litecomponents.Tipper;
@@ -52,7 +52,7 @@ public class Hardware {
     // Shooter
    public static Shooter ballLauncher = new Shooter(shooter);
    //notifier
-   public static AlianceNotifier lights = new AlianceNotifier();
+   public static AllianceNotifier lights = new AllianceNotifier();
 //    // Roller
     public static Stopper stopper = new Stopper(holder,holder2);
     public static Roller collector = new Roller(roller,roller);

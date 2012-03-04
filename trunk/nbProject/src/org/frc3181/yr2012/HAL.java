@@ -21,6 +21,7 @@ public class HAL extends IterativeRobot implements DeathMachine {
     Timer tT = new Timer();
     String state = "";
     int autono = 0;
+    boolean gameOver = false;
     DriverStation driveStation = DriverStation.getInstance();
     
     /**
@@ -48,9 +49,16 @@ public class HAL extends IterativeRobot implements DeathMachine {
      */
     public void disabledPeriodic() {
         updateDash();
-        Hardware.lights.whiteOff();
-        Hardware.lights.setAlliance(driveStation.getAlliance());
+        if(gameOver){
+            Hardware.lights.whiteOn();
+            Hardware.lights.discoMode();
+        }
+        else{
+            Hardware.lights.whiteOn();
+            Hardware.lights.setAlliance(driveStation.getAlliance());
+        }
     }
+    
 
     //------------$*$*$*$*$*$*$*$*AUTONOMOUS METHODS*$*$*$*$*$*$*$*$------------//
     /**
@@ -100,6 +108,7 @@ public class HAL extends IterativeRobot implements DeathMachine {
         Hardware.lights.setAlliance(driveStation.getAlliance());
         Hardware.lights.whiteOn();
         Hardware.bridgeTip.moveTipperTo(0);
+        gameOver = true; // this boolean will not be checked until the robot is disabled again, making it safe it enter discoMode at endGame
     }
 
     /**
@@ -109,14 +118,13 @@ public class HAL extends IterativeRobot implements DeathMachine {
         ControlScheme.update();
         Hardware.lights.setAlliance(driveStation.getAlliance());
         Hardware.lights.whiteOn();
-        //Hardware.DSOut.say(2, "Voltage: " + Sensors.battery.getValue());
         //update dashboard
         updateDash();
 
         //drive
         Hardware.driveSystem.mecanumDrive();
         
-        //Control Roller
+        //Control Roller (ball collector)
         Hardware.collector.rollerController();
         
         //Control Shooter
@@ -142,12 +150,6 @@ public class HAL extends IterativeRobot implements DeathMachine {
         //Control the stopper peg thing
         Hardware.stopper.stopperController();
         
-        //Tip Bridge if Necessary
-        //Hardware.bridgeTip.controlTipper();
-        
-        //lift balls if present
-        //Hardware.ballLift.moveBalls();
-
     }
 
     /**

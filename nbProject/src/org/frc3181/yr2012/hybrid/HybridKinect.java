@@ -17,21 +17,17 @@ public class HybridKinect {
 
         if(KinectGestures.getTipDown())
         {
-            Hardware.bridgeTip.moveTipperDown(10);
+            Hardware.bridgeTip.moveTipperDown(5);
         }
         else if (KinectGestures.getTipUp()){
-            Hardware.bridgeTip.moveTipperUp(10);
+            Hardware.bridgeTip.moveTipperUp(5);
         }
         else
         {
             Hardware.tip.set(0);
         }
-         if(KinectGestures.getShoot())
-        {
-            Hardware.bridgeTip.moveTipperDown(10);
-        }
-         else{
-            Hardware.stopper.autoStopperController(false);
+        Hardware.stopper.stopperControllerHybrid(KinectGestures.getShoot());
+        
             
           if (KinectGestures.isDriving()) {
             if (KinectGestures.getStrafeLeft()) {
@@ -62,7 +58,7 @@ public class HybridKinect {
           }else{
             Hardware.DSOut.say(3, "Kinect: not moving");
           }
-         }//*/
+         //*/
         Hardware.driveSystem.mecanumDrive(magnitude, direction, rotation);
     }
 }

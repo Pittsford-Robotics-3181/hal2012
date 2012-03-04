@@ -51,11 +51,23 @@ public class Stopper {
         updateStopperPosition();
     }
     
-    /**
-     * autonomous version of the above
+        /**
+     * rollerController allows the driver to turn the Roller on and off
      */
-    public void autoStopperController(boolean lowerGate) {
-        isShooting=lowerGate;
+    public void stopperControllerHybrid(boolean doShoot) {
+        if (doShoot) {
+            isShooting = false;
+        } else {
+            isShooting = true;
+        }
+        Hardware.DSOut.say(3, "Value: " + Sensors.ballSensor.get());
+        if(!Sensors.ballSensor.get())
+        {
+            ballNotPrimed = true;
+        }
+        else{
+            ballNotPrimed = false;
+        }//*/
         updateStopperPosition();
     }
 

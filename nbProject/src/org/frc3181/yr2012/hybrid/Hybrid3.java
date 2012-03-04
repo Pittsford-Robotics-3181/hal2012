@@ -22,7 +22,7 @@ public class Hybrid3 {
     public static void run() {
         if (shooting) {
             if (timer.get() >= .5) {
-                Hardware.stopper.autoStopperController(false);
+                Hardware.stopper.stopperControllerHybrid(false);
                 shooting = false;
                 timer.reset();
                 timer.start();
@@ -30,7 +30,7 @@ public class Hybrid3 {
         } else {
             if (ballsShot < 2) {
                 if (timer.get() >= 5.01) {
-                    Hardware.stopper.autoStopperController(true);
+                    Hardware.stopper.stopperControllerHybrid(true);
                     shooting = true;
                     timer.reset();
                     timer.start();

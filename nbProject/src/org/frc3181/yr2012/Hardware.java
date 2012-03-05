@@ -48,7 +48,6 @@ public class Hardware {
     // Joystick for Shooter
     public static Joystick ballJoystick = new Joystick(2);
     
-    //TODO: Probably, we want these to be the litecomponent parts. Make sure you import the correct ones and change vars accordingly.
     // Shooter
    public static Shooter ballLauncher = new Shooter(shooter);
    //notifier

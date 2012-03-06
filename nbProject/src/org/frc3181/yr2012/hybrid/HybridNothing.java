@@ -6,5 +6,7 @@ package org.frc3181.yr2012.hybrid;
  */
 public class HybridNothing {
     //Do nothing
+    
+    public static void init(){}
       public static void run(){}
 }

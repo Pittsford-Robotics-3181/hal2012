@@ -77,10 +77,10 @@ public class HAL extends IterativeRobot implements DeathMachine {
         Hardware.lights.whiteOn();
         updateDash();
         switch(autono) {
-            case(0): break; //Do nothing
-            case(1): HybridTip.init();break; //Tip the bridge
-            case(2): HybridShoot.init(); break;//Shoot
-            case(4): break; //Kinect mode
+            case(HYBRID_NOTHING): HybridNothing.init(); break; //Do nothing
+            case(HYBRID_TIP): HybridTip.init(); break;//Tip the bridge
+            case(HYBRID_SHOOT): HybridShoot.init(); break;//Shoot
+            case(HYBRID_KINECT): HybridKinect.init(); break;//Kinect mode!
         }
     }
 

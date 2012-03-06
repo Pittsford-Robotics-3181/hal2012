@@ -26,8 +26,8 @@ public class Shooter {
      * Set the shooting motor to a given speed. Varying the speed varies the
      * distance the balls will go!
      * This will also ramp up and down the shooter motor to a hundred points.
-     * TODO: Make this make sense, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
-     * @param speed The speed to shoot at. <0 is shoot out, >0 is roll back (which shouldn't be used and will cause the method to return).
+     * TODO: Make this make sense and EXPLAIN, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
+     * @param speed The speed to shoot at. <0 is shoot out, >0 is roll back (which shouldn't be used and will cause the method to return anyway).
      */
     public void shootAtSpeed(double speed) {
         if (speed > 0) {

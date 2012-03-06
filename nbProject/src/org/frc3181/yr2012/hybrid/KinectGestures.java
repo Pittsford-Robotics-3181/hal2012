@@ -11,7 +11,6 @@ import org.frc3181.yr2012.Hardware;
  * Our Kinect code, so you don't have to. Helper methods at top, gestures at bottom.
  * @author Ben
  * @author Liam
- * TODO: Implement motion detection based on body proportions from the spine or head joint.
  * TODO: Change the gestures to things that work consistently.
  */
 public class KinectGestures {

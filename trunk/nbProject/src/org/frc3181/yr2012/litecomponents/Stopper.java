@@ -1,9 +1,9 @@
 package org.frc3181.yr2012.litecomponents;
 
-import edu.wpi.first.wpilibj.Jaguar;
 import org.frc3181.yr2012.Hardware;
 import edu.wpi.first.wpilibj.Servo;
 import org.frc3181.yr2012.ControlScheme;
+
 /**
  * TODO: Give this an accurate summary.
  * TODO: Make it make sense, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
@@ -18,7 +18,6 @@ public class Stopper {
      */
     private Servo lowerHolder;
     private Servo upperHolder;
-    
     /**
      * TODO: Give these an accurate summary, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
      */
@@ -42,21 +41,19 @@ public class Stopper {
      */
     public void controlStopper() {
         if (ControlScheme.releaseBallForShooting) {
-            isShooting = false;
+            isShooting = false; //TODO: Explain exactly why isShooting = false means we're shooting.
         } else {
             isShooting = true;
         }
-        Hardware.DSOut.say(3, "Value: " + Sensors.ballSensor.get());
-        if(!Sensors.ballSensor.get())
-        {
+        Hardware.DSOut.say(3, "Stopper sensor: " + Sensors.ballSensor.get());
+        if (!Sensors.ballSensor.get()) {
             ballNotPrimed = true;
-        }
-        else{
+        } else {
             ballNotPrimed = false;
         }//*/
         updateStopperPosition();
     }
-    
+
     /**
      * Periodically call this function to check how the stopper servos should be manipulated.
      * The isShooting variable controls whether or not the lower stopper is to allow for the ball to roll through the shooter.
@@ -65,16 +62,14 @@ public class Stopper {
      */
     public void controlStopperHybrid(boolean doShoot) {
         if (doShoot) {
-            isShooting = false;
+            isShooting = false; //TODO: This makes no sense. doShoot is the opposite of isShooting?
         } else {
             isShooting = true;
         }
-        Hardware.DSOut.say(3, "Value: " + Sensors.ballSensor.get());
-        if(!Sensors.ballSensor.get())
-        {
+        Hardware.DSOut.say(3, "Stopper sensor: " + Sensors.ballSensor.get());
+        if (!Sensors.ballSensor.get()) {
             ballNotPrimed = true;
-        }
-        else{
+        } else {
             ballNotPrimed = false;
         }//*/
         updateStopperPosition();
@@ -86,17 +81,16 @@ public class Stopper {
      */
     private void updateStopperPosition() {
         if (isShooting) {
-            lowerHolder.setAngle(170); 
-        }else{
+            lowerHolder.setAngle(170);
+        } else {
             lowerHolder.setAngle(0);
-            }
-        
-        if(ballNotPrimed) {
-            upperHolder.setAngle(100);
-        }else{
-            upperHolder.setAngle(160);
-            }
-        //*/
         }
 
+        if (ballNotPrimed) {
+            upperHolder.setAngle(100);
+        } else {
+            upperHolder.setAngle(160);
+        }
+        //*/
     }
+}

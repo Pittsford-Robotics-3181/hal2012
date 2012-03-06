@@ -11,7 +11,8 @@ public class HybridShoot {
 
     private static boolean shooting = false;//is the Robot shooting?
     private static Timer timer = new Timer();//Timer to direct the shots
-    private static byte ballsShot = 0;//how many balls have been shot.
+    private static int ballsShot = 0;//how many balls have been shot.
+
     /**
      * Sets up the tipping sensor, starts the tipping and driving.
      */
@@ -22,6 +23,7 @@ public class HybridShoot {
         ballsShot = 0;//reset ball counter
         shooting = false;//No, the robot isn't shooting yet
     }
+
     /**
      * Performs the autonomous run.
      */
@@ -37,15 +39,15 @@ public class HybridShoot {
             //otherwise continue shooting
         } else {//if not shooting:
             if (ballsShot < 2) {//if we haven't shot both balls:
-                if (timer.get() >= 5.01) {//if we have been building up for at least 5.01 seconds:
+                if (timer.get() >= 5) {//if we have been building up for at least 5 seconds:
                     shooting = true;//we are now shooting
                     timer.reset();
                     timer.start();//start timing the shot
                 }
                 //otherwise continue building up
             } else {// if we have shot both balls:
+                //TODO: Make sure this isn't dangerous, i.e., we crash into the opposing alliance's bridge or alley.
                 Hardware.driveSystem.mecanumDrive(.25, 180, 0);//start creeping towards the bridge.
-
             }
         }
     }

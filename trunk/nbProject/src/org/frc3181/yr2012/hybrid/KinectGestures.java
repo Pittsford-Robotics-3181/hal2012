@@ -81,7 +81,6 @@ public class KinectGestures {
      * @return The corresponding joint.
      */
     public Joint getJoint(int jointID) {
-        Hardware.ballJoystick.getThrottle();
         return kinect.getSkeleton().GetJoint(joints[jointID]);
     }
 

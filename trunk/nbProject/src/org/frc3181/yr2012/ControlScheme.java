@@ -4,7 +4,7 @@ package org.frc3181.yr2012;
  * This file contains the overall control settings for the robot.
  * @author liam middlebrook
  */
-public class ControlScheme {
+public class ControlScheme extends Hardware {
     /**
      * Drive Joystick Functions And Associated Buttons
      */

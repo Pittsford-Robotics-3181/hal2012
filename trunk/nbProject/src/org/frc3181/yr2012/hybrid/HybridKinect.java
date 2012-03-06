@@ -23,7 +23,7 @@ public class HybridKinect {
         } else {
             Hardware.tip.set(0);
         }
-        Hardware.stopper.stopperControllerHybrid(KinectGestures.getShoot());
+        Hardware.stopper.controlStopperHybrid(KinectGestures.getShoot());
 
         if (KinectGestures.isDriving()) {
             if (KinectGestures.getStrafeLeft()) {

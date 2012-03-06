@@ -19,7 +19,7 @@ public class Conveyor {
     /**
      * Starts the balls rolling.
      */
-    public void init() {
+    private void init() {
         mover.set(1.00);
     }
 }

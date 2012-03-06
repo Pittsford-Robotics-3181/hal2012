@@ -18,6 +18,7 @@ import org.frc3181.yr2012.hybrid.KinectGestures;
  * @author Robbie Markwick
  */
 public class HAL extends IterativeRobot implements DeathMachine {
+
     public static final int HYBRID_NOTHING = 0;
     public static final int HYBRID_TIP = 1;
     public static final int HYBRID_SHOOT = 2;
@@ -27,7 +28,7 @@ public class HAL extends IterativeRobot implements DeathMachine {
     int autono = HYBRID_SHOOT;
     boolean gameOver = false;
     DriverStation driveStation = DriverStation.getInstance();
-    
+
     /**
      * This function is run when the robot starts up and should be
      * used for any initialization code.
@@ -53,16 +54,14 @@ public class HAL extends IterativeRobot implements DeathMachine {
      */
     public void disabledPeriodic() {
         updateDash();
-        if(gameOver){
+        if (gameOver) {
             Hardware.lights.whiteOn();
             Hardware.lights.discoMode();
-        }
-        else{
+        } else {
             Hardware.lights.whiteOn();
             Hardware.lights.setAlliance(driveStation.getAlliance());
         }
     }
-    
 
     //------------$*$*$*$*$*$*$*$*AUTONOMOUS METHODS*$*$*$*$*$*$*$*$------------//
     /**
@@ -76,11 +75,19 @@ public class HAL extends IterativeRobot implements DeathMachine {
         Hardware.lights.setAlliance(driveStation.getAlliance());
         Hardware.lights.whiteOn();
         updateDash();
-        switch(autono) {
-            case(HYBRID_NOTHING): HybridNothing.init(); break; //Do nothing
-            case(HYBRID_TIP): HybridTip.init(); break;//Tip the bridge
-            case(HYBRID_SHOOT): HybridShoot.init(); break;//Shoot
-            case(HYBRID_KINECT): HybridKinect.init(); break;//Kinect mode!
+        switch (autono) {
+            case (HYBRID_NOTHING):
+                HybridNothing.init();
+                break; //Do nothing
+            case (HYBRID_TIP):
+                HybridTip.init();
+                break;//Tip the bridge
+            case (HYBRID_SHOOT):
+                HybridShoot.init();
+                break;//Shoot
+            case (HYBRID_KINECT):
+                HybridKinect.init();
+                break;//Kinect mode!
         }
     }
 
@@ -91,12 +98,20 @@ public class HAL extends IterativeRobot implements DeathMachine {
         Hardware.lights.setAlliance(driveStation.getAlliance());
         updateDash();
         Hardware.lights.whiteOn();
-        
-        switch(autono) {
-            case(HYBRID_NOTHING): HybridNothing.run(); break; //Do nothing
-            case(HYBRID_TIP): HybridTip.run(); break;//Tip the bridge
-            case(HYBRID_SHOOT): HybridShoot.run(); break;//Shoot
-            case(HYBRID_KINECT): HybridKinect.run(); break;//Kinect mode!
+
+        switch (autono) {
+            case (HYBRID_NOTHING):
+                HybridNothing.run();
+                break; //Do nothing
+            case (HYBRID_TIP):
+                HybridTip.run();
+                break;//Tip the bridge
+            case (HYBRID_SHOOT):
+                HybridShoot.run();
+                break;//Shoot
+            case (HYBRID_KINECT):
+                HybridKinect.run();
+                break;//Kinect mode!
         }
     }
 
@@ -127,33 +142,29 @@ public class HAL extends IterativeRobot implements DeathMachine {
 
         //drive
         Hardware.driveSystem.mecanumDrive();
-        
+
         //Control Roller (ball collector)
-        Hardware.collector.rollerController();
-        
+        Hardware.collector.controlRoller();
+
         //Control Shooter
-        if(ControlScheme.isShooting)
-        {
+        if (ControlScheme.isShooting) {
             Hardware.ballLauncher.shootAtSpeed(-.9);
-        }
-        else {
+        } else {
             Hardware.ballLauncher.shootAtSpeed(0);
         }
 
         //Control Tipper
-        if(ControlScheme.tipperUp){
+        if (ControlScheme.tipperUp) {
             Hardware.bridgeTip.moveTipperUp(5);
-        }
-
-        else if (ControlScheme.tipperDown) {
+        } else if (ControlScheme.tipperDown) {
             Hardware.bridgeTip.moveTipperDown(5);
-        }else{
+        } else {
             Hardware.tip.set(0);
         }
 
         //Control the stopper peg thing
-        Hardware.stopper.stopperController();
-        
+        Hardware.stopper.controlStopper();
+
     }
 
     /**
@@ -171,7 +182,10 @@ public class HAL extends IterativeRobot implements DeathMachine {
 
         SmartDashboard.putInt("Encoder", Sensors.tipperSensor.get());
         SmartDashboard.putBoolean("Lower Limit Switch", Sensors.lowLimit.get());
-        try {autono = SmartDashboard.getInt("Autonomous");} catch (Exception ex) {}
+        try {
+            autono = SmartDashboard.getInt("Autonomous");
+        } catch (Exception ex) {
+        }
     }
 
     /**

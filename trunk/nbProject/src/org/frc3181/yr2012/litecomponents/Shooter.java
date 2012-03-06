@@ -27,9 +27,12 @@ public class Shooter {
      * distance the balls will go!
      * This will also ramp up and down the shooter motor to a hundred points.
      * TODO: Make this make sense, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
-     * @param speed The speed to shoot at.
+     * @param speed The speed to shoot at. <0 is shoot out, >0 is roll back (which shouldn't be used and will cause the method to return).
      */
     public void shootAtSpeed(double speed) {
+        if (speed > 0) {
+            return;
+        }
         double avgSpeed = 0;
         if (speed < 0 && !on) {
             Sensors.timer.reset();
@@ -38,9 +41,6 @@ public class Shooter {
         }
 
         on = (speed != 0);
-        if (speed > 0) {
-            return;
-        }
         if (avgSpeed == 2000) {
             return;
         }

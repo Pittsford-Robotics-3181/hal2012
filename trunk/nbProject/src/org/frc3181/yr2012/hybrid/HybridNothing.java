@@ -1,10 +1,10 @@
 package org.frc3181.yr2012.hybrid;
 
 /**
- *Don't Do anything. Just sit there and let everyone else complain
+ *Don't do anything. Just sit there and let everyone else complain
  * @author robbiemarkwick
  */
-public class Hybrid1 {
+public class HybridNothing {
     //Do nothing
       public static void run(){}
 }

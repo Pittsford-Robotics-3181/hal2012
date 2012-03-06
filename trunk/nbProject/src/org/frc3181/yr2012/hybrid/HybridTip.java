@@ -7,7 +7,7 @@ import org.frc3181.yr2012.litecomponents.Sensors;
  * Drive forward and tips bridge.
  * @author robbiemarkwick
  */
-public class Hybrid2 {
+public class HybridTip {
 
     private static boolean isHorizontal;
     private static boolean read;

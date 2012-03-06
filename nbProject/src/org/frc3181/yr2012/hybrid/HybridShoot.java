@@ -4,14 +4,15 @@ import org.frc3181.yr2012.Hardware;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- * shoot at a pre-determined basket, then sit there.
+ * Shoot at a pre-determined basket, then sit there.
+ * TODO: Which basket?
  * @author robbiemarkwick
  */
-public class Hybrid3 {
+public class HybridShoot {
 
     private static boolean shooting = false;
     private static Timer timer = new Timer();
-    private static byte ballsShot = 0;
+    private static int ballsShot = 0;
 
     public static void init() {
         Hardware.ballLauncher.shootAtSpeed(-1);

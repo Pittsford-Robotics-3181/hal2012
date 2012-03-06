@@ -18,9 +18,13 @@ import org.frc3181.yr2012.hybrid.KinectGestures;
  * @author Robbie Markwick
  */
 public class HAL extends IterativeRobot implements DeathMachine {
+    public static final int HYBRID_NOTHING = 0;
+    public static final int HYBRID_TIP = 1;
+    public static final int HYBRID_SHOOT = 2;
+    public static final int HYBRID_KINECT = 4;
     Timer tT = new Timer();
     String state = "";
-    int autono = 0;
+    int autono = HYBRID_SHOOT;
     boolean gameOver = false;
     DriverStation driveStation = DriverStation.getInstance();
     
@@ -74,8 +78,8 @@ public class HAL extends IterativeRobot implements DeathMachine {
         updateDash();
         switch(autono) {
             case(0): break; //Do nothing
-            case(1): Hybrid2.init();break; //Tip the bridge
-            case(2): Hybrid3.init(); break;//Shoot
+            case(1): HybridTip.init();break; //Tip the bridge
+            case(2): HybridShoot.init(); break;//Shoot
             case(4): break; //Kinect mode
         }
     }
@@ -89,10 +93,10 @@ public class HAL extends IterativeRobot implements DeathMachine {
         Hardware.lights.whiteOn();
         
         switch(autono) {
-            case(0): Hybrid1.run(); break; //Do nothing
-            case(1): Hybrid2.run(); break;//Tip the bridge
-            case(2): Hybrid3.run(); break;//Shoot
-            case(4): HybridKinect.run(); break;//Kinect mode
+            case(HYBRID_NOTHING): HybridNothing.run(); break; //Do nothing
+            case(HYBRID_TIP): HybridTip.run(); break;//Tip the bridge
+            case(HYBRID_SHOOT): HybridShoot.run(); break;//Shoot
+            case(HYBRID_KINECT): HybridKinect.run(); break;//Kinect mode!
         }
     }
 

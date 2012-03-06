@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Servo;
 import org.frc3181.yr2012.ControlScheme;
 /**
  * The roller that collects the balls.
+ * TODO: Give variables clear names, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
  * @author Ben
  * @author Liam
  * @author Robbie

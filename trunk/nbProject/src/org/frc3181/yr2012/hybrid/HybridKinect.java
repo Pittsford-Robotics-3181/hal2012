@@ -9,6 +9,7 @@ import org.frc3181.yr2012.Hardware;
  */
 public class HybridKinect {
 
+    public static void init(){}
     public static void run() {
         double magnitude = 0;
         double direction = 0;

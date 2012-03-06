@@ -32,9 +32,9 @@ public class Roller {
     }
 
     /**
-     * rollerController allows the driver to turn the Roller on and off
+     * controlRoller allows the driver to turn the Roller on and off
      */
-    public void rollerController() {
+    public void controlRoller() {
         if (ControlScheme.collectingBalls) {
     isCollecting = !isCollecting;
         }

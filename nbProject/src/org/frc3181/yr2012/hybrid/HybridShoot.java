@@ -4,7 +4,7 @@ import org.frc3181.yr2012.Hardware;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- * shoot at a pre-determined basket, then sit there.
+ * Shoot at a pre-determined basket, then sit there.
  * @author robbiemarkwick
  */
 public class HybridShoot {
@@ -28,7 +28,7 @@ public class HybridShoot {
     public static void run() {
         if (shooting) {//if the Robot is actully shooting:
             if (timer.get() >= .5) {//if it has shot for more than half a second:
-                Hardware.stopper.stopperControllerHybrid(false);//allow second ball to move up
+                Hardware.stopper.controlStopperHybrid(false);//allow second ball to move up
                 shooting = false;//you are no longer shooting
                 ballsShot++;//we have now shot another ball
                 timer.reset();

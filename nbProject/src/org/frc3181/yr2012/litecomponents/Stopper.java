@@ -5,8 +5,8 @@ import org.frc3181.yr2012.Hardware;
 import edu.wpi.first.wpilibj.Servo;
 import org.frc3181.yr2012.ControlScheme;
 /**
- * The roller that collects the balls.
- * TODO: Give variables clear names, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
+ * TODO: Give this an accurate summary.
+ * TODO: Make it make sense, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
  * @author Ben
  * @author Liam
  * @author Robbie
@@ -14,23 +14,25 @@ import org.frc3181.yr2012.ControlScheme;
 public class Stopper {
 
     /** 
-     * Speed Controller for motor.
+     * Speed Controller for holder thingies which stop the balls from going into the shooter.
      */
-    private Servo collector1;
-    private Servo collector2;
+    private Servo lowerHolder;
+    private Servo upperHolder;
     
     /**
-     * Boolean determining, if the robot is in collection mode.
+     * TODO: Give these an accurate summary, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
      */
     private boolean isShooting = false;
     private boolean ballNotPrimed = true;
-    /** 
-     * Constructs the Roller using the given motor.
-     * @param collect
+
+    /**
+     * Stopper constructor.
+     * @param h1 The first holder?
+     * @param h2 The second holder?
      */
-    public Stopper(Servo collect1, Servo collect2) {
-        collector1 = collect1;
-        collector2 = collect2;
+    public Stopper(Servo h1, Servo h2) {
+        lowerHolder = h1;
+        upperHolder = h2;
     }
 
     /**
@@ -38,7 +40,7 @@ public class Stopper {
      * The isShooting variable controls whether or not the lower stopper is to allow for the ball to roll through the shooter.
      * The second half of this code detects if there are already two balls in the robot and if so it will lower the upper stopper to minimize weight on the lower stopper.
      */
-    public void stopperController() {
+    public void controlStopper() {
         if (ControlScheme.releaseBallForShooting) {
             isShooting = false;
         } else {
@@ -55,13 +57,13 @@ public class Stopper {
         updateStopperPosition();
     }
     
-        /**
-Periodically call this function to check how the stopper servos should be manipulated.
+    /**
+     * Periodically call this function to check how the stopper servos should be manipulated.
      * The isShooting variable controls whether or not the lower stopper is to allow for the ball to roll through the shooter.
      * The second half of this code detects if there are already two balls in the robot and if so it will lower the upper stopper to minimize weight on the lower stopper.
      * @param doShoot Whether or not the ball should be released into the shooter.
      */
-    public void stopperControllerHybrid(boolean doShoot) {
+    public void controlStopperHybrid(boolean doShoot) {
         if (doShoot) {
             isShooting = false;
         } else {
@@ -84,15 +86,15 @@ Periodically call this function to check how the stopper servos should be manipu
      */
     private void updateStopperPosition() {
         if (isShooting) {
-            collector1.setAngle(170); 
+            lowerHolder.setAngle(170); 
         }else{
-            collector1.setAngle(0);
+            lowerHolder.setAngle(0);
             }
         
         if(ballNotPrimed) {
-            collector2.setAngle(100);
+            upperHolder.setAngle(100);
         }else{
-            collector2.setAngle(160);
+            upperHolder.setAngle(160);
             }
         //*/
         }

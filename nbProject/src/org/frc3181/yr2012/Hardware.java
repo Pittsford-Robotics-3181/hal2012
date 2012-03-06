@@ -3,12 +3,13 @@ package org.frc3181.yr2012;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
-import org.frc3181.yr2012.litecomponents.AllianceNotifier;
-import org.frc3181.yr2012.litecomponents.Shooter;
 import edu.wpi.first.wpilibj.Victor;
-import org.frc3181.yr2012.litecomponents.Tipper;
+import org.frc3181.yr2012.litecomponents.AllianceNotifier;
+import org.frc3181.yr2012.litecomponents.Conveyor;
 import org.frc3181.yr2012.litecomponents.Roller;
+import org.frc3181.yr2012.litecomponents.Shooter;
 import org.frc3181.yr2012.litecomponents.Stopper;
+import org.frc3181.yr2012.litecomponents.Tipper;
 
 /**
  * This file contains our hardware declarations.
@@ -17,8 +18,6 @@ import org.frc3181.yr2012.litecomponents.Stopper;
  * @author liam middlebrook
  */
 public class Hardware {
-    //TODO: Get image data from SmartDashboard or camera or DriverStation or something, and do stuff with it.
-    
     // motors
     // Note that slot 1 refers to what appears to be the second slot
     // "slot 1" is the first three slots; "slot 2" is the fifth through seventh slots; 4 and 8 are always empty
@@ -30,12 +29,10 @@ public class Hardware {
     // Non-Driving Motors
     public static Victor shooter = new Victor(/*slot*/1, /*channel*/ 5);
     public static Jaguar roller = new Jaguar(/*slot*/1, /*channel*/ 6);
-//    public static final Victor leftShooter = new Victor(1, 7);
-//    public static final Victor rightShooter = new Victor(1, 1);
     public static final Servo holder = new Servo(1, 7);
-    public static final Servo holder2 = new Servo(1,8);
+    public static final Servo holder2 = new Servo(1, 8);
     public static final Jaguar tip = new Jaguar(1, 1);
-//    public static final Jaguar conveyorMotor = new Jaguar(1, 10);
+    public static final Jaguar conveyorMotor = new Jaguar(1, 10);
 
     // Drive system
     public static DriveSystem driveSystem = new DriveSystem(Hardware.frontLeftMotor,
@@ -44,23 +41,20 @@ public class Hardware {
             Hardware.rearRightMotor);
 
     // Joystick for Driving
-    public static Joystick driveJoystick = new Joystick(1);
+    protected static Joystick driveJoystick = new Joystick(1);
     // Joystick for Shooter
-    public static Joystick ballJoystick = new Joystick(2);
-    
+    protected static Joystick ballJoystick = new Joystick(2);
     // Shooter
-   public static Shooter ballLauncher = new Shooter(shooter);
-   //notifier
-   public static AllianceNotifier lights = new AllianceNotifier();
-//    // Roller
-    public static Stopper stopper = new Stopper(holder,holder2);
-    public static Roller collector = new Roller(roller,roller);
+    public static Shooter ballLauncher = new Shooter(shooter);
+    //notifier
+    public static AllianceNotifier lights = new AllianceNotifier();
+    // Roller
+    public static Stopper stopper = new Stopper(holder, holder2);
+    public static Roller collector = new Roller(roller, roller);
     // Tipper
     public static Tipper bridgeTip = new Tipper(tip);
-//    // Conveyor
-//    public static Conveyor ballLift = new Conveyor(conveyorMotor);
-    
-
+    // Conveyor
+    public static Conveyor ballLift = new Conveyor(conveyorMotor);
     // Sensors are in Sensors.java instead of here.
 
     // Pseudo-hardware 

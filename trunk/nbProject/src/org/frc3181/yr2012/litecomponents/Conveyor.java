@@ -4,8 +4,10 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  * The conveyor that moves balls up the robot. Its motor should always be on.
+  * Deprecated: This is not a physical part on the robot;
  * @author Ben
  * @author Robbie
+ * @deprecated
  */
 public class Conveyor {
 

@@ -5,8 +5,18 @@ import edu.wpi.first.wpilibj.Servo;
 import org.frc3181.yr2012.ControlScheme;
 
 /**
- * TODO: Give this an accurate summary.
- * TODO: Make it make sense, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
+ * This stopper controls the flow of balls once they have passed through the robots roller.
+  * The servo motor for lowerHolder controls the mechanism that will release a ball to be rolled into the shooter when activated. Default position looks as drawn crudely below:
+  
+            * (Ball)
+  *Shooter* |____
+                 *
+  When activated to release a ball for shooting it looks as drawn crudely below:
+    
+          <-(Ball)* (Another Ball Waiting)
+  *Shooter* ______|    (Limit Switch)
+           *    
+ *The upperHolder is automatically activated by a limit switch crudely in the image above. It controls a flap on the top of the robot's collection unit that will reject balls from rolling down the Hopper if it contains more than 2 balls.
  * @author Ben
  * @author Liam
  * @author Robbie
@@ -19,15 +29,16 @@ public class Stopper {
     private Servo lowerHolder;
     private Servo upperHolder;
     /**
-     * TODO: Give these an accurate summary, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
+  * isShooting: Should the lowerMotor position be changed from its default position to release a ball to the shooter.
+  * hopperFilled: Are there 2 balls in the hopper?
      */
     private boolean isShooting = false;
-    private boolean ballNotPrimed = true;
+    private boolean hopperFilled = true;
 
     /**
      * Stopper constructor.
-     * @param h1 The first holder?
-     * @param h2 The second holder?
+     * @param h1 The lowerServo
+     * @param h2 The upperServo
      */
     public Stopper(Servo h1, Servo h2) {
         lowerHolder = h1;
@@ -41,16 +52,12 @@ public class Stopper {
      */
     public void controlStopper() {
         if (ControlScheme.releaseBallForShooting) {
-            isShooting = false; //TODO: Explain exactly why isShooting = false means we're shooting.
-        } else {
             isShooting = true;
-        }
-        Hardware.DSOut.say(3, "Stopper sensor: " + Sensors.ballSensor.get());
-        if (!Sensors.ballSensor.get()) {
-            ballNotPrimed = true;
         } else {
-            ballNotPrimed = false;
-        }//*/
+            isShooting = false;
+        }
+        
+        hopperFilled = Sensors.ballSensor.het();
         updateStopperPosition();
     }
 
@@ -61,17 +68,9 @@ public class Stopper {
      * @param doShoot Whether or not the ball should be released into the shooter.
      */
     public void controlStopperHybrid(boolean doShoot) {
-        if (doShoot) {
-            isShooting = false; //TODO: This makes no sense. doShoot is the opposite of isShooting?
-        } else {
-            isShooting = true;
-        }
-        Hardware.DSOut.say(3, "Stopper sensor: " + Sensors.ballSensor.get());
-        if (!Sensors.ballSensor.get()) {
-            ballNotPrimed = true;
-        } else {
-            ballNotPrimed = false;
-        }//*/
+        isShooting = doShoot;
+        
+        hopperFilled = Sensors.ballSensor.het();
         updateStopperPosition();
     }
 
@@ -81,15 +80,15 @@ public class Stopper {
      */
     private void updateStopperPosition() {
         if (isShooting) {
-            lowerHolder.setAngle(170);
-        } else {
             lowerHolder.setAngle(0);
+        } else {
+            lowerHolder.setAngle(170);
         }
 
-        if (ballNotPrimed) {
-            upperHolder.setAngle(100);
-        } else {
+        if (hopperFilled) {
             upperHolder.setAngle(160);
+        } else {
+            upperHolder.setAngle(100);
         }
         //*/
     }

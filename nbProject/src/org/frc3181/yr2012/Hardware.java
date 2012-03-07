@@ -53,8 +53,6 @@ public class Hardware {
     public static Roller collector = new Roller(roller, roller);
     // Tipper
     public static Tipper bridgeTip = new Tipper(tip);
-    // Conveyor
-    public static Conveyor ballLift = new Conveyor(conveyorMotor);
     // Sensors are in Sensors.java instead of here.
 
     // Pseudo-hardware 

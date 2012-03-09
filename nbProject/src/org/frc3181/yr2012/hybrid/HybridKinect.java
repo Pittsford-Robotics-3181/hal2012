@@ -14,17 +14,25 @@ public class HybridKinect {
         double magnitude = 0;
         double direction = 0;
         double rotation = 0;
-        Hardware.ballLauncher.shootAtSpeed(-.5); //START ROLLING THE SHOOTER MOTOR IN PREPERATION TO SHOOT
+        Hardware.ballLauncher.shootAtSpeed(-.6); //START ROLLING THE SHOOTER MOTOR IN PREPERATION TO SHOOT
 
         if (KinectGestures.getTipDown()) {
-            Hardware.bridgeTip.moveTipperDown(5);
+            Hardware.bridgeTip.moveTipperUp(10);
+
+                Hardware.DSOut.say(3, "Kinect: tip down");
         } else if (KinectGestures.getTipUp()) {
-            Hardware.bridgeTip.moveTipperUp(5);
+            Hardware.bridgeTip.moveTipperDown(10);
+
+                Hardware.DSOut.say(3, "Kinect: tip up");
         } else {
             Hardware.tip.set(0);
         }
         Hardware.stopper.controlStopperHybrid(KinectGestures.getShoot());
+if(KinectGestures.getShoot())
+        {
 
+                Hardware.DSOut.say(3, "Kinect: shoot");
+        }
         if (KinectGestures.isDriving()) {
             if (KinectGestures.getStrafeLeft()) {
                 magnitude = .5;

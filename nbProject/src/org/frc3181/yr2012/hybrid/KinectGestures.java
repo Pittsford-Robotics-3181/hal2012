@@ -168,10 +168,11 @@ public class KinectGestures {
 
     /**
      * If left ankle is out enough.
-     * @return Whether to shoot.
+     * @return
+     * Whether to shoot.
      */
     public static boolean getShoot() {
-        return getSkeleton().GetAnkleLeft().getX() < -.7;
+        return (getSkeleton().GetAnkleLeft().getX() < getSkeleton().GetHead().getX() -.3);
     }
     
     /**
@@ -179,10 +180,11 @@ public class KinectGestures {
      * @return Whether to shoot.
      */
     public static boolean getTipDown() {
-        return getSkeleton().GetAnkleRight().getZ() > .7;
+        return getSkeleton().GetAnkleRight().getX() > getSkeleton().GetHead().getX() + .3;
     }
     public static boolean getTipUp() {
-        return getSkeleton().GetAnkleRight().getZ() < -.7;
+        return false;
+        //return getSkeleton().GetAnkleRight().getZ() < getSkeleton().GetHead().getZ() -.7;
     }
 
     /**NEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEWNEW**/

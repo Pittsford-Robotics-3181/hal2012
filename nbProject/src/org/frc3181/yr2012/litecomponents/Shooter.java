@@ -26,7 +26,7 @@ private double currentSpeed = 0.0;
     public void shootAtSpeed(double speed) {
         currentSpeed = shooterWheel.get();
 
-        speed = Math.min(.5, Math.max(-.5, speed)); //limit speed to [-.5,.5]
+        speed = Math.min(.6, Math.max(-.6, speed)); //limit speed to [-.5,.5]
 
         if(currentSpeed< speed)
         {

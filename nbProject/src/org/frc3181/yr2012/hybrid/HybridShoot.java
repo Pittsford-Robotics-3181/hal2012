@@ -17,7 +17,7 @@ public class HybridShoot {
      * Sets up the tipping sensor, starts the tipping and driving.
      */
     public static void init() {
-        Hardware.ballLauncher.shootAtSpeed(-.5);//start the shooting wheel, but the robot isn't shooting yet.
+        //Hardware.ballLauncher.shootAtSpeed(-.6);//start the shooting wheel, but the robot isn't shooting yet.
         timer.reset();
         timer.start();//reset and start the timer
         ballsShot = 0;//reset ball counter
@@ -28,7 +28,7 @@ public class HybridShoot {
      * Performs the autonomous run.
      */
     public static void run() {
-        if (shooting) {//if the Robot is actully shooting:
+        /*if (shooting) {//if the Robot is actully shooting:
             if (timer.get() >= .5) {//if it has shot for more than half a second:
                 Hardware.stopper.controlStopperHybrid(false);//allow second ball to move up
                 shooting = false;//you are no longer shooting
@@ -46,9 +46,10 @@ public class HybridShoot {
                 }
                 //otherwise continue building up
             } else {// if we have shot both balls:
-                //TODO: Make sure this isn't dangerous, i.e., we crash into the opposing alliance's bridge or alley.
-                Hardware.driveSystem.mecanumDrive(.25, 180, 0);//start creeping towards the bridge.
+          */      //TODO: Make sure this isn't dangerous, i.e., we crash into the opposing alliance's bridge or alley.
+        if(timer.get() > 12){
+        Hardware.driveSystem.mecanumDrive(.20, 180, 0);//start creeping towards the bridge.
             }
-        }
+        //}
     }
 }

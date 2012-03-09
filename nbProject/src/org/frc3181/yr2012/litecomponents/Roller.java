@@ -45,14 +45,15 @@ public class Roller {
     public void controlRoller() {
         if (ControlScheme.collectingBalls && timer.get() > .75) {
             isCollecting = !isCollecting;//toggle collecting status
-            isRejecting = !isCollecting;//can collect or reject, not both
+            isRejecting = false;//can collect or reject, not both
             timer.reset();
             timer.start();
         }else if(ControlScheme.rejectingBalls && timer.get() > .75) {
             isRejecting = !isRejecting;//toggle rejecting status
-            isCollecting = !isRejecting;//can collect or reject, not both
+            isCollecting = false;//can collect or reject, not both
             timer.reset();
             timer.start();
+            Hardware.DSOut.say(2, "rEJECTING bALLS");
         }
         SmartDashboard.putBoolean("Collecting", isCollecting);
         SmartDashboard.putBoolean("Collecting", isRejecting);

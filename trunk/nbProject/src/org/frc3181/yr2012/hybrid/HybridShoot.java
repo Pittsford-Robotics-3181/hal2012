@@ -17,7 +17,7 @@ public class HybridShoot {
      * Sets up the tipping sensor, starts the tipping and driving.
      */
     public static void init() {
-        Hardware.ballLauncher.shootAtSpeed(-1);//start the shooting wheel, but the robot isn't shooting yet.
+        Hardware.ballLauncher.shootAtSpeed(-.5);//start the shooting wheel, but the robot isn't shooting yet.
         timer.reset();
         timer.start();//reset and start the timer
         ballsShot = 0;//reset ball counter

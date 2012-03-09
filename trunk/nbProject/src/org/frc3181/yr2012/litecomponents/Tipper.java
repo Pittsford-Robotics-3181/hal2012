@@ -76,13 +76,9 @@ public class Tipper {
      * Move tipper all the way down.
      */
     public void moveTipperDown(double value) {
-        if (Sensors.lowLimit.get() != true) {
-            if (getTipperPosition() + value < 130) {
+       
                 moveTipperTo(getTipperPosition() + value);
                 tipperMotor.set(value / 10);
-            } else {
-                Hardware.tip.set(0);
-            }
-        }
+          
     }
 }

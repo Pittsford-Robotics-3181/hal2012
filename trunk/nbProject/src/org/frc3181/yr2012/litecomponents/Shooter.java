@@ -1,6 +1,7 @@
 package org.frc3181.yr2012.litecomponents;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import org.frc3181.yr2012.Hardware;
 
 /**
  * The shooter.
@@ -13,7 +14,7 @@ public class Shooter {
      */
     private SpeedController shooterWheel;
     private boolean on = false;
-
+private double currentSpeed = 0.0;
     /**
      * Construct a new Shooter with the given speed controller.
      * @param wheel The ball shooting controller.
@@ -22,37 +23,23 @@ public class Shooter {
         shooterWheel = wheel;
     }
 
-    /**
-     * Set the shooting motor to a given speed. Varying the speed varies the
-     * distance the balls will go!
-     * This will also ramp up and down the shooter motor to a hundred points.
-     * TODO: Make this make sense and EXPLAIN, for the love of all that is holy and sacred and my sanity and anything else you can possibly think of.
-     * @param speed The speed to shoot at. <0 is shoot out, >0 is roll back (which shouldn't be used and will cause the method to return anyway).
-     */
     public void shootAtSpeed(double speed) {
-        if (speed > 0) {
-            return;
-        }
-        double avgSpeed = 0;
-        if (speed < 0 && !on) {
-            Sensors.timer.reset();
-            Sensors.timer.start();
-            avgSpeed = Sensors.avgRevsPerMin();
-        }
+        currentSpeed = shooterWheel.get();
 
-        on = (speed != 0);
-        if (avgSpeed == 2000) {
-            return;
-        }
-        if (avgSpeed > 2000) //if it needs to speed up...
-        {
-            shooterWheel.set(avgSpeed - .01);
-        }
+        speed = Math.min(.5, Math.max(-.5, speed)); //limit speed to [-.5,.5]
 
-        if (avgSpeed < 2000) //if it needs to slow down...
+        if(currentSpeed< speed)
         {
-            shooterWheel.set(avgSpeed + .01);
+
+            shooterWheel.set(currentSpeed +.01);
+
         }
+        if(currentSpeed > speed)
+        {
+            shooterWheel.set(currentSpeed -=.01);
+
+        }
+        Hardware.DSOut.say(4,"Shooter Speed: " + shooterWheel.get());
     }
 
     /**

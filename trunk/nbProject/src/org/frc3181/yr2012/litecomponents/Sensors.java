@@ -27,7 +27,7 @@ public class Sensors {
         timer.start();
     }
     public static Ultrasonic BridgeFinder = new Ultrasonic(5, 6);
-    public static DigitalInput ballSensor = new DigitalInput(4);
+    public static DigitalInput ballSensor = new DigitalInput(7);
     /**
      * The limit switch to stop the tipper from moving past the lower bound.
      */
@@ -48,7 +48,7 @@ public class Sensors {
     private static double lastRevs = 0;
     private static double time = 0;
     private static double lastTime = 0;
-    private static Encoder shotEncoder = new Encoder(7, 8);
+    private static Encoder shotEncoder = new Encoder(8, 9);
     public static Timer timer = new Timer();
 
     public static double avgRevsPerMin() {

@@ -25,7 +25,7 @@ public class HAL extends IterativeRobot implements DeathMachine {
     public static final int HYBRID_KINECT = 4;
     Timer tT = new Timer();
     String state = "";
-    int autono = HYBRID_SHOOT;
+    int autono = HYBRID_KINECT;
     boolean gameOver = false;
     DriverStation driveStation = DriverStation.getInstance();
 
@@ -148,16 +148,16 @@ public class HAL extends IterativeRobot implements DeathMachine {
 
         //Control Shooter
         if (ControlScheme.isShooting) {
-            Hardware.ballLauncher.shootAtSpeed(-.9);
+            Hardware.ballLauncher.shootAtSpeed(-.5);
         } else {
             Hardware.ballLauncher.shootAtSpeed(0);
         }
 
         //Control Tipper
         if (ControlScheme.tipperUp) {
-            Hardware.bridgeTip.moveTipperUp(5);
+            Hardware.bridgeTip.moveTipperUp(10);
         } else if (ControlScheme.tipperDown) {
-            Hardware.bridgeTip.moveTipperDown(5);
+            Hardware.bridgeTip.moveTipperDown(10);
         } else {
             Hardware.tip.set(0);
         }

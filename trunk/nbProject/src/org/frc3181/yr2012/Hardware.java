@@ -27,9 +27,9 @@ public class Hardware {
     public static Jaguar frontRightMotor = new Jaguar(/*slot*/1, /*channel*/ 3);
     public static Jaguar rearRightMotor = new Jaguar(/*slot*/1, /*channel*/ 4);
     // Non-Driving Motors
-    public static Victor shooter = new Victor(/*slot*/1, /*channel*/ 5);
+    public static Victor shooter = new Victor(/*slot*/2, /*channel*/ 5);
     public static Jaguar roller = new Jaguar(/*slot*/1, /*channel*/ 6);
-    public static final Servo holder = new Servo(1, 7);
+    public static final Servo holder = new Servo(1, 5);
     public static final Servo holder2 = new Servo(1, 8);
     public static final Jaguar tip = new Jaguar(1, 1);
     public static final Jaguar conveyorMotor = new Jaguar(1, 10);

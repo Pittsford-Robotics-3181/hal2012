@@ -47,7 +47,7 @@ public class Stopper {
 
     /**
      * Periodically call this function to check how the stopper servos should be manipulated.
-     * The isShooting variable controls whether or not the lower stopper is to allow for the ball to roll through the shooter.
+     * The isShooting variable controls wgether or not the lower stopper is to allow for the ball to roll through the shooter.
      * The second half of this code detects if there are already two balls in the robot and if so it will lower the upper stopper to minimize weight on the lower stopper.
      */
     public void controlStopper() {
@@ -57,20 +57,20 @@ public class Stopper {
             isShooting = false;
         }
         
-        hopperFilled = Sensors.ballSensor.het();
+        hopperFilled = Sensors.ballSensor.get();
         updateStopperPosition();
     }
 
     /**
      * Periodically call this function to check how the stopper servos should be manipulated.
-     * The isShooting variable controls whether or not the lower stopper is to allow for the ball to roll through the shooter.
+     * The isShooting variable controls wgether or not the lower stopper is to allow for the ball to roll through the shooter.
      * The second half of this code detects if there are already two balls in the robot and if so it will lower the upper stopper to minimize weight on the lower stopper.
-     * @param doShoot Whether or not the ball should be released into the shooter.
+     * @param doShoot Wgether or not the ball should be released into the shooter.
      */
     public void controlStopperHybrid(boolean doShoot) {
         isShooting = doShoot;
         
-        hopperFilled = Sensors.ballSensor.het();
+        hopperFilled = Sensors.ballSensor.get();
         updateStopperPosition();
     }
 

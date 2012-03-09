@@ -20,6 +20,8 @@ public class ControlScheme extends Hardware {
     /**
      * Accessory Joystick Buttons And Associated Buttons
      */
+
+    public static boolean rejectingBalls = Hardware.ballJoystick.getRawButton(6);
     public static boolean collectingBalls = Hardware.ballJoystick.getRawButton(4);
     public static boolean isShooting = Hardware.ballJoystick.getRawButton(5);
     public static boolean tipperUp = Hardware.ballJoystick.getRawButton(3);
@@ -42,6 +44,7 @@ public class ControlScheme extends Hardware {
         rotateRight = Hardware.driveJoystick.getRawButton(9);
 
         //Accesory Joystick Buttons And Associated Buttons
+        rejectingBalls = Hardware.ballJoystick.getRawButton(6);
         collectingBalls = Hardware.ballJoystick.getRawButton(4);
         isShooting = Hardware.ballJoystick.getRawButton(5);
         tipperUp = Hardware.ballJoystick.getRawButton(2);

@@ -14,7 +14,7 @@ public class HybridKinect {
         double magnitude = 0;
         double direction = 0;
         double rotation = 0;
-        Hardware.ballLauncher.shootAtSpeed(-1.0); //START ROLLING THE SHOOTER MOTOR IN PREPERATION TO SHOOT
+        Hardware.ballLauncher.shootAtSpeed(-.5); //START ROLLING THE SHOOTER MOTOR IN PREPERATION TO SHOOT
 
         if (KinectGestures.getTipDown()) {
             Hardware.bridgeTip.moveTipperDown(5);

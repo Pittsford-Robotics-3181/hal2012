@@ -25,7 +25,7 @@ public class HAL extends IterativeRobot implements DeathMachine {
     public static final int HYBRID_KINECT = 4;
     Timer tT = new Timer();
     String state = "";
-    int autono = HYBRID_KINECT;
+    int autono = HYBRID_SHOOT;
     boolean gameOver = false;
     DriverStation driveStation = DriverStation.getInstance();
 
@@ -148,7 +148,7 @@ public class HAL extends IterativeRobot implements DeathMachine {
 
         //Control Shooter
         if (ControlScheme.isShooting) {
-            Hardware.ballLauncher.shootAtSpeed(-.5);
+            Hardware.ballLauncher.shootAtSpeed(-.6);
         } else {
             Hardware.ballLauncher.shootAtSpeed(0);
         }

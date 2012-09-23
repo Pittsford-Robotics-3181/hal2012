@@ -14,36 +14,45 @@ import org.frc3181.yr2012.Utils;
  */
 public class Tipper {
 
-    private SpeedController tipperMotor;
+    private SpeedController tipperMotor; //see var name
     //PID stuff
     private static final double Kp = 0; //if Kp = 1, there is no ramping, just exact movement to the correct speed.
-    private static final double Ki = 0;
-    private static final double Kd = 0;
-    private static final double MIN_ENCODER_VALUE = 0;
-    private static final double MID_ENCODER_VALUE = 0;
-    private static final double MAX_ENCODER_VALUE = 0;
-    private PIDController tipperController;
+    private static final double Ki = 0; //integral gain of motor
+    private static final double Kd = 0; // differential gain of motor
+    private static final double MIN_ENCODER_VALUE = 0; //see var name
+    private static final double MID_ENCODER_VALUE = 0; //see var name
+    private static final double MAX_ENCODER_VALUE = 0; //see var name
+    private PIDController tipperController; //reads integral calculations from pid source
 
     /**
      * Tipper constructor.
      * @param tipMotor The motor that raises and lowers the tipper.
      */
     public Tipper(SpeedController tipMotor) {
-        tipperMotor = tipMotor;
-        tipperController = new PIDController(Kp, Ki, Kd, Sensors.tipperSensor, tipperMotor);
-        tipperController.setInputRange(MIN_ENCODER_VALUE, MAX_ENCODER_VALUE);
-        Sensors.tipperSensor.start();
-        tipperController.enable();
+        tipperMotor = tipMotor; //sets the local tipperMotor pointer to equal the tipMotor parameter
+        tipperController = new PIDController(Kp, Ki, Kd, Sensors.tipperSensor, tipperMotor); //initializes the pidController
+        tipperController.setInputRange(MIN_ENCODER_VALUE, MAX_ENCODER_VALUE); // sets the pidcontroller's encoder values to the ones declared previously
+        Sensors.tipperSensor.start(); //starts the tippersensor
+        tipperController.enable(); // enables the PIDController
     }
-
+    /**
+     * Checks if the tipper is in the middle
+     * @return whether or not the tipper is in the middle
+     */
     public boolean isMiddle() {
         return (Utils.checkForSmall(MID_ENCODER_VALUE - Sensors.tipperSensor.get(), .3) == 0);
     }
-
+    /**
+     * 
+     * @return the tipperMotor pointer
+     */
     public SpeedController getTipperMotor() {
         return tipperMotor;
     }
-
+    /**
+     * 
+     * @return the location of the Tipper
+     */
     public double getTipperPosition() {
         return tipperController.getSetpoint();
     }

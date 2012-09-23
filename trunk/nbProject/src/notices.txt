@@ -6,4 +6,8 @@ Somebody who understand the Tipper class, PLEASE comment the shit out of it.  I 
 
 Just read the javadoc for the components used (like SpeedController and PIDController)
 
-~Benjamin
+~Benjamin (Not the Tipper author)
+
+There is no more shit in the Tipper class, it has all been commented out.
+
+~Benjamin (Not the Tipper author)

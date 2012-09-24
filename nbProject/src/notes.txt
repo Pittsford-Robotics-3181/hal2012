@@ -9,4 +9,16 @@ Within the code, add this line:
 
 // TODO: [...]
 
+or
+
+/*
+* TODO: [...]
+*/
+
+or
+
+/**
+* @todo [...]
+*/
+
 ...replacing "[...]" with the description of the Task that needs to be done.  NetBeans will pick this up and add it to the list when you save.
